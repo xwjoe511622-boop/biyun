@@ -287,7 +287,7 @@ async function signOut(): Promise<void> {
     <RouterLink class="brand" to="/">
       <img v-if="brand.logoUrl !== ''" class="brand-logo" :src="brand.logoUrl" :alt="brand.name" />
       <BrandMark v-else :size="28" />
-      <BrandWordmark v-if="brand.name === 'BIYUN'" class="brand-wordmark" :height="21" />
+      <BrandWordmark v-if="brand.name === 'BIYUN'" class="brand-wordmark" :height="17" />
       <span class="brand-words" :class="{ 'has-wordmark': brand.name === 'BIYUN' }">
         <span class="brand-name ellipsis">{{ brand.name }}</span>
         <span v-if="BRAND_NAME_ZH !== ''" class="brand-zh">{{ BRAND_NAME_ZH }}</span>
