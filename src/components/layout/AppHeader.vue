@@ -548,6 +548,9 @@ async function signOut(): Promise<void> {
   .app-header .icon-button :deep(svg) { width: 22px; height: 22px; stroke-width: 1.9; }
   .app-header:not(.is-inner) .icon-button:active { color: var(--color-accent-text); transform: scale(.92); }
   .app-header.is-home .m-search-icon { margin-right: 2px; }
+  /* The magnifier's glyph fills less of its box than the bell's, so it is drawn larger to look the same size. */
+  .app-header .m-search-icon :deep(svg) { width: 26px; height: 26px; stroke-width: 1.8; }
+  .app-header .icon-button:not(.m-search-icon) :deep(svg) { width: 24px; height: 24px; }
   .app-header.is-home .m-me { margin-left: 6px; }
   .app-header.is-inner .brand { display: none; }
   .app-header.is-inner .m-back { display: inline-flex; margin-left: -8px; border-color: transparent; background: transparent; }
