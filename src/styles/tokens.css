@@ -1,0 +1,105 @@
+/*
+ * Design tokens (Longbit defaults; the Bitwinex brand overrides the brand tokens in brand-bitwinex.css).
+ * Direction: "night terminal" — ink-black layered surfaces, hairline borders, one brand
+ * signal colour, and the exchange convention green = buy / red = sell. Dark is the default;
+ * light mirrors every token so components never hard-code a theme. Up/down colours never change with the brand.
+ */
+:root {
+  color-scheme: light;
+  /* Sticky site header height; 0 on phones where the header scrolls away with the page. */
+  --header-h: 60px;
+  --color-bg: #f3f4f7;
+  --color-bg-deep: #e9ebf0;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f6f7f9;
+  --color-elevated: #ffffff;
+  --color-hover: #f0f2f5;
+  --color-border: #e5e8ed;
+  --color-border-strong: #d3d8e0;
+  --color-text: #0e1319;
+  --color-text-secondary: #4b5565;
+  --color-text-muted: #7a8595;
+  --color-up: #00a37c;
+  --color-up-soft: rgba(0, 163, 124, 0.1);
+  --color-up-bar: rgba(0, 163, 124, 0.14);
+  --color-down: #e0364b;
+  --color-down-soft: rgba(224, 54, 75, 0.09);
+  --color-down-bar: rgba(224, 54, 75, 0.13);
+  --color-accent: #f5a524;
+  --color-accent-strong: #e8900c;
+  --color-accent-text: #b25f00;
+  --color-accent-soft: rgba(245, 165, 36, 0.14);
+  --color-on-accent: #1a1103;
+  --color-warning: #a35d00;
+  --color-warning-soft: #fdf3e1;
+  --color-info: #2f6fed;
+  --glow-accent: 0 0 0 1px rgba(245, 165, 36, 0.35), 0 8px 28px -10px rgba(245, 165, 36, 0.55);
+  /* Brand artwork (hero glows, headline gradient, auth-panel chart): theme-independent. */
+  --brand-art-rgb: 255, 181, 71;
+  --brand-art-chip: #ffbe5c;
+  --brand-art-hl-dark: linear-gradient(100deg, #ffd27a 0%, #ffb547 45%, #f0800c 100%);
+  --brand-art-hl-light: linear-gradient(100deg, #e8900c, #b25f00);
+
+  --radius-lg: 14px;
+  --radius: 8px;
+  --radius-sm: 6px;
+  --radius-pill: 999px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 28px;
+  --space-7: 40px;
+
+  --font-display: 'Bricolage Grotesque Variable', 'Figtree Variable', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', sans-serif;
+  --font-sans: 'Figtree Variable', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-size-2xs: 11px;
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-md: 14px;
+  --font-size-lg: 18px;
+  --font-size-xl: 26px;
+
+  --shadow-panel: none;
+  --shadow-pop: 0 18px 48px -16px rgba(15, 23, 42, 0.28), 0 2px 6px rgba(15, 23, 42, 0.06);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-bg: #06080b;
+  --color-bg-deep: #030405;
+  --color-surface: #0d1015;
+  --color-surface-alt: #141920;
+  --color-elevated: #181e27;
+  --color-hover: #1a212b;
+  --color-border: #1c232d;
+  --color-border-strong: #2a3441;
+  --color-text: #eef1f6;
+  --color-text-secondary: #a4aebd;
+  --color-text-muted: #6d7888;
+  --color-up: #22c9a0;
+  --color-up-soft: rgba(34, 201, 160, 0.12);
+  --color-up-bar: rgba(34, 201, 160, 0.16);
+  --color-down: #f6465d;
+  --color-down-soft: rgba(246, 70, 93, 0.12);
+  --color-down-bar: rgba(246, 70, 93, 0.16);
+  --color-accent: #ffb547;
+  --color-accent-strong: #ffc46b;
+  --color-accent-text: #ffbe5c;
+  --color-accent-soft: rgba(255, 181, 71, 0.12);
+  --color-on-accent: #1a1103;
+  --color-warning: #f0bf6a;
+  --color-warning-soft: rgba(240, 191, 106, 0.1);
+  --color-info: #6ea0ff;
+  --shadow-pop: 0 24px 60px -18px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+@media (max-width: 720px) {
+  :root { --header-h: 0px; }
+}

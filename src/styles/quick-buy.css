@@ -1,0 +1,230 @@
+/*
+ * 快捷买币 / Quick buy page (views/QuickBuyView.vue). Tokens only; the two skins differ in the card's voice:
+ *   binance  boxed input fields, underline Buy/Sell tabs, brand-blue primary button (binance.com Buy Crypto)
+ *   okx      one oversized right-aligned amount, pill segmented tabs, ink (black / white) pill button (okx.com 买币)
+ * The amount figure is the page's one loud element; everything else stays quiet.
+ */
+.qb-page { width: 100%; background: var(--bn-page, var(--color-bg)); color: var(--color-text); }
+
+.qb-top { border-bottom: 1px solid var(--color-border); }
+.qb-top-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  max-width: 1200px; margin: 0 auto; padding: 14px 24px; font-size: 13px;
+}
+.qb-crumb { color: var(--color-text-secondary); }
+.qb-crumb span { margin: 0 6px; color: var(--color-text-muted); }
+.qb-crumb strong { color: var(--color-text); font-weight: 600; }
+.qb-top-links { display: inline-flex; align-items: center; gap: 20px; }
+.qb-top-links a { display: inline-flex; align-items: center; gap: 6px; color: var(--color-text); font-weight: 500; }
+.qb-top-links a:hover { color: var(--color-accent-text); }
+
+/* ------------------------------------------------------------------ hero: words left, card right */
+.qb-hero {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 440px); grid-template-areas: 'intro card' 'how card';
+  grid-template-rows: auto 1fr; column-gap: 72px; align-items: start;
+  max-width: 1200px; margin: 0 auto; padding: 56px 24px 64px;
+}
+.qb-intro { grid-area: intro; padding-top: 12px; min-width: 0; }
+.qb-how { grid-area: how; min-width: 0; }
+.qb-hero > .qb-card { grid-area: card; }
+.qb-title {
+  max-width: 12em; margin: 0; font-family: var(--font-display); font-size: 44px; line-height: 1.14; font-weight: 700;
+  letter-spacing: -0.02em; text-wrap: balance;
+}
+.qb-lead { max-width: 34em; margin: 18px 0 0; color: var(--color-text-secondary); font-size: 16px; line-height: 1.6; }
+.qb-steps-title { margin: 44px 0 14px; font-size: 15px; font-weight: 600; color: var(--color-text); }
+.qb-steps { display: grid; gap: 18px; max-width: 30em; margin: 0; padding: 0; list-style: none; }
+.qb-steps li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 14px; align-items: start; }
+.qb-step-n {
+  display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--color-border-strong); color: var(--color-text); font-size: 13px; font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.qb-steps li > span:last-child { display: flex; flex-direction: column; gap: 3px; color: var(--color-text-secondary); font-size: 14px; line-height: 1.55; }
+.qb-steps strong { color: var(--color-text); font-size: 15px; font-weight: 600; }
+
+/* ------------------------------------------------------------------ card */
+.qb-card {
+  position: relative; display: flex; flex-direction: column; gap: 14px; min-width: 0; padding: 24px;
+  border: 1px solid var(--color-border); border-radius: 16px; background: var(--bn-card, var(--color-surface));
+  box-shadow: var(--shadow-pop);
+}
+.qb-tabs { display: flex; gap: 24px; border-bottom: 1px solid var(--color-border); margin-bottom: 4px; }
+.qb-tab {
+  position: relative; height: 40px; padding: 0 2px; color: var(--color-text-secondary); font-size: 16px; font-weight: 600;
+}
+.qb-tab:hover { color: var(--color-text); }
+.qb-tab.active { color: var(--color-text); }
+.qb-tab.active::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; border-radius: 2px; background: var(--color-text); }
+.qb-card.is-buy .qb-tab.active::after { background: var(--color-up); }
+.qb-card.is-sell .qb-tab.active::after { background: var(--color-down); }
+
+.qb-field {
+  display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border: 1px solid var(--color-border);
+  border-radius: 12px; background: var(--bn-input, var(--color-surface)); transition: border-color 0.15s;
+}
+.qb-field-in:focus-within { border-color: var(--color-accent); }
+.qb-field.invalid { border-color: var(--color-down); }
+.qb-field-out { background: var(--color-surface-alt); border-color: transparent; }
+.qb-field-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 20px; }
+.qb-field-label { color: var(--color-text-secondary); font-size: 13px; font-weight: 500; }
+.qb-avail { display: inline-flex; align-items: center; gap: 8px; color: var(--color-text-secondary); font-size: 12px; text-align: right; overflow-wrap: anywhere; }
+.qb-max { padding: 0; color: var(--color-accent-text); font-size: 12px; font-weight: 600; }
+.qb-max:hover:not(:disabled) { text-decoration: underline; }
+.qb-max:disabled { color: var(--color-text-muted); cursor: not-allowed; }
+.qb-field-row { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.qb-amount {
+  flex: 1 1 auto; width: 0; min-width: 0; height: 44px; padding: 0; border: 0; background: transparent; outline: none;
+  color: var(--color-text); font-family: var(--font-sans); font-size: 30px; font-weight: 600; letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.qb-amount.is-sm { font-size: 24px; }
+.qb-amount.is-xs { font-size: 19px; }
+.qb-amount::placeholder { color: var(--color-text-muted); }
+.qb-receive {
+  flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  color: var(--color-text); font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums;
+}
+.qb-unit {
+  display: inline-flex; flex: 0 0 auto; align-items: center; gap: 8px; height: 36px; color: var(--color-text);
+  font-size: 15px; font-weight: 600;
+}
+.qb-coin-btn { padding: 0 10px 0 6px; border-radius: 999px; background: var(--color-surface-alt); }
+.qb-field-out .qb-coin-btn { background: var(--bn-card, var(--color-surface)); }
+.qb-coin-btn:hover { background: var(--color-hover); }
+.qb-coin-btn svg:last-child { color: var(--color-text-secondary); }
+.qb-ratios { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.qb-ratio {
+  height: 26px; border: 1px solid var(--color-border); border-radius: 6px; background: transparent;
+  color: var(--color-text-secondary); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums;
+}
+.qb-ratio:hover:not(:disabled) { border-color: var(--color-accent); color: var(--color-text); }
+.qb-ratio:disabled { color: var(--color-text-muted); cursor: not-allowed; }
+.qb-error { margin: 0; color: var(--color-down); font-size: 12px; line-height: 1.45; }
+
+/* coin picker: one panel over the card */
+.qb-picker-panel {
+  position: absolute; z-index: 20; left: 12px; right: 12px; top: 72px; display: flex; flex-direction: column; gap: 8px;
+  max-height: 380px; padding: 12px; border: 1px solid var(--color-border); border-radius: 14px;
+  background: var(--color-elevated); box-shadow: var(--shadow-pop);
+}
+.qb-search {
+  display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 12px; border-radius: 10px;
+  background: var(--color-surface-alt); color: var(--color-text-secondary);
+}
+.qb-search input { flex: 1; min-width: 0; height: 100%; border: 0; background: transparent; outline: none; color: var(--color-text); font-size: 14px; }
+.qb-coin-list { margin: 0; padding: 0; list-style: none; overflow-y: auto; }
+.qb-coin-row {
+  display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; align-items: center; gap: 12px; width: 100%;
+  padding: 10px 10px; border-radius: 10px; text-align: left; color: var(--color-text);
+}
+.qb-coin-row:hover, .qb-coin-row.active { background: var(--color-hover); }
+.qb-coin-name { display: flex; flex-direction: column; min-width: 0; }
+.qb-coin-name strong { font-size: 14px; font-weight: 600; }
+.qb-coin-name span { overflow: hidden; color: var(--color-text-secondary); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.qb-coin-last { color: var(--color-text-secondary); font-size: 13px; font-variant-numeric: tabular-nums; }
+.qb-coin-empty { padding: 16px 10px; color: var(--color-text-muted); font-size: 13px; }
+
+.qb-meta { display: grid; gap: 8px; margin: 2px 0 0; }
+.qb-meta div { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; }
+.qb-meta dt { flex: 0 0 auto; color: var(--color-text-secondary); white-space: nowrap; }
+.qb-meta dd { margin: 0; color: var(--color-text); text-align: right; overflow-wrap: anywhere; }
+.qb-note { margin: 0; color: var(--color-text-muted); font-size: 12px; line-height: 1.55; }
+.qb-state { margin: 24px 0; color: var(--color-text-secondary); font-size: 14px; text-align: center; }
+
+.qb-action { height: 48px; margin-top: 6px; font-size: 16px; border-radius: 10px; }
+.qb-register { align-self: center; color: var(--color-text-secondary); font-size: 13px; }
+.qb-register:hover { color: var(--color-accent-text); }
+.qb-block { margin: -4px 0 0; color: var(--color-down); font-size: 12px; line-height: 1.5; text-align: center; }
+.qb-block.pending { color: var(--color-text-muted); }
+
+/* ------------------------------------------------------------------ FAQ */
+.qb-faq {
+  display: grid; grid-template-columns: minmax(0, 280px) minmax(0, 1fr); gap: 48px;
+  width: calc(100% - 48px); max-width: 1152px; margin: 0 auto; padding: 48px 0 88px; border-top: 1px solid var(--color-border);
+}
+.qb-faq-title { margin: 0; font-family: var(--font-display); font-size: 28px; font-weight: 700; letter-spacing: -0.015em; }
+.qb-faq-list { display: flex; flex-direction: column; min-width: 0; }
+.qb-faq-item { border-bottom: 1px solid var(--color-border); }
+.qb-faq-item summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; cursor: pointer;
+  list-style: none; color: var(--color-text); font-size: 16px; font-weight: 600;
+}
+.qb-faq-item summary::-webkit-details-marker { display: none; }
+.qb-faq-item summary svg { flex: 0 0 auto; color: var(--color-text-secondary); transition: transform 0.2s var(--ease-out); }
+.qb-faq-item[open] summary svg { transform: rotate(180deg); }
+.qb-faq-item summary:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.qb-faq-item p { max-width: 62em; margin: 0 0 18px; color: var(--color-text-secondary); font-size: 14px; line-height: 1.7; }
+.qb-faq-item p a { margin-left: 4px; color: var(--color-accent-text); font-weight: 500; }
+
+/* ------------------------------------------------------------------ dialog body */
+.qb-confirm { display: grid; gap: 12px; margin: 0 0 14px; }
+.qb-confirm div { display: flex; justify-content: space-between; gap: 16px; font-size: 14px; }
+.qb-confirm dt { color: var(--color-text-secondary); }
+.qb-confirm dd { margin: 0; color: var(--color-text); font-weight: 600; text-align: right; overflow-wrap: anywhere; }
+.qb-dialog-error {
+  display: flex; gap: 8px; align-items: flex-start; margin: 12px 0 0; padding: 10px 12px; border-radius: 10px;
+  background: var(--color-down-soft); color: var(--color-down); font-size: 13px; line-height: 1.5;
+}
+.qb-dialog-error svg { flex: 0 0 auto; margin-top: 2px; }
+.qb-dialog-error strong { margin-right: 4px; }
+.qb-result { display: flex; flex-direction: column; align-items: stretch; gap: 14px; }
+.qb-result-icon { align-self: center; color: var(--color-up); }
+
+/* ------------------------------------------------------------------ OKX skin: okx.com 买币 card */
+:root[data-skin='okx'] .qb-title { font-size: 52px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; }
+:root[data-skin='okx'] .qb-card { border-radius: 24px; box-shadow: none; padding: 24px; gap: 16px; }
+:root[data-skin='okx'] .qb-tabs { align-self: flex-start; gap: 0; padding: 4px; border: 0; border-radius: 999px; background: var(--color-surface-alt); margin-bottom: 8px; }
+:root[data-skin='okx'] .qb-tab { height: 36px; min-width: 96px; padding: 0 20px; border-radius: 999px; font-size: 14px; }
+:root[data-skin='okx'] .qb-tab.active { background: var(--color-bg); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); }
+:root[data-skin='okx'] .qb-tab.active::after { display: none; }
+/* The amount: no box, one oversized right-aligned figure. */
+:root[data-skin='okx'] .qb-field-in { padding: 4px 0 8px; border: 0; border-radius: 0; background: transparent; }
+:root[data-skin='okx'] .qb-field-in .qb-field-row { justify-content: flex-end; }
+:root[data-skin='okx'] .qb-field-in .qb-amount { height: 64px; font-size: 52px; font-weight: 700; letter-spacing: -0.03em; text-align: right; }
+:root[data-skin='okx'] .qb-field-in .qb-amount.is-sm { font-size: 38px; }
+:root[data-skin='okx'] .qb-field-in .qb-amount.is-xs { font-size: 28px; }
+:root[data-skin='okx'] .qb-field-in .qb-unit { font-size: 20px; }
+:root[data-skin='okx'] .qb-field-in.invalid .qb-amount { color: var(--color-down); }
+:root[data-skin='okx'] .qb-field-out { border-radius: 16px; }
+:root[data-skin='okx'] .qb-action {
+  height: 56px; border-radius: 999px; border-color: var(--color-text); background: var(--color-text); color: var(--color-bg); font-size: 16px;
+}
+:root[data-skin='okx'] .qb-action:hover:not(:disabled) { opacity: 0.86; background: var(--color-text); border-color: var(--color-text); }
+:root[data-skin='okx'] .qb-faq-title { font-weight: 800; letter-spacing: -0.025em; }
+:root[data-skin='okx'] .qb-step-n { border-color: var(--color-text); }
+
+/* ------------------------------------------------------------------ Binance skin */
+:root[data-skin='binance'] .qb-card { border-radius: 16px; }
+:root[data-skin='binance'] .qb-field-in:focus-within { border-color: var(--color-accent); }
+:root[data-skin='binance'] .qb-action { border-radius: 8px; }
+
+/* ------------------------------------------------------------------ responsive */
+@media (max-width: 1024px) {
+  /* Phones and tablets: the card right after the headline, the steps below it. */
+  .qb-hero { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'intro' 'card' 'how'; grid-template-rows: auto; row-gap: 28px; padding-top: 36px; }
+  .qb-card { width: 100%; max-width: 520px; }
+  .qb-steps-title { margin-top: 8px; }
+}
+@media (max-width: 720px) {
+  .qb-top-inner { padding: 12px 16px; }
+  :root[data-skin='binance'] .qb-top-inner {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 8px;
+    line-height: 1.4;
+  }
+  :root[data-skin='binance'] .qb-top-links { display: contents; }
+  :root[data-skin='binance'] .qb-top-links a { white-space: pre-line; }
+  :root[data-skin='binance'] .qb-top-links svg { flex: none; }
+  :root[data-skin='binance']:lang(en) .qb-crumb strong { display: block; }
+  .qb-hero { padding: 24px 16px 40px; row-gap: 24px; }
+  .qb-title, :root[data-skin='okx'] .qb-title { font-size: 32px; }
+  .qb-card { padding: 18px; max-width: none; }
+  .qb-faq { grid-template-columns: minmax(0, 1fr); gap: 8px; width: calc(100% - 32px); padding: 32px 0 56px; }
+  .qb-faq-title { font-size: 24px; }
+  :root[data-skin='binance'] .qb-faq { padding-bottom: 0; }
+  :root[data-skin='binance'] .qb-faq-item:last-child { border-bottom: 0; }
+  :root[data-skin='okx'] .qb-field-in .qb-amount { font-size: 40px; }
+}

@@ -1,0 +1,263 @@
+/* ==================================================================
+ * Home pages, both skins (imported by HomeBinance / HomeOkx only).
+ *
+ * Owner 10-22: 做过头了 … 不能为了特效过度开发，显得交易所不太正经. The home reads like a serious exchange
+ * (Binance / OKX / Coinbase): dense, information first, motion only where it helps.
+ *   - one quiet cosmos sky behind the page (fx/HomeSky): stars + band, no bodies, no warp, no camera moves;
+ *   - panels are calm translucent surfaces (`.glass`): a hairline border, a light blur, no pointer light or tilt;
+ *   - motion: each `[data-fx]` section fades and rises 12 px once on first view (fx.ts `useReveal`), the live
+ *     price tape scrolls, prices flash on change. Nothing is pinned or scroll-driven; nothing follows the pointer.
+ *   - prefers-reduced-motion: tape, flashes and entrances off.
+ * Shared blocks below: tape, tick flash, reveal, sky, glass, contracts board, products grid, trust grid, final CTA.
+ * ================================================================== */
+
+/* ---------------------------------------------------------------- tokens per skin × theme */
+.fx-home {
+  --fx-a: var(--color-accent);
+  --fx-bg: radial-gradient(120% 70% at 70% 0%, #0c1328 0%, #080b16 55%, #06080f 100%);
+  --fx-panel: rgba(16, 20, 34, 0.72);
+  --fx-panel-hover: rgba(22, 27, 44, 0.82);
+  --fx-edge: rgba(255, 255, 255, 0.08);
+  --fx-edge-strong: rgba(255, 255, 255, 0.16);
+  --fx-sky-opacity: 0.7;
+  position: relative; isolation: isolate; overflow-x: clip; background: var(--fx-bg);
+}
+:root[data-theme='light'] .fx-home {
+  --fx-bg: linear-gradient(180deg, #f5f7fc 0%, #f7f8fb 40%, #fafbfc 100%);
+  --fx-panel: rgba(255, 255, 255, 0.86);
+  --fx-panel-hover: rgba(255, 255, 255, 0.96);
+  --fx-edge: rgba(15, 23, 42, 0.08);
+  --fx-edge-strong: rgba(15, 23, 42, 0.16);
+  --fx-sky-opacity: 0.45;
+}
+.okx-home.fx-home {
+  --fx-a: rgb(var(--okx-gold-rgb));
+  --fx-bg: radial-gradient(120% 70% at 70% 0%, #14100a 0%, #060504 55%, #000 100%);
+  --fx-panel: rgba(14, 12, 9, 0.74);
+  --fx-panel-hover: rgba(22, 19, 13, 0.84);
+  --fx-edge: rgba(226, 191, 124, 0.12);
+  --fx-edge-strong: rgba(226, 191, 124, 0.24);
+}
+:root[data-theme='light'] .okx-home.fx-home {
+  --fx-bg: linear-gradient(180deg, #fbf8f1 0%, #fcfaf6 40%, #fdfcfa 100%);
+  --fx-panel: rgba(255, 255, 255, 0.88);
+  --fx-panel-hover: #fff;
+  --fx-edge: rgba(138, 100, 24, 0.12);
+  --fx-edge-strong: rgba(138, 100, 24, 0.24);
+}
+.fx-home > :not(.home-sky-track) { position: relative; z-index: 1; }
+
+/* ---------------------------------------------------------------- backdrop: one quiet sky */
+.home-sky-track { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.home-sky { position: sticky; top: 0; height: 100vh; height: 100lvh; overflow: hidden; contain: strict; opacity: var(--fx-sky-opacity); }
+.home-sky .cosmos { -webkit-mask-image: none; mask-image: none; }
+.home-sky-veil { position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 40%, transparent 50%, rgba(0, 0, 0, 0.35)); }
+:root[data-theme='light'] .home-sky-veil { background: none; }
+
+/* ---------------------------------------------------------------- calm panels */
+:root .fx-home .glass {
+  position: relative; border: 1px solid var(--fx-edge); border-radius: 16px; background: var(--fx-panel);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+}
+:root[data-theme='light'] .fx-home .glass { box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04); }
+:root[data-skin][data-theme] .fx-home .bn-card.glass { border-color: var(--fx-edge); background-color: var(--fx-panel); }
+.fx-home .glass:focus-visible, .fx-home .glass :focus-visible { outline: 2px solid var(--fx-a); outline-offset: 2px; }
+@media (max-width: 640px) {
+  :root .fx-home .glass { -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+
+/* Container shared by the skin-neutral blocks (same widths as bn-section-inner / okx-wrap). */
+.fx-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.okx-home .fx-wrap { max-width: 1280px; padding: 0 32px; }
+@media (max-width: 720px) { .fx-wrap, .okx-home .fx-wrap { padding: 0 16px; } }
+
+/* Section rhythm: tighter than the skins' defaults on the home. */
+:root[data-skin='okx'] .okx-home .okx-sec { padding-top: 80px; }
+:root[data-skin='okx'] .okx-home .okx-h2 { font-size: clamp(26px, 2.8vw, 38px); letter-spacing: -0.025em; }
+:root[data-skin='okx'] .okx-home .okx-sub { margin-top: 10px; font-size: 16px; }
+:root[data-skin='binance'] .bn-home .bn-section { padding: 64px 0 0; }
+:root[data-skin='binance'] .bn-home .bn-section-head { margin-bottom: 20px; }
+:root[data-skin='binance'] .bn-home .bn-section-head h2 { font-size: 32px; }
+@media (max-width: 720px) {
+  :root[data-skin='okx'] .okx-home .okx-sec { padding-top: 56px; }
+  :root[data-skin='binance'] .bn-home .bn-section { padding-top: 44px; }
+  :root[data-skin='binance'] .bn-home .bn-section-head h2 { font-size: 24px; }
+}
+
+/* ---------------------------------------------------------------- one-shot section entrance */
+.fx-io .fx-home [data-fx] { transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.fx-io .fx-home [data-fx]:not(.fx-in) { opacity: 0; transform: translateY(12px); }
+
+/* ---------------------------------------------------------------- live price tape */
+.fx-tape {
+  position: relative; overflow: hidden; border-block: 1px solid var(--fx-edge, var(--color-border));
+  background: var(--fx-panel, var(--color-surface));
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+.fx-tape-track { display: flex; width: max-content; animation: fx-tape var(--fx-tape-dur, 60s) linear infinite; }
+.fx-tape:hover .fx-tape-track, .fx-tape:focus-within .fx-tape-track { animation-play-state: paused; }
+.fx-tape-list { display: flex; margin: 0; padding: 0; list-style: none; }
+.fx-tape-list li { display: flex; align-items: center; }
+.fx-tape-list li::before { content: ''; width: 1px; height: 14px; background: var(--color-border-strong); }
+.fx-tape-item { display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 22px; color: var(--color-text); font-size: 13px; white-space: nowrap; }
+.fx-tape-item strong { font-weight: 600; }
+.fx-tape-item:hover strong { color: var(--color-accent-text); }
+.fx-tape-px { position: relative; font-weight: 500; }
+.fx-tape-chg { font-size: 12px; }
+.fx-tape-chg.up { color: var(--color-up); }
+.fx-tape-chg.down { color: var(--color-down); }
+.fx-tape-chg.flat { color: var(--color-text-muted); }
+.okx-home .fx-tape-item { height: 48px; font-family: var(--okx-font); font-size: 14px; }
+.okx-home .fx-tape-item strong { font-weight: 700; }
+.okx-home .fx-tape-item:hover strong { color: var(--okx-gold-ink); }
+@keyframes fx-tape { to { transform: translateX(-50%); } }
+
+/* ---------------------------------------------------------------- price tick flash (v-tick) */
+.fx-tk-up1, .fx-tk-up2, .fx-tk-dn1, .fx-tk-dn2 { position: relative; isolation: isolate; }
+.fx-tk-up1::after, .fx-tk-up2::after, .fx-tk-dn1::after, .fx-tk-dn2::after {
+  content: ''; position: absolute; inset: -2px -6px; z-index: -1; border-radius: 4px; pointer-events: none; opacity: 0;
+}
+.fx-tk-up1::after, .fx-tk-up2::after { background: var(--color-up-bar, rgba(14, 203, 129, 0.2)); }
+.fx-tk-dn1::after, .fx-tk-dn2::after { background: var(--color-down-bar, rgba(246, 70, 93, 0.2)); }
+.fx-tk-up1::after, .fx-tk-dn1::after { animation: fx-tick-a 0.9s ease-out; }
+.fx-tk-up2::after, .fx-tk-dn2::after { animation: fx-tick-b 0.9s ease-out; }
+@keyframes fx-tick-a { from { opacity: 1; } to { opacity: 0; } }
+@keyframes fx-tick-b { from { opacity: 1; } to { opacity: 0; } }
+
+/* ---------------------------------------------------------------- perpetuals board (fx/FxContracts) */
+.fx-contracts { padding: 64px 0 0; }
+.fx-contracts-head { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: end; gap: 16px 40px; margin-bottom: 20px; }
+.fx-contracts-copy h2 { margin: 0; color: var(--color-text); font-size: 32px; font-weight: 700; line-height: 1.2; }
+.okx-home .fx-contracts-copy h2 { font-family: var(--okx-font); font-size: clamp(26px, 2.8vw, 38px); font-weight: 800; letter-spacing: -0.025em; }
+.fx-contracts-copy p { max-width: 620px; margin: 10px 0 0; color: var(--color-text-secondary); font-size: 15px; line-height: 1.6; }
+.fx-contracts-stat { display: flex; flex-direction: column-reverse; margin: 0; text-align: right; }
+.fx-contracts-stat dt { color: var(--color-text-secondary); font-size: 12.5px; }
+.fx-contracts-stat dd { margin: 0; color: var(--color-accent-text); font-size: 30px; font-weight: 700; line-height: 1.1; }
+.okx-home .fx-contracts-stat dd { color: var(--okx-gold-ink); font-family: var(--okx-font); }
+.fx-contracts-actions { display: flex; gap: 10px; }
+.fx-contracts-actions .btn { height: 40px; padding: 0 18px; border-radius: 8px; font-size: 14px; font-weight: 600; }
+.fx-contracts-actions .okx-pill { height: 40px; padding: 0 20px; font-size: 14px; }
+.fx-contracts-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.fx-contract {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px 12px; width: 100%; padding: 14px 18px;
+  text-align: left; transition: border-color 0.15s, background-color 0.15s;
+}
+.fx-contract:hover { border-color: var(--fx-edge-strong); background: var(--fx-panel-hover); }
+.fx-contract-top { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.fx-contract-top strong { color: var(--color-text); font-size: 15px; font-weight: 650; }
+.okx-home .fx-contract-top strong { font-family: var(--okx-font); }
+.fx-contract-top em { padding: 1px 6px; border-radius: 4px; font-style: normal; font-size: 11px; font-weight: 600; color: var(--color-text-secondary); background: color-mix(in srgb, var(--color-text) 8%, transparent); }
+.fx-contract-top em.gold { color: var(--okx-gold-ink, #c99400); background: color-mix(in srgb, #c99400 14%, transparent); }
+.fx-contract-mid { grid-column: 1; display: flex; align-items: baseline; gap: 10px; }
+.fx-contract-px { color: var(--color-text); font-size: 18px; font-weight: 600; }
+.fx-contract-chg { font-size: 13px; font-weight: 600; }
+.fx-contract-chg.up { color: var(--color-up); }
+.fx-contract-chg.down { color: var(--color-down); }
+.fx-contract-chg.flat { color: var(--color-text-muted); }
+.fx-contract-x { grid-column: 2; grid-row: 1 / span 2; align-self: center; padding: 3px 8px; border-radius: 6px; color: var(--color-accent-text); background: var(--color-accent-soft); font-size: 12px; font-weight: 600; }
+.okx-home .fx-contract-x { color: var(--okx-gold-ink); }
+.fx-contracts-empty { margin: 0; padding: 32px 0; color: var(--color-text-muted); text-align: center; }
+@media (max-width: 1000px) {
+  .fx-contracts-head { grid-template-columns: minmax(0, 1fr) auto; }
+  .fx-contracts-actions { grid-column: 1 / -1; }
+  .fx-contracts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+  .fx-contracts { padding-top: 48px; }
+  .fx-contracts-copy h2 { font-size: 24px; }
+  .okx-home .fx-contracts-copy h2 { font-size: 26px; }
+  .fx-contracts-copy p { font-size: 14px; }
+  .fx-contracts-stat dd { font-size: 24px; }
+  .fx-contracts-grid { gap: 8px; }
+  .fx-contract { grid-template-columns: minmax(0, 1fr); padding: 12px; gap: 4px; }
+  .fx-contract-mid { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .fx-contract-px { font-size: 16px; }
+  .fx-contract-x { grid-column: 1; grid-row: auto; justify-self: start; }
+  .fx-contract-top em { display: none; }
+}
+@media (max-width: 360px) { .fx-contracts-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------------------------------------------------------------- products grid */
+.fx-prod-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.fx-prod-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 24px; }
+.fx-prod { display: flex; flex-direction: column; padding: 18px 20px; transition: border-color 0.15s, background-color 0.15s; }
+.fx-prod:hover { border-color: var(--fx-edge-strong); background: var(--fx-panel-hover); }
+.fx-prod-main { display: grid; grid-template-columns: 36px minmax(0, 1fr); column-gap: 12px; align-content: start; flex: 1 1 auto; color: inherit; }
+.fx-prod-icon {
+  grid-row: span 2; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 10px;
+  color: var(--color-accent-text); background: var(--color-accent-soft);
+}
+.okx-home .fx-prod-icon { color: var(--okx-gold-ink); }
+.fx-prod h3 { display: flex; align-items: center; gap: 4px; margin: 0; color: var(--color-text); font-size: 16px; font-weight: 650; line-height: 1.3; }
+.okx-home .fx-prod h3 { font-family: var(--okx-font); font-weight: 750; }
+.fx-prod p { margin: 4px 0 0; color: var(--color-text-secondary); font-size: 13.5px; line-height: 1.55; }
+.fx-prod-arrow { color: var(--color-text-muted); }
+.fx-prod-main:hover .fx-prod-arrow { color: var(--color-accent-text); }
+.fx-prod-facts { grid-column: 2; display: flex; flex-wrap: wrap; gap: 6px 24px; margin: 12px 0 0; }
+.fx-prod-facts dt { color: var(--color-text-muted); font-size: 12px; }
+.fx-prod-facts dd { margin: 2px 0 0; color: var(--color-text); font-size: 17px; font-weight: 650; }
+.fx-prod-more { grid-column: 2; margin-top: 12px; color: var(--color-accent-text); font-size: 13.5px; font-weight: 600; }
+.okx-home .fx-prod-more { color: var(--okx-gold-ink); }
+.fx-prod-main:hover .fx-prod-more { text-decoration: underline; }
+.fx-prod-links { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 8px 0 0 48px; }
+.fx-prod-links a { color: var(--color-accent-text); font-size: 13px; font-weight: 500; }
+.fx-prod-links a:hover { text-decoration: underline; }
+@media (max-width: 1080px) { .fx-prod-grid, .fx-prod-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* Phones: two compact columns — icon over title, a two-line description, the live figure; sub-links live on the
+   product pages (the whole tile is the link). */
+@media (max-width: 560px) {
+  .fx-prod-grid, .fx-prod-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .fx-prod { padding: 12px; }
+  .fx-prod-main { grid-template-columns: minmax(0, 1fr); }
+  .fx-prod-icon { grid-row: auto; width: 30px; height: 30px; margin-bottom: 8px; }
+  .fx-prod h3 { font-size: 14.5px; }
+  .fx-prod-arrow { display: none; }
+  .fx-prod p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-size: 12.5px; }
+  .bn-home .fx-prod p { display: block; overflow: visible; -webkit-line-clamp: unset; }
+  .fx-prod-facts, .fx-prod-more { grid-column: 1; }
+  .fx-prod-facts { gap: 4px 12px; margin-top: 8px; }
+  .fx-prod-facts dd { font-size: 15px; }
+  .fx-prod-more { margin-top: 8px; font-size: 12.5px; }
+  .fx-prod-links { display: none; }
+}
+
+/* ---------------------------------------------------------------- trust / security grid */
+.fx-trust-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.okx-home .fx-trust-grid { margin-top: 24px; }
+.fx-trust { padding: 20px; }
+.fx-trust-icon { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 10px; color: var(--color-accent-text); background: var(--color-accent-soft); }
+.okx-home .fx-trust-icon { color: var(--okx-gold-ink); }
+.fx-trust h3 { margin: 14px 0 6px; color: var(--color-text); font-size: 16px; font-weight: 650; }
+.okx-home .fx-trust h3 { font-family: var(--okx-font); font-weight: 750; }
+.fx-trust p { margin: 0; color: var(--color-text-secondary); font-size: 13.5px; line-height: 1.6; }
+@media (max-width: 1080px) { .fx-trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) {
+  .fx-trust-grid { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .fx-trust { display: grid; grid-template-columns: 32px minmax(0, 1fr); column-gap: 12px; padding: 14px 16px; }
+  .fx-trust-icon { grid-row: span 2; width: 32px; height: 32px; }
+  .fx-trust h3 { margin: 4px 0 4px; font-size: 15px; }
+  .fx-trust p { font-size: 13px; }
+}
+
+/* ---------------------------------------------------------------- final call to action (compact band) */
+.fx-final { padding: 64px 0 72px; }
+.fx-final-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 32px 40px; }
+.fx-final-copy h2 { margin: 0; color: var(--color-text); font-size: 28px; font-weight: 700; line-height: 1.25; }
+.okx-home .fx-final-copy h2 { font-family: var(--okx-font); font-weight: 800; letter-spacing: -0.02em; }
+.fx-final-copy > p:not(.fx-tagline) { margin: 8px 0 0; color: var(--color-text-secondary); font-size: 15px; line-height: 1.6; }
+/* "WIN THE FUTURE" (BITWINEX brand tagline): one small line above the headline. */
+.fx-tagline { margin: 0 0 10px; color: var(--color-text-secondary); font-size: 12px; font-weight: 600; letter-spacing: 0.24em; }
+.fx-tagline b { color: #c99a3a; font-weight: 700; }
+:root[data-theme='light'] .fx-tagline b { color: #9a6c14; }
+@media (max-width: 720px) {
+  .fx-final { padding: 48px 0 56px; }
+  .fx-final-inner { flex-direction: column; align-items: stretch; gap: 20px; padding: 24px 20px; }
+  .fx-final-copy h2 { font-size: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-tape-track, .fx-tk-up1::after, .fx-tk-up2::after, .fx-tk-dn1::after, .fx-tk-dn2::after { animation: none; }
+  .fx-tape { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+  .fx-tape-list[aria-hidden='true'] { display: none; }
+}

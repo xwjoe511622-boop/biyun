@@ -1,0 +1,87 @@
+/* ==================================================================
+ * Button finish, both skins. Imported once in main.ts, after the skins.
+ *
+ * Owner 10-22 (做过头了): buttons stay put — nothing follows the pointer, nothing bounces or lifts. Hover is a
+ * colour / border change only.
+ *  1. Quiet glass — secondary / quiet / ghost buttons, OKX outline pills, active tabs, header icon buttons: a
+ *     faint top-lit gradient and a hairline border. No pointer light, no backdrop blur, no refraction. Never inside
+ *     the trading terminal or tables; buy/sell buttons stay solid green/red.
+ *  2. Gold flowing border (金边流光) — exactly two calls to action per home: the hero sign-up button and the final
+ *     call to action. A conic gradient border whose angle turns slowly via @property, plus a sheen on hover.
+ *     prefers-reduced-motion: the border stays gold but still; no sheen.
+ * ================================================================== */
+
+@property --fx-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+
+:root {
+  --glass-top: rgba(255, 255, 255, 0.07);
+  --glass-low: rgba(255, 255, 255, 0.03);
+  --glass-edge: rgba(255, 255, 255, 0.14);
+  --glass-spec: rgba(255, 255, 255, 0.1);
+  --gold-1: #f6e3b4;
+  --gold-2: #c9a35a;
+  --gold-3: #8a6418;
+}
+:root[data-theme='light'] {
+  --glass-top: rgba(255, 255, 255, 0.95);
+  --glass-low: rgba(255, 255, 255, 0.75);
+  --glass-edge: rgba(15, 23, 42, 0.12);
+  --glass-spec: rgba(255, 255, 255, 1);
+}
+:root[data-skin='okx'] { --glass-edge: rgba(226, 191, 124, 0.24); }
+:root[data-skin='okx'][data-theme='light'] { --glass-edge: rgba(138, 100, 24, 0.2); }
+
+/* ---------------------------------------------------------------- 1. quiet glass */
+:root[data-skin] .btn:not(.btn-primary):not(.btn-buy):not(.btn-sell):not(.btn-ghost):not(.terminal *):not(table *),
+:root[data-skin] .btn-ghost:not(.terminal *):not(table *):hover:not(:disabled),
+:root[data-skin] .okx-pill-line,
+:root[data-skin] .app-header .icon-button,
+:root[data-skin] .fx-home .market-overview .tab.is-active {
+  border: 1px solid var(--glass-edge);
+  background: linear-gradient(180deg, var(--glass-top), var(--glass-low));
+  box-shadow: inset 0 1px 0 var(--glass-spec);
+  color: var(--color-text);
+  transition: border-color 0.15s, background-color 0.15s, color 0.15s;
+}
+:root[data-skin] .btn:not(.btn-primary):not(.btn-buy):not(.btn-sell):not(.terminal *):not(table *):hover:not(:disabled),
+:root[data-skin] .okx-pill-line:hover,
+:root[data-skin] .app-header .icon-button:hover {
+  border-color: var(--color-text-muted);
+}
+/* Header icon buttons: round. */
+:root[data-skin] .app-header .icon-button { border-radius: 999px; }
+:root[data-skin='okx'] .app-header .auth-login { border-radius: 999px; }
+
+/* ---------------------------------------------------------------- 2. gold flowing border + sheen (two CTAs) */
+.fx-home :is(.signup-btn, .cta-btn, .okx-signup .okx-pill-gold, .okx-final-actions .okx-pill-gold) {
+  --fx-fill: var(--color-accent);
+  position: relative; overflow: hidden; isolation: isolate;
+  border: 1.5px solid transparent !important;
+  background:
+    linear-gradient(var(--fx-fill), var(--fx-fill)) padding-box,
+    conic-gradient(from var(--fx-angle), #9c7424, var(--gold-2) 12%, var(--gold-1) 22%, #fff 26%, var(--gold-1) 30%, var(--gold-2) 40%, #9c7424 52%, var(--gold-2) 64%, var(--gold-1) 74%, #fff 77%, var(--gold-1) 80%, var(--gold-2) 90%, #9c7424) border-box !important;
+  animation: fx-angle 8s linear infinite;
+  transition: filter 0.2s;
+}
+:root[data-skin='okx'] .fx-home :is(.okx-signup .okx-pill-gold, .okx-final-actions .okx-pill-gold) {
+  background:
+    linear-gradient(180deg, #ecd096, #c49a4c) padding-box,
+    conic-gradient(from var(--fx-angle), #6b4c12, #c9a35a 12%, #fff1cf 22%, #fff 26%, #fff1cf 30%, #c9a35a 40%, #6b4c12 52%, #c9a35a 64%, #fff1cf 74%, #fff 77%, #fff1cf 80%, #c9a35a 90%, #6b4c12) border-box !important;
+  color: #1a1408;
+}
+.fx-home :is(.signup-btn, .cta-btn, .okx-signup .okx-pill-gold, .okx-final-actions .okx-pill-gold)::after {
+  content: ''; position: absolute; z-index: -1; top: 0; bottom: 0; left: 0; width: 60%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: translateX(-120%) skewX(-20deg);
+}
+.fx-home :is(.signup-btn, .cta-btn, .okx-signup .okx-pill-gold, .okx-final-actions .okx-pill-gold):hover::after {
+  transform: translateX(260%) skewX(-20deg); transition: transform 0.75s cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+.fx-home :is(.signup-btn, .cta-btn, .okx-signup .okx-pill-gold, .okx-final-actions .okx-pill-gold):hover { filter: brightness(1.06); }
+@keyframes fx-angle { to { --fx-angle: 360deg; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-home :is(.signup-btn, .cta-btn, .okx-signup .okx-pill-gold, .okx-final-actions .okx-pill-gold) { animation: none; }
+  .fx-home :is(.signup-btn, .cta-btn, .okx-signup .okx-pill-gold, .okx-final-actions .okx-pill-gold)::after { display: none; }
+  :root[data-skin] .btn, :root[data-skin] .okx-pill-line, :root[data-skin] .app-header .icon-button { transition: none; }
+}

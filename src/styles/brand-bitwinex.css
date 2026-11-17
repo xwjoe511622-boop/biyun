@@ -1,0 +1,28 @@
+/*
+ * Bitwinex brand tokens (VITE_BRAND=bitwinex; vite.config.ts puts data-brand="bitwinex" on <html>).
+ * Source of truth: clean-source/frontend/brand/bitwinex/BRAND.md. Only the brand signal changes: surfaces, text,
+ * and the green = up / red = down trade colours stay exactly as in tokens.css.
+ */
+:root[data-brand='bitwinex'] {
+  --color-accent: #2e5bff;
+  --color-accent-strong: #1f47e6;
+  --color-accent-text: #1d43d1;
+  --color-accent-soft: rgba(46, 91, 255, 0.1);
+  --color-on-accent: #ffffff;
+  --color-info: #0f8fbf;
+  --glow-accent: 0 0 0 1px rgba(46, 91, 255, 0.35), 0 8px 28px -10px rgba(46, 91, 255, 0.55);
+  --brand-art-rgb: 76, 116, 255;
+  --brand-art-chip: #8be9ff;
+  --brand-art-hl-dark: linear-gradient(100deg, #8be9ff 0%, #6f93ff 45%, #3d63ff 100%);
+  --brand-art-hl-light: linear-gradient(100deg, #2e5bff, #1a3bb8);
+}
+
+:root[data-brand='bitwinex'][data-theme='dark'] {
+  --color-accent: #4c74ff;
+  --color-accent-strong: #6f8fff;
+  --color-accent-text: #8aa6ff;
+  --color-accent-soft: rgba(76, 116, 255, 0.14);
+  --color-on-accent: #ffffff;
+  --color-info: #5cc8ef;
+  --glow-accent: 0 0 0 1px rgba(76, 116, 255, 0.4), 0 8px 28px -10px rgba(76, 116, 255, 0.6);
+}

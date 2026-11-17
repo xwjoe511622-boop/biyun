@@ -1,0 +1,47 @@
+{
+  "name": "picat-modern-exchange-pc",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Longbit (龙比特) Vue 3 + TypeScript PC web client — the public site https://www.ttexxx.xyz since 2026-09-26 (session token persisted in localStorage with keep-alive; legacy Vue 2 site kept only as a rollback backup).",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build:demo": "VITE_DEMO=1 vite build",
+    "build": "npm run typecheck && vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4173 --strictPort",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.app.json",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@fontsource-variable/bricolage-grotesque": "5.3.0",
+    "@fontsource-variable/figtree": "5.3.0",
+    "@fontsource-variable/hanken-grotesk": "5.3.0",
+    "@fontsource-variable/jetbrains-mono": "5.3.0",
+    "@klinecharts/extension": "0.1.0",
+    "@lucide/vue": "1.48.0",
+    "@noble/ciphers": "2.4.0",
+    "@noble/hashes": "2.4.0",
+    "decimal.js": "10.6.0",
+    "jsencrypt": "3.5.4",
+    "klinecharts": "10.0.3",
+    "pako": "3.0.2",
+    "pinia": "4.0.3",
+    "qrcode": "1.5.4",
+    "vue": "3.5.43",
+    "vue-i18n": "11.4.12",
+    "vue-router": "5.3.1",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "6.0.9",
+    "jsdom": "30.1.1",
+    "typescript": "6.0.3",
+    "vite": "8.3.1",
+    "vitest": "5.0.2",
+    "vue-tsc": "3.3.11"
+  }
+}

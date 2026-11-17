@@ -1,0 +1,167 @@
+/* Binance-style skin (VITE_SKIN=binance): selectors scoped to :root[data-skin='binance']. */
+/* Trading terminal arrangement (grid areas, density) lives in its own file, same scoping rule. */
+@import './skin-binance-terminal.css';
+
+/*
+ * Surfaces and type follow binance.com (dark: #0B0E11 page, #181A20 panels, #1E2329 raised, #2B3139 hairlines;
+ * light: white page, #FAFAFA bands, #EAECEF hairlines). The accent stays Bitwinex blue (brand-bitwinex.css):
+ * this file never sets --color-accent*. Up/down are Binance's green/red; light uses Binance's darker light-mode
+ * pair so the figures stay legible on white.
+ */
+:root[data-skin='binance'] {
+  --color-bg: #ffffff;
+  --color-bg-deep: #fafafa;
+  --color-surface: #ffffff;
+  --color-surface-alt: #fafafa;
+  --color-elevated: #ffffff;
+  --color-hover: #f5f5f5;
+  --color-border: #eaecef;
+  --color-border-strong: #d8dce1;
+  --color-text: #1e2329;
+  --color-text-secondary: #707a8a;
+  --color-text-muted: #929aa5;
+  --color-up: #03a66d;
+  --color-up-soft: rgba(3, 166, 109, 0.1);
+  --color-up-bar: rgba(3, 166, 109, 0.12);
+  --color-down: #cf304a;
+  --color-down-soft: rgba(207, 48, 74, 0.08);
+  --color-down-bar: rgba(207, 48, 74, 0.11);
+
+  --radius-lg: 12px;
+  --radius: 6px;
+  --radius-sm: 4px;
+
+  /* One family throughout, like Binance's Plex: no display face. */
+  --font-display: 'Figtree Variable', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Segoe UI', sans-serif;
+
+  --shadow-pop: 0 8px 32px -8px rgba(30, 35, 41, 0.16), 0 0 0 1px rgba(30, 35, 41, 0.04);
+
+  /* Skin-only tokens used by the Binance home, header and footer. */
+  --bn-page: #ffffff;
+  --bn-band: #fafafa;
+  --bn-card: #ffffff;
+  --bn-card-2: #f5f5f5;
+  --bn-input: #ffffff;
+  --bn-header: #ffffff;
+  --bn-footer: #ffffff;
+  --bn-text-strong: #202630;
+}
+
+:root[data-skin='binance'][data-theme='dark'] {
+  --color-bg: #0b0e11;
+  --color-bg-deep: #0b0e11;
+  --color-surface: #181a20;
+  --color-surface-alt: #1e2329;
+  --color-elevated: #1e2329;
+  --color-hover: #2b3139;
+  --color-border: #2b3139;
+  --color-border-strong: #474d57;
+  --color-text: #eaecef;
+  --color-text-secondary: #848e9c;
+  --color-text-muted: #707a8a;
+  --color-up: #0ecb81;
+  --color-up-soft: rgba(14, 203, 129, 0.12);
+  --color-up-bar: rgba(14, 203, 129, 0.14);
+  --color-down: #f6465d;
+  --color-down-soft: rgba(246, 70, 93, 0.12);
+  --color-down-bar: rgba(246, 70, 93, 0.14);
+  --shadow-pop: 0 12px 40px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.03);
+
+  --bn-page: #0b0e11;
+  --bn-band: #181a20;
+  --bn-card: #181a20;
+  --bn-card-2: #1e2329;
+  --bn-input: #0b0e11;
+  --bn-header: #181a20;
+  --bn-footer: #0b0e11;
+  --bn-text-strong: #ffffff;
+}
+
+/* Body copy: Binance sets everything in one sans with tabular figures. */
+:root[data-skin='binance'] body {
+  background: var(--color-bg);
+  font-feature-settings: 'tnum' 1;
+}
+:root[data-skin='binance'] .num {
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Buttons: flat Binance fills, no glow, 600 weight. */
+:root[data-skin='binance'] .btn { border-color: transparent; font-weight: 600; }
+:root[data-skin='binance'] .btn:hover:not(:disabled) { border-color: transparent; }
+:root[data-skin='binance'] .btn-primary:hover:not(:disabled) { box-shadow: none; }
+:root[data-skin='binance'] .btn-quiet { background: var(--color-surface-alt); color: var(--color-text); }
+:root[data-skin='binance'] .btn-quiet:hover:not(:disabled) { background: var(--color-hover); }
+
+/* Binance home building blocks (used only by views/home/HomeBinance.vue and components/home/binance). */
+:root[data-skin='binance'] .bn-card {
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  background: var(--bn-card);
+}
+:root[data-skin='binance'][data-theme='dark'] .bn-card { border-color: transparent; }
+:root[data-skin='binance'] .bn-section { padding: 80px 0; }
+:root[data-skin='binance'] .bn-section + .bn-section { padding-top: 40px; }
+:root[data-skin='binance'] .bn-section-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+:root[data-skin='binance'] .bn-section-head {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 28px;
+}
+:root[data-skin='binance'] .bn-section-head h2 {
+  margin: 0; color: var(--color-text); font-size: 40px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em;
+}
+:root[data-skin='binance'] .bn-section-head p { max-width: 640px; margin: 12px 0 0; color: var(--color-text-secondary); font-size: 16px; line-height: 1.6; }
+:root[data-skin='binance'] .bn-link-more {
+  display: inline-flex; align-items: center; gap: 2px; flex: 0 0 auto; color: var(--color-text-secondary); font-size: 14px; font-weight: 500; white-space: nowrap;
+}
+:root[data-skin='binance'] .bn-link-more:hover { color: var(--color-text); }
+@media (max-width: 720px) {
+  :root[data-skin='binance'] .bn-section { padding: 48px 0; }
+  :root[data-skin='binance'] .bn-section + .bn-section { padding-top: 24px; }
+  :root[data-skin='binance'] .bn-section-inner { padding: 0 16px; }
+  :root[data-skin='binance'] .bn-section-head { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
+  :root[data-skin='binance'] .bn-section-head h2 { font-size: 28px; }
+  :root[data-skin='binance'] .bn-section-head p { font-size: 14px; }
+  :root[data-skin='binance'] .bn-card { border-radius: 16px; }
+}
+
+/* Typography shared by ordinary www business pages, including teleported dialogs. */
+:root[data-skin='binance'] {
+  --bn-page-title-size: 30px;
+  --bn-dialog-title-size: 16px;
+}
+:root[data-skin='binance'] :is(
+  .wallet-title-row .wallet-title, h1.page-title, .page-head h1,
+  .orders-center .head h1, .otc-page .hero-copy h1, .markets-page .head h1,
+  .fdata-head h1, .rp-head .rp-title
+) { font-size: var(--bn-page-title-size); }
+:root[data-skin='binance'] :is(.orders-center .subtitle, .fdata-head p, .rp-head .rp-sub) {
+  font-size: var(--font-size-md);
+}
+:root[data-skin='binance'] .otc-page .otc-hero { margin-bottom: 20px; }
+:root[data-skin='binance'] .otc-page .hero-copy p { margin-top: 6px; font-size: 14px; }
+
+:root[data-skin='binance'] [role='dialog'] :is(.dialog-title, .drawer-head h2, .fd-head h3) {
+  font-size: var(--bn-dialog-title-size);
+  font-weight: 700;
+}
+:root[data-skin='binance'] :is(.drawer .summary dt, .drawer .stats dt, .drawer .table td small, .coin-table th) {
+  font-size: var(--font-size-xs);
+}
+:root[data-skin='binance'] :is(.coin-table td, .drawer .table td) { font-size: var(--font-size-sm); }
+:root[data-skin='binance'] .drawer .bio { font-size: var(--font-size-md); }
+
+@media (max-width: 768px) {
+  :root[data-skin='binance'] { --bn-page-title-size: 24px; }
+
+  /* Focusable text entry stays legible on phones, including iOS focus zoom.
+     Large amount and leverage controls already have their own larger scale. */
+  :root[data-skin='binance'] :is(
+    textarea, input:not([type]), input[type='text'], input[type='search'], input[type='email'],
+    input[type='tel'], input[type='url'], input[type='password'], input[type='number'],
+    input[type='date'], input[type='datetime-local'], input[type='time']
+  ):not(.qb-amount, .amount-input input, .td-amount input, .lev-value input):not([readonly], [disabled]) {
+    font-size: 16px !important;
+  }
+}

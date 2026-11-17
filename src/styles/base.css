@@ -1,0 +1,522 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+/* Anchor jumps, focus scrolling and scroll anchoring land below the sticky header. */
+html { scroll-padding-top: calc(var(--header-h) + 8px); }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+input, button, select, textarea { font: inherit; }
+select { color: var(--color-text); }
+button, a, input, select { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+/* Thin, theme-aware scrollbars for dense trading panels. */
+* { scrollbar-width: thin; scrollbar-color: var(--color-border-strong) transparent; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* Numbers never wrap mid-value; tabular figures keep columns aligned. */
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'zero' 0, 'tnum' 1;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wrap-anywhere {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.up { color: var(--color-up); }
+.down { color: var(--color-down); }
+.muted { color: var(--color-text-muted); }
+.secondary { color: var(--color-text-secondary); }
+
+.panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-panel);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+  min-height: 48px;
+}
+
+.panel-title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-md);
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.panel-body {
+  padding: 16px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 16px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius);
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color 0.18s var(--ease-out), border-color 0.18s var(--ease-out),
+    color 0.18s var(--ease-out), transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out);
+}
+
+.btn:hover:not(:disabled) {
+  border-color: var(--color-text-muted);
+  background: var(--color-hover);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-on-accent);
+  font-weight: 700;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-accent-strong);
+  border-color: var(--color-accent-strong);
+  box-shadow: var(--glow-accent);
+}
+
+.btn-buy {
+  background: var(--color-up);
+  border-color: var(--color-up);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.btn-sell {
+  background: var(--color-down);
+  border-color: var(--color-down);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.btn-buy:hover:not(:disabled),
+.btn-sell:hover:not(:disabled) {
+  filter: brightness(1.08);
+  border-color: transparent;
+}
+.btn-buy:hover:not(:disabled) { background: var(--color-up); }
+.btn-sell:hover:not(:disabled) { background: var(--color-down); }
+
+.btn-block {
+  width: 100%;
+  height: 44px;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  background: transparent;
+  color: var(--color-text-secondary);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  color: var(--color-text);
+  background: var(--color-hover);
+  border-color: transparent;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
+.tab {
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: 550;
+  white-space: nowrap;
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.tab:hover { color: var(--color-text); }
+
+.tab.active {
+  background: var(--color-hover);
+  color: var(--color-text);
+  font-weight: 650;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 22px;
+  padding: 0 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-alt);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-2xs);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+  table-layout: fixed;
+}
+
+.table th,
+.table td {
+  padding: 11px var(--space-3);
+  text-align: right;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table th {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: 550;
+  background: var(--color-surface);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.table tbody tr { transition: background-color 0.12s; }
+.table tbody tr:hover { background: var(--color-hover); }
+
+.table th:first-child,
+.table td:first-child {
+  text-align: left;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 550;
+}
+
+.field-input {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius);
+  background: var(--color-surface-alt);
+  transition: border-color 0.15s, box-shadow 0.15s, background-color 0.15s;
+}
+
+.field-input:hover { border-color: var(--color-text-muted); }
+
+.field-input:focus-within {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+  background: var(--color-surface);
+}
+
+.field-input.invalid {
+  border-color: var(--color-down);
+  box-shadow: 0 0 0 3px var(--color-down-soft);
+}
+
+.field-input input,
+.field-input select {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  outline: none;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md);
+  background: transparent;
+  color: inherit;
+}
+
+.field-input input::placeholder { color: var(--color-text-muted); }
+
+.field-suffix {
+  flex: 0 0 auto;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.field-hint {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.field-error {
+  color: var(--color-down);
+  font-size: var(--font-size-xs);
+}
+
+p.field-hint, p.field-error { margin: 2px 0; }
+
+/*
+ * Order-ticket validation that must not move the ticket (2026-09-29, 前端状态管理约定): the message floats as a small
+ * bubble over the gap under its field instead of being inserted into the flow. The field wrapper is `.float-anchor`;
+ * the full text stays readable through `title` when it is ellipsised.
+ */
+.float-anchor { position: relative; }
+.field-error.float {
+  position: absolute !important;
+  right: 6px;
+  top: calc(100% - 6px);
+  z-index: 4;
+  max-width: calc(100% - 12px);
+  margin: 0 !important;
+  padding: 1px 7px;
+  border: 1px solid var(--color-down-soft);
+  border-radius: 6px;
+  background: var(--color-elevated);
+  box-shadow: 0 4px 12px -6px rgba(0, 0, 0, 0.45);
+  font-size: 11px;
+  line-height: 16px;
+  /* Wraps to at most two lines instead of an ellipsised single line (10-01 owner: truncated rule text). */
+  white-space: normal;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.notice {
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
+  font-size: var(--font-size-xs);
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.notice-error {
+  background: var(--color-down-soft);
+  color: var(--color-down);
+}
+
+.notice-info {
+  background: var(--color-accent-soft);
+  color: var(--color-accent-text);
+}
+
+.scroll-y {
+  overflow-y: auto;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  border-radius: var(--radius);
+  color: var(--color-text-secondary);
+  transition: background-color 0.15s, color 0.15s;
+}
+.icon-button:hover { background: var(--color-hover); color: var(--color-text); }
+
+/* Page-level container used by non-terminal pages (home, assets, security). */
+.page {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 28px 24px 56px;
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes flash-up {
+  0% { background-color: var(--color-up-bar); }
+  100% { background-color: transparent; }
+}
+
+@keyframes flash-down {
+  0% { background-color: var(--color-down-bar); }
+  100% { background-color: transparent; }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 currentColor; opacity: 1; }
+  50% { box-shadow: 0 0 0 4px transparent; opacity: 0.7; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+@media (max-width: 720px) {
+  .page { padding: 20px 16px 40px; }
+}
+
+/*
+ * Mobile layout helpers (owner 10-22: 「前端移动端还有一些缺陷比如右侧溢出」). Audit: scripts/mobile-audit.mjs.
+ *
+ * `.x-scroll` — a horizontal scroller that stays inside its card; with `v-scroll-fade` (src/core/scroll-fade.ts) the
+ * edge that still hides columns fades out. Only for genuinely wide data (order history, network fee schedules).
+ */
+.x-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.x-scroll[data-fade='right'] { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); }
+.x-scroll[data-fade='left'] { -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to left, #000 calc(100% - 36px), transparent); }
+.x-scroll[data-fade='both'] { -webkit-mask-image: linear-gradient(to right, transparent, #000 36px, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to right, transparent, #000 36px, #000 calc(100% - 36px), transparent); }
+
+/*
+ * `.table-cards` — on phones a table becomes one card per record with "label: value" rows. Each <td> carries
+ * `data-label` (its column header); a cell with `data-label=""` or class `card-title` becomes the card heading.
+ * Numbers keep `.num` (tabular figures), labels wrap, values right-aligned.
+ */
+@media (max-width: 640px) {
+  .table.table-cards { min-width: 0 !important; width: 100%; table-layout: auto; }
+  .table.table-cards thead { display: none; }
+  .table.table-cards, .table.table-cards tbody { display: block; }
+  .table.table-cards tr { display: grid; gap: 6px; padding: 12px 16px; border-bottom: 1px solid var(--color-border); }
+  .table.table-cards tbody tr:last-child { border-bottom: 0; }
+  .table.table-cards td {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+    padding: 0 !important; height: auto !important; border: 0; text-align: right !important;
+    white-space: normal; overflow: visible; min-width: 0; max-width: none !important;
+  }
+  .table.table-cards td::before {
+    content: attr(data-label); flex: 0 1 auto; color: var(--color-text-muted); font-family: var(--font-sans);
+    font-size: var(--font-size-xs); font-weight: 500; text-align: left; white-space: normal; letter-spacing: 0;
+  }
+  .table.table-cards td.card-title, .table.table-cards td[data-label=''] { justify-content: flex-start; text-align: left !important; font-weight: 650; }
+  .table.table-cards td.card-title::before, .table.table-cards td[data-label='']::before { content: none; }
+  .table.table-cards td.num { overflow-wrap: anywhere; }
+}
+
+/* Long notes and copy wrap instead of pushing the page sideways. */
+.wrap-text { overflow-wrap: anywhere; word-break: normal; min-width: 0; }

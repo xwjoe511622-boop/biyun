@@ -1,0 +1,443 @@
+/*
+ * OKX-style skin (VITE_SKIN=okx): black-gold (dark, default) / white-gold (light).
+ * Every selector is scoped to :root[data-skin='okx'] so the Binance skin never sees it.
+ *
+ * Palette
+ *   dark   canvas #000000 · panels #0E0E0F / #161618 / #1C1C1F · ink #F7F5F0
+ *          gold: champagne #D9B36C (fill), #E7C584 (hover), #E2BF7C (gold text, 10.6:1 on black), deep #9A7535
+ *   light  canvas #FFFFFF · panels #F6F6F4 · ink #0A0A0A
+ *          gold: #C9A35A (fill, dark text on it 8:1), #B88F45 (hover), #8A6418 (gold text, 5.6:1 on white)
+ *   on-gold text #1A1206 in both themes. Up/down keep the shared green/red tokens.
+ * Type: Hanken Grotesk Variable (display + UI, heavy weights for headlines), CJK falls back to PingFang/YaHei.
+ */
+
+:root[data-skin='okx'] {
+  --okx-font: 'Hanken Grotesk Variable', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --font-display: var(--okx-font);
+  --font-sans: 'Hanken Grotesk Variable', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', sans-serif;
+  --font-mono: 'Hanken Grotesk Variable', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  /* light: white-gold */
+  --okx-canvas: #ffffff;
+  --okx-panel: #f6f6f4;
+  --okx-phone-frame: #e4e2dc;
+  --okx-gold-rgb: 201, 163, 90;
+  --okx-gold-hi: #f1dcaa;
+  --okx-gold-deep: #9a7535;
+  --okx-gold-ink: #8a6418;
+  --okx-gold-line: rgba(176, 136, 62, 0.45);
+  --bn-header: #ffffff;
+
+  --color-bg: #ffffff;
+  --color-bg-deep: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f6f6f4;
+  --color-elevated: #ffffff;
+  --color-hover: #f1f0ec;
+  --color-border: #ebe9e4;
+  --color-border-strong: #d8d5cd;
+  --color-text: #0a0a0a;
+  --color-text-secondary: #55524c;
+  --color-text-muted: #75716a;
+  --color-accent: #c9a35a;
+  --color-accent-strong: #b88f45;
+  --color-accent-text: #8a6418;
+  --color-accent-soft: rgba(201, 163, 90, 0.16);
+  --color-on-accent: #1a1206;
+  --color-info: #8a6418;
+  --glow-accent: 0 0 0 1px rgba(201, 163, 90, 0.4), 0 8px 26px -12px rgba(201, 163, 90, 0.7);
+  --brand-art-rgb: 201, 163, 90;
+  --brand-art-chip: #e7c584;
+  --brand-art-hl-dark: linear-gradient(100deg, #f3dda8 0%, #d9b36c 50%, #a8813d 100%);
+  --brand-art-hl-light: linear-gradient(100deg, #b88f45, #7a5812);
+  --radius-lg: 16px;
+  --radius: 10px;
+  --radius-sm: 8px;
+  --shadow-pop: 0 20px 50px -18px rgba(20, 16, 8, 0.25), 0 0 0 1px rgba(20, 16, 8, 0.05);
+}
+
+:root[data-skin='okx'][data-theme='dark'] {
+  --okx-canvas: #000000;
+  --okx-panel: #0e0e0f;
+  --okx-phone-frame: #1f1f22;
+  --okx-gold-rgb: 217, 179, 108;
+  --okx-gold-hi: #f3dda8;
+  --okx-gold-deep: #9a7535;
+  --okx-gold-ink: #e2bf7c;
+  --okx-gold-line: rgba(217, 179, 108, 0.38);
+  --bn-header: #000000;
+
+  --color-bg: #000000;
+  --color-bg-deep: #000000;
+  --color-surface: #0e0e0f;
+  --color-surface-alt: #161618;
+  --color-elevated: #1c1c1f;
+  --color-hover: #1f1f22;
+  --color-border: #222225;
+  --color-border-strong: #34343a;
+  --color-text: #f7f5f0;
+  --color-text-secondary: #aba79f;
+  --color-text-muted: #7f7b73;
+  --color-accent: #d9b36c;
+  --color-accent-strong: #e7c584;
+  --color-accent-text: #e2bf7c;
+  --color-accent-soft: rgba(217, 179, 108, 0.13);
+  --color-on-accent: #1a1206;
+  --color-info: #e2bf7c;
+  --glow-accent: 0 0 0 1px rgba(217, 179, 108, 0.45), 0 8px 28px -10px rgba(217, 179, 108, 0.55);
+  --shadow-pop: 0 24px 60px -18px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* ------------------------------------------------------------------ base type */
+:root[data-skin='okx'] body { letter-spacing: -0.003em; }
+:root[data-skin='okx'] h1,
+:root[data-skin='okx'] h2,
+:root[data-skin='okx'] h3 { letter-spacing: -0.02em; }
+:root[data-skin='okx'] .num { letter-spacing: 0; font-feature-settings: 'tnum' 1; }
+
+/* ------------------------------------------------------------------ shared controls */
+:root[data-skin='okx'] .btn { border-radius: 999px; font-weight: 600; }
+:root[data-skin='okx'] .btn-primary { font-weight: 700; }
+:root[data-skin='okx'] .btn-primary:hover:not(:disabled) { box-shadow: none; }
+/* OKX keeps the brand colour off neutral buttons: secondary buttons are quiet fills. */
+:root[data-skin='okx'] .btn:not(.btn-primary):not(.btn-buy):not(.btn-sell):not(.btn-ghost) { border-color: transparent; background: var(--color-surface-alt); }
+:root[data-skin='okx'] .btn:not(.btn-primary):not(.btn-buy):not(.btn-sell):not(.btn-ghost):hover:not(:disabled) { background: var(--color-hover); border-color: transparent; }
+:root[data-skin='okx'] .tab.active { background: var(--color-surface-alt); color: var(--color-text); }
+:root[data-skin='okx'] .chip { border-color: transparent; }
+:root[data-skin='okx'] .field-input { border-radius: 10px; border-color: var(--color-border-strong); background: transparent; }
+:root[data-skin='okx'] .field-input:hover { border-color: var(--color-text-secondary); }
+:root[data-skin='okx'] .field-input:focus-within { border-color: var(--color-text); box-shadow: none; background: transparent; }
+:root[data-skin='okx'] .table th { background: transparent; font-weight: 500; }
+:root[data-skin='okx'] .panel { border-radius: 16px; }
+:root[data-skin='okx'] ::selection { background: var(--color-accent); color: var(--color-on-accent); }
+
+/* ------------------------------------------------------------------ header (classes from AppHeader.vue) */
+:root[data-skin='okx'] .app-header { border-bottom-color: transparent; }
+:root[data-skin='okx'] .app-header .brand-name { font-weight: 800; letter-spacing: -0.03em; }
+:root[data-skin='okx'] .app-header .nav-link { font-weight: 500; }
+:root[data-skin='okx'] .app-header .nav-link:hover,
+:root[data-skin='okx'] .app-header .nav-link.is-active { color: var(--color-text); }
+:root[data-skin='okx'] .app-header .nav-link.is-active::after,
+:root[data-skin='okx'] .app-header .nav-group.is-active > .nav-trigger::after { display: none; }
+:root[data-skin='okx'] .app-header .nav-group.is-active > .nav-trigger,
+:root[data-skin='okx'] .app-header .nav-group.is-open > .nav-trigger { color: var(--color-text); }
+:root[data-skin='okx'] .app-header .nav-menu { border-radius: 16px; border-color: var(--color-border); padding: 12px; }
+:root[data-skin='okx'] .app-header .nav-menu-item { border-radius: 12px; }
+:root[data-skin='okx'] .app-header .nav-menu-item:hover strong,
+:root[data-skin='okx'] .app-header .nav-menu-item:hover .nav-menu-icon { color: var(--color-text); }
+:root[data-skin='okx'] .app-header .auth-btn { border-radius: 999px; height: 32px; padding: 0 16px; }
+@media (max-width: 720px) { :root[data-skin='okx'] .app-header .auth-btn { height: 40px; } }
+:root[data-skin='okx'] .app-header .auth-btn.btn-ghost,
+:root[data-skin='okx'] .app-header .auth-login { background: transparent; color: var(--color-text); }
+:root[data-skin='okx'] .app-header .auth-btn.btn-primary { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-on-accent); }
+:root[data-skin='okx'] .app-header .icon-button:hover,
+:root[data-skin='okx'] .app-header .header-link:hover { color: var(--okx-gold-ink); }
+
+/* Brand tile in gold (BrandMark.vue draws a cobalt tile with fill attributes; CSS fill wins over attributes). */
+:root[data-skin='okx'] .brand-mark.bitwinex { filter: drop-shadow(0 4px 12px rgba(var(--okx-gold-rgb), 0.3)); }
+
+/* ------------------------------------------------------------------ footer (classes from SiteFooter.vue) */
+:root[data-skin='okx'] .site-footer { background: var(--okx-canvas); border-top: 1px solid var(--color-border); }
+:root[data-skin='okx'] .site-footer .footer-col h4 { font-weight: 700; }
+
+/* ------------------------------------------------------------------ home building blocks (HomeOkx + components/home/okx) */
+:root[data-skin='okx'] .okx-sr {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+:root[data-skin='okx'] .okx-sec { padding-top: 112px; }
+:root[data-skin='okx'] .okx-wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+:root[data-skin='okx'] .okx-narrow { max-width: 1000px; }
+:root[data-skin='okx'] .okx-center { text-align: center; }
+:root[data-skin='okx'] .okx-sec-head-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+:root[data-skin='okx'] .okx-h2 {
+  margin: 0; font-family: var(--okx-font); font-size: clamp(30px, 3.6vw, 52px); font-weight: 800; line-height: 1.1; letter-spacing: -0.035em;
+}
+:root[data-skin='okx'] .okx-h3 {
+  margin: 0; font-family: var(--okx-font); font-size: clamp(28px, 3vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em;
+}
+:root[data-skin='okx'] .okx-display {
+  margin: 0; font-family: var(--okx-font); font-size: clamp(40px, 5.4vw, 80px); font-weight: 800; line-height: 1.04; letter-spacing: -0.045em;
+}
+:root[data-skin='okx'] .okx-sub { max-width: 640px; margin: 16px 0 0; color: var(--color-text-secondary); font-size: 17px; line-height: 1.6; }
+:root[data-skin='okx'] .okx-center .okx-sub { margin-left: auto; margin-right: auto; }
+:root[data-skin='okx'] .okx-link { color: var(--color-text); font-size: 15px; font-weight: 650; white-space: nowrap; border-bottom: 1px solid var(--color-border-strong); padding-bottom: 2px; }
+:root[data-skin='okx'] .okx-link:hover { color: var(--okx-gold-ink); border-color: var(--okx-gold-ink); }
+
+:root[data-skin='okx'] .okx-pill {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 28px; border-radius: 999px;
+  border: 1px solid transparent; font-size: 15px; font-weight: 700; white-space: nowrap; cursor: pointer;
+  transition: background-color .15s, border-color .15s, color .15s;
+}
+:root[data-skin='okx'] .okx-pill-gold { background: var(--color-accent); color: var(--color-on-accent); }
+:root[data-skin='okx'] .okx-pill-gold:hover { background: var(--color-accent-strong); }
+:root[data-skin='okx'] .okx-pill-line { border-color: var(--color-border-strong); color: var(--color-text); background: transparent; }
+:root[data-skin='okx'] .okx-pill-line:hover { border-color: var(--color-text); }
+:root[data-skin='okx'] .okx-pill-sm { height: 34px; padding: 0 18px; font-size: 13px; font-weight: 650; }
+:root[data-skin='okx'] .okx-pill-lg { height: 56px; padding: 0 40px; font-size: 16px; }
+
+/* Segmented control (OKX market tabs). */
+:root[data-skin='okx'] .okx-seg { display: inline-flex; gap: 4px; margin-top: 28px; padding: 4px; border-radius: 999px; background: var(--okx-panel); max-width: 100%; overflow-x: auto; }
+:root[data-skin='okx'] .okx-seg button {
+  height: 38px; padding: 0 20px; border-radius: 999px; color: var(--color-text-secondary); font-size: 14px; font-weight: 600; white-space: nowrap;
+  transition: background-color .15s, color .15s;
+}
+:root[data-skin='okx'] .okx-seg button:hover { color: var(--color-text); }
+:root[data-skin='okx'] .okx-seg button.on { background: var(--color-text); color: var(--okx-canvas); }
+
+@media (max-width: 720px) {
+  :root[data-skin='okx'] .okx-sec { padding-top: 72px; }
+  :root[data-skin='okx'] .okx-wrap { padding: 0 16px; }
+  :root[data-skin='okx'] .okx-sub { font-size: 15px; }
+  :root[data-skin='okx'] .okx-sec-head-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+  :root[data-skin='okx'] .okx-seg button { padding: 0 14px; font-size: 13px; }
+}
+
+/* ==================================================================
+ * Trading terminals (TradeView / FuturesTradeView / MarginTradeView). Layout contract and grid-area classes
+ * (.terminal, .terminal__header/chart/book/form/pairs/trades/account/orders/notice) are owned by those views;
+ * this block only re-arranges the areas into OKX's terminal and restyles the shared widgets. OKX-only markup
+ * (market list rows, chart tabs, book/trades tabs, ticket header) is chosen by SKIN in the components.
+ *
+ * OKX arrangement (desktop, measured on okx.com at 2000px: left ≈300 · centre fluid · right ≈400):
+ *   spot / margin   markets list: full-height left column · pair bar over centre + right · chart, then the
+ *                   two-column ticket in the centre · order book | trades tabs: one full-height right panel ·
+ *                   orders below the fold with the account panel beside them under the book column
+ *   futures         pair bar full width · chart · book (with trades tab) · ticket right column · orders + account
+ * The working area fills the viewport (`--term-rest` from components/trade/terminal-fit.ts); short screens scroll.
+ * Panels are flat on the canvas and separated by 1px rules instead of rounded cards on gaps.
+ * ================================================================== */
+@media (min-width: 1181px) {
+  :root[data-skin='okx'] .terminal { gap: 1px; padding: 0; background: var(--color-border); }
+  :root[data-skin='okx'] .terminal--spot,
+  :root[data-skin='okx'] .terminal--margin {
+    --okx-left: clamp(264px, 15.5vw, 310px);
+    --okx-right: clamp(300px, 20.5vw, 410px);
+    grid-template-columns: var(--okx-left) minmax(0, 1fr) var(--okx-right);
+    grid-template-rows: auto max(380px, var(--term-rest, 540px)) auto auto;
+    grid-template-areas:
+      'pairs  header header'
+      'pairs  chart  book'
+      'pairs  form   book'
+      'orders orders account';
+  }
+  :root[data-skin='okx'] .terminal--futures {
+    grid-template-columns: minmax(0, 1fr) clamp(280px, 17vw, 340px) clamp(310px, 18.5vw, 370px);
+    grid-template-rows: auto auto minmax(max(520px, var(--term-rest, 640px)), auto) auto;
+    grid-template-areas:
+      'header header header'
+      'notice notice notice'
+      'chart  book   form'
+      'orders orders account';
+  }
+  :root[data-skin='okx'] .terminal--spot .terminal__pairs,
+  :root[data-skin='okx'] .terminal--margin .terminal__pairs,
+  :root[data-skin='okx'] .terminal--spot .terminal__book,
+  :root[data-skin='okx'] .terminal--margin .terminal__book { contain: size; }
+  :root[data-skin='okx'] .terminal .side-cell { gap: 1px; background: var(--color-border); }
+  :root[data-skin='okx'] .terminal .side-cell > .cell { flex: 1 1 auto; }
+}
+/* Two-column tablet layout: the book panel carries the trades tab, so the market list takes the freed row. */
+@media (min-width: 769px) and (max-width: 1180px) {
+  :root[data-skin='okx'] .terminal--spot,
+  :root[data-skin='okx'] .terminal--margin {
+    grid-template-areas:
+      'header header'
+      'chart  book'
+      'form   book'
+      'pairs  pairs'
+      'orders orders'
+      'account account';
+  }
+}
+
+:root[data-skin='okx'] .terminal { background: var(--color-border); }
+:root[data-skin='okx'] .terminal .cell,
+:root[data-skin='okx'] .terminal .top-bar { border-radius: 0; background: var(--okx-canvas); }
+:root[data-skin='okx'] .terminal .feed-notice { border-radius: 0; }
+
+/* Pair bar: big pair name, price in the trade colour, quiet stats. */
+:root[data-skin='okx'] .terminal .top-bar { min-height: 60px; padding: 6px 20px 6px 16px; }
+:root[data-skin='okx'] .terminal .top-divider { display: none; }
+:root[data-skin='okx'] .terminal .pair-block .pair,
+:root[data-skin='okx'] .terminal .picker-trigger strong { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+:root[data-skin='okx'] .terminal .last-price { font-size: 18px; font-weight: 700; }
+:root[data-skin='okx'] .terminal .stat-label,
+:root[data-skin='okx'] .terminal .fticker-stats .stat > span:first-child { color: var(--color-text-muted); }
+
+/* Tabs: text with a short ink underline (OKX), never gold. */
+:root[data-skin='okx'] .terminal .tab,
+:root[data-skin='okx'] .terminal .book-tab,
+:root[data-skin='okx'] .terminal .type-tab,
+:root[data-skin='okx'] .terminal .view-tab,
+:root[data-skin='okx'] .terminal .pl-tab {
+  position: relative; border-radius: 0; background: transparent; color: var(--color-text-muted); font-weight: 600;
+}
+:root[data-skin='okx'] .terminal .tab.active,
+:root[data-skin='okx'] .terminal .book-tab.active,
+:root[data-skin='okx'] .terminal .type-tab.active,
+:root[data-skin='okx'] .terminal .view-tab.active,
+:root[data-skin='okx'] .terminal .pl-tab.active { background: transparent; color: var(--color-text); font-weight: 700; }
+:root[data-skin='okx'] .terminal .tab.active::after,
+:root[data-skin='okx'] .terminal .book-tab.active::after,
+:root[data-skin='okx'] .terminal .type-tab.active::after {
+  content: ''; position: absolute; left: 50%; bottom: -2px; width: 16px; height: 2px; margin-left: -8px; border-radius: 2px; background: var(--color-text);
+}
+:root[data-skin='okx'] .terminal .ftabs-head .tab.active::after { bottom: 0; }
+@media (max-width: 768px) {
+  :root[data-skin='okx'] .terminal--margin .records-head .tab.active::after { bottom: 0; }
+}
+:root[data-skin='okx'] .terminal .book-tab.active::after { bottom: -1px; left: 50%; right: auto; }
+:root[data-skin='okx'] .terminal .scale.active,
+:root[data-skin='okx'] .terminal .cp-scales .active { background: var(--color-surface-alt); color: var(--color-text); border-radius: 6px; }
+
+/* Segmented controls (futures open/close, book modes). */
+:root[data-skin='okx'] .terminal .oc-tabs { height: 36px; padding: 3px; border-radius: 999px; background: var(--color-surface-alt); }
+:root[data-skin='okx'] .terminal .oc-tab { border-radius: 999px; font-size: 14px; }
+:root[data-skin='okx'] .terminal .oc-tab.active { background: var(--color-text); color: var(--okx-canvas); box-shadow: none; }
+:root[data-skin='okx'] .terminal .cfg-chip,
+:root[data-skin='okx'] .terminal .mode-row { height: 32px; border-radius: 8px; background: var(--color-surface-alt); font-weight: 650; }
+:root[data-skin='okx'] .terminal .cfg-chip:hover:not(:disabled),
+:root[data-skin='okx'] .terminal .mode-row:hover { color: var(--color-text); background: var(--color-hover); }
+
+/* Inputs: filled, borderless until focus, label inside on the left and unit on the right (OKX ticket). */
+:root[data-skin='okx'] .terminal .field-input {
+  height: 40px; border: 1px solid transparent; border-radius: 8px; background: var(--color-surface-alt);
+}
+:root[data-skin='okx'] .terminal .field-input:hover { border-color: var(--color-border-strong); }
+:root[data-skin='okx'] .terminal .field-input:focus-within { border-color: var(--color-text); background: var(--color-surface-alt); box-shadow: none; }
+:root[data-skin='okx'] .terminal .field-input.invalid { border-color: var(--color-down); }
+:root[data-skin='okx'] .terminal .inline-label { color: var(--color-text-muted); }
+:root[data-skin='okx'] .terminal .field-suffix { color: var(--color-text); font-weight: 600; }
+
+/* Percent slider: round marks and thumb in ink (OKX), trade colour only while buying/selling. */
+:root[data-skin='okx'] .pct:not(.tone-up):not(.tone-down) { --tone: var(--color-text); }
+:root[data-skin='okx'] .pct-mark { transform: none; border-radius: 50%; width: 8px; height: 8px; margin-left: -4px; top: 4px; border-width: 1.5px; background: var(--okx-canvas); }
+:root[data-skin='okx'] .pct-thumb { transform: none; border-radius: 50%; width: 14px; height: 14px; border-width: 2px; background: var(--okx-canvas); box-shadow: none; }
+:root[data-skin='okx'] .pct.dragging .pct-thumb { box-shadow: 0 0 0 4px color-mix(in srgb, var(--tone) 20%, transparent); }
+:root[data-skin='okx'] .pct-track { height: 2px; top: 7px; }
+
+/* Buy / sell keep green / red; OKX's rounded action buttons. */
+:root[data-skin='okx'] .terminal .btn-buy,
+:root[data-skin='okx'] .terminal .btn-sell,
+:root[data-skin='okx'] .terminal .submit,
+:root[data-skin='okx'] .terminal .submit-button { border-radius: 999px; box-shadow: none; font-weight: 700; }
+:root[data-skin='okx'] .terminal .btn-buy.submit:not(:disabled),
+:root[data-skin='okx'] .terminal .btn-sell.submit:not(:disabled) { box-shadow: none; }
+
+/* Order book: tight rows, soft depth bars, large mid price. */
+:root[data-skin='okx'] .terminal .book-head,
+:root[data-skin='okx'] .terminal .trades-head,
+:root[data-skin='okx'] .terminal .balance-head,
+:root[data-skin='okx'] .terminal .acct-head { border-bottom-color: var(--color-border); }
+:root[data-skin='okx'] .terminal .book-title,
+:root[data-skin='okx'] .terminal .trades-title,
+:root[data-skin='okx'] .terminal .balance-title,
+:root[data-skin='okx'] .terminal .acct-title,
+:root[data-skin='okx'] .terminal .spot-title { font-size: 15px; font-weight: 700; }
+:root[data-skin='okx'] .terminal .mid-last { font-size: 20px; font-weight: 800; letter-spacing: -0.01em; }
+:root[data-skin='okx'] .terminal .step-select { border-radius: 6px; }
+
+/* Orders / positions table: OKX keeps headers quiet and rows airy. */
+:root[data-skin='okx'] .terminal .orders-panel,
+:root[data-skin='okx'] .terminal .ftabs { border: 0; border-radius: 0; background: var(--okx-canvas); }
+:root[data-skin='okx'] .terminal .orders-header,
+:root[data-skin='okx'] .terminal .ftabs-head { min-height: 48px; }
+:root[data-skin='okx'] .terminal .table th { color: var(--color-text-muted); }
+
+/* Guest prompts inside the terminal: gold primary (brand action), neutral second action. */
+:root[data-skin='okx'] .terminal .guest-actions .btn { border-radius: 999px; }
+
+/* Market list (left column, OKX "Markets"). */
+:root[data-skin='okx'] .terminal .pl-row.active { background: var(--color-surface-alt); }
+:root[data-skin='okx'] .terminal .pl-search { border-radius: 8px; }
+
+/* ------------------------------------------------------------------ terminal widgets, OKX proportions (2026-10-22) */
+/* Pair bar: coin, BTC/USDT bold, caret, star; no long-name line (OKX). */
+:root[data-skin='okx'] .terminal .top-bar { min-height: 56px; gap: 28px; padding: 4px 20px 4px 12px; }
+:root[data-skin='okx'] .terminal .picker-trigger { height: 40px; gap: 8px; padding: 0 8px 0 4px; border-radius: 8px; }
+:root[data-skin='okx'] .terminal .picker-trigger .pair-name { display: none; }
+:root[data-skin='okx'] .terminal .picker-trigger .pair { font-size: 18px; font-weight: 800; }
+:root[data-skin='okx'] .terminal .picker-trigger .pair small { color: var(--color-text); font-size: 18px; font-weight: 800; }
+:root[data-skin='okx'] .terminal .ticker-stats .stat dt,
+:root[data-skin='okx'] .terminal .fticker-stats .stat dt { font-size: 12px; }
+
+/* Book: OKX's 24px rows, quieter column heads, large mid price, no spread figure. */
+:root[data-skin='okx'] .terminal .book-head { height: 44px; flex-basis: 44px; padding: 0 16px; border-bottom: 0; }
+:root[data-skin='okx'] .terminal .book-tools { flex: 1 1 auto; gap: 4px; }
+:root[data-skin='okx'] .terminal .book-tools .modes { margin-right: auto; gap: 4px; }
+:root[data-skin='okx'] .terminal .step-select { height: 26px; border: 0; min-width: 56px; justify-content: center; }
+:root[data-skin='okx'] .terminal .book .cols { padding: 4px 16px 6px; font-size: 12px; }
+:root[data-skin='okx'] .terminal .level { height: 24px; flex-basis: 24px; line-height: 24px; padding: 0 16px; font-size: 12.5px; }
+:root[data-skin='okx'] .terminal .level::before { top: 1px; bottom: 1px; }
+:root[data-skin='okx'] .terminal .mid { flex-basis: 48px; height: 48px; padding: 0 16px; border: 0; }
+:root[data-skin='okx'] .terminal .mid-last { font-size: 22px; font-weight: 800; }
+:root[data-skin='okx'] .terminal .mid-spread { display: none; }
+:root[data-skin='okx'] .terminal .ratio { padding: 0 16px; border-top-color: var(--color-border); }
+:root[data-skin='okx'] .terminal .trades .cols { padding: 10px 16px 6px; font-size: 12px; }
+:root[data-skin='okx'] .terminal .trade-row { height: 24px; padding: 0 16px; font-size: 12.5px; }
+
+/* Ticket: filled inputs with the label inside on the left and the unit on the right, big pill actions. */
+:root[data-skin='okx'] .terminal .order-form { gap: 10px; padding: 14px 20px 16px; }
+:root[data-skin='okx'] .terminal .order-form .field-input,
+:root[data-skin='okx'] .terminal .order-form .market-price-line { height: 44px; border-radius: 10px; }
+:root[data-skin='okx'] .terminal .order-form .inline-label { color: var(--color-text-secondary); font-size: 13px; }
+:root[data-skin='okx'] .terminal .order-form .submit-button { height: 44px; margin-top: 4px; border-radius: 999px; font-size: 15px; }
+:root[data-skin='okx'] .terminal .order-form-buy .submit-button:not(:disabled),
+:root[data-skin='okx'] .terminal .order-form-sell .submit-button:not(:disabled) { box-shadow: none; }
+:root[data-skin='okx'] .terminal .ticket-meta .balance-row,
+:root[data-skin='okx'] .terminal .ticket-meta .total-row { font-size: 12px; }
+
+/* 杠杆 switch in the ticket header (spot ↔ margin terminal, OKX). Panels sit straight on the canvas. */
+:root[data-skin='okx'] .terminal { --color-surface: var(--okx-canvas); }
+:root[data-skin='okx'] .okx-lever { display: inline-flex; align-items: center; gap: 8px; margin-left: auto; color: var(--color-text); font-size: 13px; font-weight: 600; }
+:root[data-skin='okx'] .okx-lever i { position: relative; width: 32px; height: 18px; border-radius: 999px; background: var(--color-border-strong); transition: background-color .15s; }
+:root[data-skin='okx'] .okx-lever i::after { content: ''; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform .15s; }
+:root[data-skin='okx'] .okx-lever.on i { background: var(--color-accent); }
+:root[data-skin='okx'] .okx-lever.on i::after { transform: translateX(14px); }
+:root[data-skin='okx'] .okx-lever:hover i { filter: brightness(1.15); }
+
+/* Phone book (compact, ~45% of the screen): the desktop 16px gutters clipped quantities at 320–360 px (mobile audit 10-22). */
+:root[data-skin='okx'] .terminal .book.compact .book-head { padding: 0 6px; }
+:root[data-skin='okx'] .terminal .book.compact .book-tools .modes { gap: 0; }
+/* The −/+ step buttons do not fit beside the modes in the phone column; the step menu stays. */
+:root[data-skin='okx'] .terminal .book.compact .step-btn { display: none; }
+:root[data-skin='okx'] .terminal .book.compact .step-select { min-width: 0; }
+:root[data-skin='okx'] .terminal .book.compact .cols { padding: 4px 8px 6px; font-size: 11px; }
+:root[data-skin='okx'] .terminal .book.compact .level { padding: 0 8px; font-size: 12px; }
+:root[data-skin='okx'] .terminal .book.compact .mid { padding: 0 8px; }
+:root[data-skin='okx'] .terminal .book.compact .ratio { padding: 0 8px; }
+@media (max-width: 380px) {
+  :root[data-skin='okx'] .terminal .book.compact .level { font-size: 11px; }
+  :root[data-skin='okx'] .terminal .book.compact .cols,
+  :root[data-skin='okx'] .terminal .book.compact .level { column-gap: 4px; padding: 0 6px; }
+}
+
+/* Phones (owner 2026-11-17): 20 px rows in the compact book so seven levels a side fit beside the ticket. */
+:root[data-skin='okx'] .terminal .book.compact .level { height: 20px; flex-basis: 20px; line-height: 20px; }
+
+/* ------------------------------------------------------------------ phone ticket finish (owner 2026-11-17)
+   Touch-sized, softer and brighter: 44px rounded fields with a gold focus ring, a full-colour action button that
+   stays readable while the form is incomplete, a larger slider thumb, pill tabs for the futures open/close. */
+@media (max-width: 720px) {
+  :root[data-skin='okx'] .terminal .field-input { height: 44px; border-radius: 12px; transition: border-color .15s ease, box-shadow .15s ease; }
+  :root[data-skin='okx'] .terminal .field-input:focus-within { border-color: var(--color-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 22%, transparent); }
+  :root[data-skin='okx'] .terminal .field-input input { font-size: 15px; font-weight: 600; }
+  :root[data-skin='okx'] .terminal .submit-button,
+  :root[data-skin='okx'] .terminal .btn-buy.submit, :root[data-skin='okx'] .terminal .btn-sell.submit { height: 46px; font-size: 15.500px; letter-spacing: .02em; transition: transform .12s ease, box-shadow .2s ease, opacity .2s ease; }
+  :root[data-skin='okx'] .terminal .btn-buy { background: linear-gradient(180deg, color-mix(in srgb, var(--color-up) 84%, #fff), var(--color-up)); color: #fff; }
+  :root[data-skin='okx'] .terminal .btn-sell { background: linear-gradient(180deg, color-mix(in srgb, var(--color-down) 84%, #fff), var(--color-down)); color: #fff; }
+  :root[data-skin='okx'] .terminal .order-form-buy .submit-button:not(:disabled), :root[data-skin='okx'] .terminal .btn-buy.submit:not(:disabled) { box-shadow: 0 10px 22px -12px var(--color-up); }
+  :root[data-skin='okx'] .terminal .order-form-sell .submit-button:not(:disabled), :root[data-skin='okx'] .terminal .btn-sell.submit:not(:disabled) { box-shadow: 0 10px 22px -12px var(--color-down); }
+  :root[data-skin='okx'] .terminal .submit-button:disabled, :root[data-skin='okx'] .terminal .submit:disabled { opacity: .72; filter: none; }
+  :root[data-skin='okx'] .terminal .submit-button:active:not(:disabled), :root[data-skin='okx'] .terminal .submit:active:not(:disabled) { transform: scale(.98); }
+  :root[data-skin='okx'] .pct-thumb { width: 18px; height: 18px; margin-top: -2px; border-width: 2.500px; box-shadow: 0 2px 6px rgba(0, 0, 0, .35); }
+  :root[data-skin='okx'] .pct-mark { width: 9px; height: 9px; }
+  :root[data-skin='okx'] .terminal .oc-tabs { height: 40px; padding: 4px; border-radius: 12px; }
+  :root[data-skin='okx'] .terminal .oc-tab { border-radius: 9px; font-weight: 700; }
+  :root[data-skin='okx'] .terminal .cfg-chip, :root[data-skin='okx'] .terminal .mode-row { height: 36px; border-radius: 10px; }
+}
+@media (max-width: 720px) {
+  /* The rounded-order line keeps its label on one line; the value shrinks and ellipsizes instead. */
+  :root[data-skin='okx'] .terminal .total-row > .muted { flex: 0 0 auto; white-space: nowrap; }
+  :root[data-skin='okx'] .terminal .total-row > .num { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}

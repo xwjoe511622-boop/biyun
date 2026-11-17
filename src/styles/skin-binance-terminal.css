@@ -1,0 +1,132 @@
+/* Binance-style trading terminal (VITE_SKIN=binance): grid arrangement and density, scoped to :root[data-skin='binance']. */
+
+/*
+ * Arrangement (layout contract: comment block in src/views/TradeView.vue). The views' own styles already default to
+ * this arrangement; it is restated here so the Binance skin owns it explicitly, the same way skin-okx.css can
+ * re-arrange the same `.terminal__*` areas. Desktop only: tablet / phone stacking stays in the views.
+ */
+@media (min-width: 1181px) {
+  :root[data-skin='binance'] .terminal--spot,
+  :root[data-skin='binance'] .terminal--margin {
+    grid-template-areas:
+      'header header pairs'
+      'book   chart  pairs'
+      'book   form   trades'
+      'orders orders account';
+  }
+  :root[data-skin='binance'] .terminal--futures {
+    grid-template-areas:
+      'header header form'
+      'notice notice form'
+      'chart  book   form'
+      'orders orders account';
+  }
+}
+@media (min-width: 1361px) {
+  :root[data-skin='binance'] .terminal--spot,
+  :root[data-skin='binance'] .terminal--margin { grid-template-columns: 320px minmax(0, 1fr) 320px; }
+  :root[data-skin='binance'] .terminal--futures { grid-template-columns: minmax(0, 1fr) 300px 330px; }
+}
+
+/* Panels: flat #181A20 cards with 4px gutters of page colour between them, small radii, no shadows. */
+:root[data-skin='binance'] .terminal { gap: 4px; padding: 4px; background: var(--color-bg); }
+/* Light: white panels need visible gutters (Binance light terminal: #F5F5F5 between white cards). */
+:root[data-skin='binance']:not([data-theme='dark']) .terminal { background: var(--color-hover); }
+:root[data-skin='binance'] .terminal .cell,
+:root[data-skin='binance'] .terminal .top-bar { border-radius: 8px; box-shadow: none; }
+
+/* Pair bar: Binance's single-line header (pair 20px, price 20px coloured, 12px stats). */
+:root[data-skin='binance'] .terminal .top-bar { min-height: 56px; gap: 16px; padding: 4px 16px 4px 8px; }
+:root[data-skin='binance'] .terminal .top-divider { display: none; }
+:root[data-skin='binance'] .terminal .picker-trigger { height: 44px; border-radius: 6px; }
+:root[data-skin='binance'] .terminal .picker-trigger .pair { font-family: var(--font-sans); font-size: 20px; font-weight: 600; letter-spacing: 0; }
+:root[data-skin='binance'] .terminal .picker-trigger .pair small { font-size: 20px; font-weight: 600; color: var(--color-text); }
+:root[data-skin='binance'] .terminal .picker-trigger .pair-name { font-size: 12px; text-decoration: underline; text-underline-offset: 2px; }
+:root[data-skin='binance'] .terminal .ticker,
+:root[data-skin='binance'] .terminal .fticker { gap: 24px; }
+:root[data-skin='binance'] .terminal .ticker .last-price,
+:root[data-skin='binance'] .terminal .fticker .last-price { font-size: 20px; font-weight: 600; letter-spacing: 0; }
+:root[data-skin='binance'] .terminal .ticker-stats,
+:root[data-skin='binance'] .terminal .fticker-stats { gap: 24px; }
+:root[data-skin='binance'] .terminal .stat dt { margin-bottom: 2px; font-size: 12px; color: var(--color-text-secondary); }
+:root[data-skin='binance'] .terminal .stat dd { font-size: 12px; font-weight: 500; }
+:root[data-skin='binance'] .terminal .data-link { border: 0; height: 28px; padding: 0 8px; color: var(--color-text-secondary); }
+:root[data-skin='binance'] .terminal .data-link:hover { background: var(--color-hover); }
+@media (max-width: 1600px) {
+  /* Icon-only so the funding / 24h stats keep the room (the title attribute still names it). */
+  :root[data-skin='binance'] .terminal .data-link span { display: none; }
+}
+
+/* Panel heads: 14px semibold titles over a hairline, tab underline short and centred like Binance. */
+:root[data-skin='binance'] .terminal .book:not(.compact) .book-head,
+:root[data-skin='binance'] .terminal .trades-head,
+:root[data-skin='binance'] .terminal .balance-head { height: 40px; flex-basis: 40px; padding: 0 16px; }
+:root[data-skin='binance'] .terminal .book-title,
+:root[data-skin='binance'] .terminal .trades-title,
+:root[data-skin='binance'] .terminal .balance-title,
+:root[data-skin='binance'] .terminal .spot-title { font-family: var(--font-sans); font-size: 14px; font-weight: 600; }
+
+/* Order book & trades: 20px rows, 12px figures, 11-12px column heads; Binance's 16px side padding. */
+:root[data-skin='binance'] .terminal .book:not(.compact) .cols,
+:root[data-skin='binance'] .terminal .trades .cols { padding: 8px 16px 4px; font-size: 12px; }
+:root[data-skin='binance'] .terminal .book:not(.compact) .level { height: 20px; flex-basis: 20px; padding: 0 16px; font-size: 12px; }
+:root[data-skin='binance'] .terminal .book:not(.compact) .mid { padding-left: 16px; padding-right: 16px; }
+:root[data-skin='binance'] .terminal .book:not(.compact) .mid-last { font-size: 20px; font-weight: 600; }
+:root[data-skin='binance'] .terminal .trades .trade-row { height: 20px; padding: 0 16px; font-size: 12px; }
+:root[data-skin='binance'] .terminal .trades .trade-row { animation: none; }
+:root[data-skin='binance'] .terminal .trades .live { display: none; }
+
+/* Order form: Binance tab strip (14px, short accent underline), 12px meta text. */
+@media (min-width: 769px) {
+  :root[data-skin='binance'] .terminal .spot-head { height: 40px; padding: 0 16px; gap: 16px; }
+  :root[data-skin='binance'] .terminal .type-tab { font-size: 14px; }
+}
+:root[data-skin='binance'] .terminal .type-tab { font-weight: 500; color: var(--color-text-secondary); }
+:root[data-skin='binance'] .terminal .type-tab.active { color: var(--color-text); font-weight: 600; }
+:root[data-skin='binance'] .terminal .type-tab.active::after { left: 30%; right: 30%; height: 3px; }
+
+/* Futures book / trades tab strip. */
+:root[data-skin='binance'] .terminal .book-tabs { padding: 0 16px; gap: 20px; }
+:root[data-skin='binance'] .terminal .book-tab { font-size: 14px; color: var(--color-text-secondary); }
+:root[data-skin='binance'] .terminal .book-tab.active { color: var(--color-text); }
+
+/* Ticket inputs: Binance's outlined boxes (label left, value right), sans figures, flat buttons without glow. */
+:root[data-skin='binance'] .terminal .order-form .field-input,
+:root[data-skin='binance'] .terminal .order-form .market-price-line {
+  height: 40px; border: 1px solid var(--color-border-strong); border-radius: 8px; background: transparent; opacity: 1;
+}
+:root[data-skin='binance'] .terminal .order-form .field-input:hover,
+:root[data-skin='binance'] .terminal .order-form .field-input:focus-within { border-color: var(--color-accent); }
+:root[data-skin='binance'] .terminal .order-form .field-input input,
+:root[data-skin='binance'] .terminal .field-input input,
+:root[data-skin='binance'] .terminal .market-box,
+:root[data-skin='binance'] .terminal .size-hint,
+:root[data-skin='binance'] .terminal .bbo-resolved { font-family: var(--font-sans); font-weight: 500; }
+:root[data-skin='binance'] .terminal .order-form .inline-label { color: var(--color-text-secondary); font-weight: 400; }
+:root[data-skin='binance'] .terminal .order-form .submit-button,
+:root[data-skin='binance'] .terminal .submit { height: 40px; border-radius: 8px; box-shadow: none; font-weight: 600; }
+:root[data-skin='binance'] .terminal .field-input:focus-within { border-color: var(--color-accent); }
+
+/* Chart tools under the interval strip: Binance-thin row, sans labels. */
+:root[data-skin='binance'] .terminal .chart-toolbar { min-height: 32px; padding: 2px 8px; }
+:root[data-skin='binance'] .terminal .chart-zone { font-family: var(--font-sans); }
+
+/* Bottom tabs: 14px, secondary until active, short underline. */
+:root[data-skin='binance'] .terminal .orders-header { padding: 0 16px; }
+:root[data-skin='binance'] .terminal .orders-header .tab { font-size: 14px; font-weight: 500; color: var(--color-text-secondary); }
+:root[data-skin='binance'] .terminal .orders-header .tab.active { color: var(--color-text); font-weight: 600; }
+:root[data-skin='binance'] .terminal .orders-header .tab.active::after { left: 30%; right: 30%; height: 3px; }
+:root[data-skin='binance'] .terminal .table-scroll .table th { font-size: 12px; font-weight: 400; color: var(--color-text-secondary); }
+
+@media (max-width: 768px) {
+  :root[data-skin='binance'] .terminal { padding: 0; gap: 0; }
+  :root[data-skin='binance'] [data-scrolls-vertically] { overscroll-behavior-y: none; }
+  :root[data-skin='binance'] .terminal .cell,
+  :root[data-skin='binance'] .terminal .top-bar { border-radius: 0; }
+  :root[data-skin='binance'] :is(.terminal--spot, .terminal--margin) .top-bar {
+    padding-left: max(16px, env(safe-area-inset-left));
+  }
+  :root[data-skin='binance'] :is(.terminal--spot, .terminal--margin) .picker-trigger { padding-left: 0; }
+  :root[data-skin='binance'] .terminal .book:not(.compact) .level { padding: 0 8px; }
+  :root[data-skin='binance'] .terminal .book .cols { padding: 6px 8px 4px; font-size: 11px; }
+}
