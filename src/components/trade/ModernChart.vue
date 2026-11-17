@@ -391,6 +391,8 @@ function chartStyles(dark: boolean, type: CandleType): DeepPartial<Styles> {
   const border = cssColor('--color-border', dark ? '#2b2e32' : '#e3e6ea')
   const grid = dark ? '#202326' : '#f0f2f4'
   const axis = dark ? '#2b2e32' : '#e3e6ea'
+  // Phones: smaller legend text with tighter gaps, so the MA / VOL read-outs fit the width instead of piling up.
+  const legendFit = typeof window !== 'undefined' && typeof window.matchMedia === 'function' && window.matchMedia('(max-width: 720px)').matches ? { size: 10, marginLeft: 6, marginRight: 0 } : {}
   return {
     grid: {
       show: true,
@@ -427,8 +429,8 @@ function chartStyles(dark: boolean, type: CandleType): DeepPartial<Styles> {
       tooltip: {
         showRule: 'follow_cross',
         rect: { color: surface, borderColor: border },
-        title: { color: muted, family },
-        legend: { color: secondary, family },
+        title: { color: muted, family, ...legendFit },
+        legend: { color: secondary, family, ...legendFit },
       },
     },
     indicator: {
@@ -438,7 +440,7 @@ function chartStyles(dark: boolean, type: CandleType): DeepPartial<Styles> {
       circles: [{ upColor: withAlpha(up, 0.7), downColor: withAlpha(down, 0.7), noChangeColor: muted }],
       texts: [{ color: muted, family }],
       lastValueMark: { text: { color: text, family } },
-      tooltip: { title: { color: muted, family }, legend: { color: secondary, family } },
+      tooltip: { title: { color: muted, family, ...legendFit }, legend: { color: secondary, family, ...legendFit } },
     },
     xAxis: {
       axisLine: { color: axis },
