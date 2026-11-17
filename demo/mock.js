@@ -6,30 +6,34 @@
   try { if (!localStorage.getItem('picat.session.v2')) localStorage.setItem('picat.session.v2', JSON.stringify({ v: 2, key: 'cdemo0bitwinex0preview0session01' })) } catch (e) {}
   // [base, 起始价, 24h涨跌%, 价格小数位, 数量小数位, 24h成交额(USDT), 品牌色]
   var SPOT = [
-    ['WIN', 3.7, 4.85, 4, 2, 3.62e7, '#C99A4A'],
     ['BTC', 64849.52, 1.32, 2, 5, 2.73e9, '#F7931A'],
     ['ETH', 1817.26, 2.05, 2, 4, 1.07e9, '#627EEA'],
+    ['WIN', 3.7, 4.85, 4, 2, 3.62e7, '#C99A4A'],
     ['SOL', 71.22, 1.90, 2, 3, 2.89e8, '#9945FF'],
     ['XRP', 0.9577, 1.06, 4, 1, 1.84e8, '#23292F'],
     ['BNB', 591.75, 0.96, 2, 3, 1.21e8, '#F3BA2F'],
+    ['HYPE', 39.69, 1.88, 3, 2, 2.6e8, '#50E3C2'],
     ['DOGE', 0.05889, 2.34, 5, 0, 9.6e7, '#C2A633'],
-    ['TRX', 0.303, -1.01, 4, 1, 5.2e7, '#EB0029'],
-    ['HYPE', 39.69, 1.88, 3, 2, 8.1e7, '#50E3C2'],
-    ['LINK', 9.10, -0.35, 3, 2, 4.0e7, '#2A5ADA'],
-    ['SUI', 0.9354, -2.42, 4, 1, 3.6e7, '#4DA2FF'],
+    ['ZEC', 226.33, -2.24, 2, 3, 2.9e8, '#ECB244'],
+    ['XMR', 497.27, 0.82, 2, 3, 1.4e8, '#FF6600'],
+    ['SUI', 0.72, -1.56, 4, 1, 3.6e8, '#4DA2FF'],
+    ['TAO', 211.72, -1.49, 2, 3, 1.0e8, '#14151A'],
+    ['AAVE', 108.04, 4.72, 2, 3, 2.6e8, '#B6509E'],
+    ['UNI', 5.16, 6.46, 3, 2, 4.5e8, '#FF007A'],
+    ['JUP', 0.2654, 5.43, 4, 1, 4.3e7, '#19C4A8'],
+    ['PEPE', 0.0000025, 1.30, 8, 0, 1.6e8, '#4C9540'],
+    ['ADA', 0.1524, -0.50, 4, 1, 4.5e8, '#0033AD'],
+    ['BCH', 207.60, 0.09, 2, 3, 6.3e7, '#0AC18E'],
+    ['ARB', 0.1320, -3.20, 4, 1, 5.1e7, '#28A0F0'],
     ['AVAX', 7.16, 0.30, 3, 2, 2.9e7, '#E84142'],
-    ['LTC', 44.80, 0.19, 2, 3, 2.4e7, '#345D9D'],
-    ['ZEC', 226.33, -2.24, 2, 3, 2.9e7, '#ECB244'],
+    ['NEAR', 3.14, 1.20, 3, 1, 3.0e8, '#00C08B'],
+    ['WLD', 0.2633, 0.26, 4, 1, 3.4e7, '#1E1E1E'],
+    ['ONDO', 0.3051, -0.30, 4, 1, 1.25e8, '#1B5CFF'],
+    ['RENDER', 1.57, 0.46, 4, 1, 2.1e7, '#CF1011'],
+    ['LINK', 9.10, -0.35, 3, 2, 4.0e7, '#2A5ADA'],
     ['SHIB', 0.00000608, -0.34, 8, 0, 1.5e7, '#FFA409'],
     ['XAUT', 4012.40, -0.82, 2, 4, 6.4e7, '#D4AF37'],
     ['PAXG', 4109.03, -0.16, 2, 4, 8.3e7, '#E4CE4D'],
-    ['TAO', 211.72, -1.49, 2, 3, 1.0e8, '#14151A'],
-    ['RENDER', 1.57, 0.46, 4, 1, 2.1e7, '#CF1011'],
-    ['WLD', 0.46, -1.90, 4, 1, 1.7e8, '#1E1E1E'],
-    ['NEAR', 1.83, -7.07, 3, 1, 3.0e8, '#00C08B'],
-    ['ONDO', 0.32, -1.08, 4, 1, 4.5e7, '#1B5CFF'],
-    ['UNI', 3.47, 0.34, 3, 2, 1.9e8, '#FF007A'],
-    ['PEPE', 0.0000025, 1.30, 8, 0, 1.6e8, '#4C9540'],
   ]
   // [base, 起始价, 涨跌%, 价格小数位, 面值, 最大杠杆, 24h成交额]
   var FUT = [
@@ -254,7 +258,7 @@
   // ---------- HTTP ----------
   var KLINE = SCALES
   // 板块标签（演示）：后台“币种标签”配置的序号
-  var TAGS = { TAO: 2, RENDER: 2, WLD: 2, NEAR: 2, ONDO: 3, LINK: 3, AVAX: 3, XAUT: 4, PAXG: 4, DOGE: 5, SHIB: 5, PEPE: 5, UNI: 6, HYPE: 6 }
+  var TAGS = { TAO: 2, RENDER: 2, WLD: 2, NEAR: 2, ONDO: 3, LINK: 3, AVAX: 3, XAUT: 4, PAXG: 4, DOGE: 5, SHIB: 5, PEPE: 5, UNI: 6, HYPE: 6, AAVE: 6, JUP: 6, ZEC: 7, XMR: 7 }
   function spotInfo() {
     var market = { USDT: {} }, coinList = { USDT: { name: 'USDT', showName: 'USDT', showPrecision: 2, icon: icon('USDT', '#26A17B'), sort: 0, isFiat: 0, otcOpen: 1 } }
     SPOT.forEach(function (r, i) {
@@ -270,7 +274,7 @@
       switch: { otc_open: '1', lever_open: '1', is_enforce_google: '0', index_international_open: '1', fiat_trade_open: '1' },
       url: {},
       HIT: 'WIN',
-      market: { market: market, coinList: coinList, followCoinList: {}, coinTagLangs: { zh_CN: { 1: '主流', 2: 'AI', 3: 'RWA', 4: '黄金', 5: 'Meme', 6: 'DeFi' }, en_US: { 1: 'Major', 2: 'AI', 3: 'RWA', 4: 'Gold', 5: 'Meme', 6: 'DeFi' } }, wsUrl: 'wss://ws.exchange.invalid/kline-api/ws', klineScale: KLINE, marketSort: ['USDT'], rate: { zh_CN: { USDT: '7.10' } } },
+      market: { market: market, coinList: coinList, followCoinList: {}, coinTagLangs: { zh_CN: { 1: '主流', 2: 'AI', 3: 'RWA', 4: '黄金', 5: 'Meme', 6: 'DeFi', 7: '隐私' }, en_US: { 1: 'Major', 2: 'AI', 3: 'RWA', 4: 'Gold', 5: 'Meme', 6: 'DeFi', 7: 'Privacy' } }, wsUrl: 'wss://ws.exchange.invalid/kline-api/ws', klineScale: KLINE, marketSort: ['USDT'], rate: { zh_CN: { USDT: '7.10' } } },
     }
   }
   function futInfo() {

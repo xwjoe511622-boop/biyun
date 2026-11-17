@@ -25,7 +25,7 @@ const { t } = useI18n({
 const market = useMarketStore()
 const router = useRouter()
 
-const PREFERRED = ['WIN', 'BTC', 'ETH', 'SOL', 'XAUT', 'BNB']
+const PREFERRED = ['BTC', 'ETH', 'SOL', 'WIN', 'HYPE', 'XAUT']
 const planets = computed(() => {
   const all = market.symbols
   const picked = PREFERRED.map((base) => all.find((entry) => entry.base === base)).filter((entry) => entry !== undefined)
