@@ -227,10 +227,12 @@ onBeforeUnmount(() => {
     </RouterLink>
 
     <section class="mh-markets">
-      <div class="mh-tabs" role="tablist">
+      <div class="mh-sticky">
+        <div class="mh-tabs" role="tablist">
         <button v-for="key in tabs" :key="key" type="button" role="tab" class="mh-tab" :class="{ active: tab === key }" :aria-selected="tab === key" :data-testid="`mhome-tab-${key}`" @click="tab = key">{{ t(key) }}</button>
+        </div>
+        <div class="mh-list-head"><span>{{ t('name') }}</span><span></span><span>{{ t('last') }}</span><span>{{ t('change') }}</span></div>
       </div>
-      <div class="mh-list-head"><span>{{ t('name') }}</span><span></span><span>{{ t('last') }}</span><span>{{ t('change') }}</span></div>
       <ul v-if="shown.length === 0 && loading" class="mh-list" aria-hidden="true">
         <li v-for="n in 6" :key="n" class="mh-row mh-sk-row"><span class="mh-row-name"><i class="sk sk-dot"></i><i class="sk sk-name"></i></span><i></i><i class="sk sk-num"></i><i class="sk sk-pill"></i></li>
       </ul>
@@ -329,6 +331,8 @@ onBeforeUnmount(() => {
 
 /* Edge to edge, no card: the list sits on the page like the markets tab's. */
 .mh-markets { margin: 2px -14px 0; }
+/* The tabs and the column header stay at the top of the screen while the list scrolls under them. */
+.mh-sticky { position: sticky; top: 0; z-index: 5; background: var(--color-bg); padding: env(safe-area-inset-top, 0px) 0 6px; box-shadow: 0 8px 10px -10px rgba(0, 0, 0, .5); }
 .mh-tabs { display: flex; gap: 22px; padding: 0 16px; overflow-x: auto; border-bottom: 1px solid var(--color-border); scrollbar-width: none; }
 .mh-tabs::-webkit-scrollbar { display: none; }
 .mh-tab { position: relative; flex: 0 0 auto; height: 42px; color: var(--color-text-muted); font-family: var(--font-display); font-size: 15.5px; font-weight: 700; transition: color .15s ease; }
