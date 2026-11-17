@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Eye, EyeOff } from '@lucide/vue'
 import { useValuationPrefs } from '@/modules/wallet/use-valuation'
@@ -46,6 +46,56 @@ const usd = computed(() => {
   const formatted = usdLine(valuationIn('USD', totalMagnitude.value, sourceSymbol.value, usdTotal.value, prefs.btcPrice.value))
   return negativeTotal.value && formatted !== '' ? formatted.replace('$', '$-') : formatted
 })
+/* ------------------------------------------------------------------ phone number motion (owner 2026-11-17)
+   On phones the total counts up from zero once when the page opens, then rolls only the digits that change, like an
+   odometer, at most once every 1.5 s. Display only: `text` stays the exact figure (and is what desktop, tests and
+   reduced-motion users get); the frames in between are formatted from floats and never used for anything else. */
+const MOTION_GAP_MS = 1500
+const COUNT_MS = 800
+const NUMERIC = /^-?[\d,]+(\.\d+)?$/
+const animated = ref(false)
+const shown = ref('')
+const rolling = ref(false)
+const direction = ref<'up' | 'down'>('up')
+let counted = false
+let frame = 0
+let timer: ReturnType<typeof setTimeout> | null = null
+let lastApplied = 0
+const numberOf = (value: string): number => Number(value.replace(/,/g, '')) // float-ok: animation frames only
+function countUp(target: string): void {
+  const goal = numberOf(target)
+  const digits = target.includes('.') ? target.length - target.indexOf('.') - 1 : 0
+  const started = performance.now()
+  rolling.value = false
+  const step = (now: number): void => {
+    const progress = Math.min(1, (now - started) / COUNT_MS)
+    if (progress >= 1 || text.value !== target) { shown.value = text.value; lastApplied = now; return }
+    const eased = 1 - (1 - progress) ** 3
+    shown.value = (goal * eased).toLocaleString('en-US', { minimumFractionDigits: digits, maximumFractionDigits: digits })
+    frame = requestAnimationFrame(step)
+  }
+  frame = requestAnimationFrame(step)
+}
+function apply(): void {
+  timer = null
+  const next = text.value
+  if (NUMERIC.test(next) && NUMERIC.test(shown.value)) direction.value = numberOf(next) >= numberOf(shown.value) ? 'up' : 'down'
+  rolling.value = NUMERIC.test(next) && NUMERIC.test(shown.value)
+  shown.value = next
+  lastApplied = performance.now()
+}
+watch(text, (next) => {
+  if (!animated.value) return
+  if (!NUMERIC.test(next)) { cancelAnimationFrame(frame); if (timer !== null) clearTimeout(timer); timer = null; rolling.value = false; shown.value = next; return }
+  if (!counted) { counted = true; countUp(next); return }
+  if (timer !== null) return
+  const wait = MOTION_GAP_MS - (performance.now() - lastApplied)
+  if (wait <= 0) apply()
+  else timer = setTimeout(apply, wait)
+})
+/** One slot per character, keyed from the right so the ones, tens … keep their place when the length changes. */
+const slots = computed(() => [...shown.value].map((char, index, all) => ({ char, key: all.length - index })))
+
 /** Characters the number line has to fit (drives the font size). */
 const chars = computed(() => Math.max(text.value.length, 6))
 
@@ -56,10 +106,16 @@ const chars = computed(() => Math.max(text.value.length, 6))
 let stopStream: (() => void) | null = null
 onMounted(() => {
   stopStream = market.start('overview')
+  const media = typeof window.matchMedia === 'function' ? window.matchMedia.bind(window) : null
+  animated.value = media !== null && media('(max-width: 720px)').matches && !media('(prefers-reduced-motion: reduce)').matches
+  if (!animated.value) return
+  if (NUMERIC.test(text.value)) { counted = true; countUp(text.value) } else shown.value = text.value
 })
 onBeforeUnmount(() => {
   stopStream?.()
   stopStream = null
+  cancelAnimationFrame(frame)
+  if (timer !== null) clearTimeout(timer)
 })
 
 function onUnit(event: Event): void {
@@ -83,7 +139,8 @@ const labelParts = computed(() => {
       </button>
     </div>
     <div class="val-line">
-      <strong class="val-num num" data-testid="valuation-total">{{ text }}</strong>
+      <strong v-if="animated" class="val-num num rolling-digits" :class="`dir-${direction}`" data-testid="valuation-total" :aria-label="text"><span v-for="slot in slots" :key="slot.key" class="ch-slot" aria-hidden="true"><Transition name="roll" :css="rolling"><span :key="slot.char" class="ch">{{ slot.char }}</span></Transition></span></strong>
+      <strong v-else class="val-num num" data-testid="valuation-total">{{ text }}</strong>
       <select class="val-unit" :value="unit" :aria-label="t('unit')" data-testid="valuation-unit" @change="onUnit">
         <option v-for="entry in VALUATION_UNITS" :key="entry" :value="entry">{{ entry }}</option>
       </select>
@@ -116,6 +173,13 @@ const labelParts = computed(() => {
 }
 .val-unit:hover, .val-unit:focus-visible { color: var(--color-text); background-color: var(--color-hover); outline: none; }
 .val-usd { color: var(--color-text-muted); font-size: 13px; }
+/* Odometer: each character sits in a clipped slot; a changed digit slides out as the new one slides in. */
+.ch-slot { position: relative; display: inline-block; overflow: hidden; height: 1.15em; line-height: 1.15; vertical-align: bottom; }
+.ch { display: inline-block; }
+.roll-enter-active, .roll-leave-active { transition: transform .45s cubic-bezier(.2, .8, .2, 1), opacity .45s ease; }
+.roll-leave-active { position: absolute; left: 0; top: 0; }
+.dir-up .roll-enter-from, .dir-down .roll-leave-to { transform: translateY(100%); opacity: 0; }
+.dir-up .roll-leave-to, .dir-down .roll-enter-from { transform: translateY(-100%); opacity: 0; }
 /* Phones: a calmer card — smaller total, tighter rhythm. */
 @media (max-width: 720px) {
   .valuation { gap: 8px; }

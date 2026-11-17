@@ -463,7 +463,10 @@
   :root[data-skin='okx'] .balances > section.summary::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(105deg, transparent 40%, rgba(255, 240, 200, .16) 50%, transparent 60%); background-size: 280% 100%; animation: asset-sheen 7s ease-in-out infinite; }
   @keyframes asset-sheen { 0%, 50% { background-position: 140% 0; } 100% { background-position: -140% 0; } }
   :root[data-skin='okx'] .balances > section.summary .val-label { font-size: 13px; letter-spacing: .02em; }
-  :root[data-skin='okx'] .balances > section.summary .val-num { background: linear-gradient(180deg, #ffffff 20%, #ffe9a0 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: 750; text-shadow: none; filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .45)); }
+  :root[data-skin='okx'] .balances > section.summary .val-num { font-weight: 750; text-shadow: none; filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .45)); }
+  /* The pale-gold fill is painted per character when the digits roll (a clipped background does not follow moving children). */
+  :root[data-skin='okx'] .balances > section.summary .val-num:not(.rolling-digits),
+  :root[data-skin='okx'] .balances > section.summary .val-num.rolling-digits .ch { background: linear-gradient(180deg, #ffffff 20%, #ffe9a0 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
   :root[data-skin='okx'] .balances > section.summary .val-unit { color: rgba(247, 242, 230, .8); }
   :root[data-skin='okx'] .balances > section.summary .val-usd { color: rgba(247, 242, 230, .7); font-size: 13.500px; }
   :root[data-skin='okx'] .balances > section.summary .overview-scope { color: rgba(247, 242, 230, .5); }
