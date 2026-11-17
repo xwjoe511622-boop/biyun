@@ -278,7 +278,7 @@ async function signOut(): Promise<void> {
   <header class="app-header" :class="{ 'is-inner': innerPage, 'is-home': homePage }">
     <button v-if="innerPage" class="m-back icon-button" type="button" :aria-label="copy.back" data-testid="header-back" @click="goBack"><ChevronLeft :size="22" :stroke-width="1.9" /></button>
     <span v-if="innerPage" class="m-title ellipsis">{{ pageTitle }}</span>
-    <RouterLink v-else-if="homePage" class="m-me" to="/me" :aria-label="t('nav.userCenter')" data-testid="header-me"><UserAvatar :size="36" :active="session.isAuthenticated" /></RouterLink>
+    <RouterLink v-else-if="homePage" class="m-me" to="/me" :aria-label="t('nav.userCenter')" data-testid="header-me"><UserAvatar :size="30" :active="session.isAuthenticated" /></RouterLink>
     <button v-if="homePage" class="m-search-icon icon-button" type="button" :aria-label="copy.search" data-testid="header-search" @click="searchOpen = true"><Search :size="19" :stroke-width="1.7" aria-hidden="true" /></button>
     <button v-else-if="!innerPage && searchPage" class="m-search" type="button" data-testid="header-search" @click="searchOpen = true"><Search :size="15" aria-hidden="true" /><span>{{ copy.search }}</span></button>
     <span v-else-if="!innerPage" class="m-main-title ellipsis">{{ mainTitle }}</span>
@@ -532,7 +532,7 @@ async function signOut(): Promise<void> {
 .m-back, .m-title, .m-me, .m-search, .m-search-icon, .m-support, .m-main-title { display: none; }
 @media (max-width: 720px) {
   /* Home: the brand on the left; search, support, messages and the avatar on the right (owner 2026-11-17). */
-  .m-me { display: inline-flex; flex: 0 0 36px; order: 3; margin-left: 8px; border-radius: 50%; }
+  .m-me { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 40px; width: 40px; height: 40px; order: 3; margin-left: 2px; border-radius: 50%; }
   .m-me:active { transform: scale(.94); }
   .m-search-icon { display: inline-flex; order: 1; margin-right: 8px; }
   .app-header.is-home:not(.is-inner) .brand { display: inline-flex; margin-right: auto; }
@@ -549,9 +549,13 @@ async function signOut(): Promise<void> {
   .app-header:not(.is-inner) .icon-button:active { color: var(--color-accent-text); transform: scale(.92); }
   .app-header.is-home .m-search-icon { margin-right: 2px; }
   /* The magnifier's glyph fills less of its box than the bell's, so it is drawn larger to look the same size. */
-  .app-header .m-search-icon :deep(svg) { width: 26px; height: 26px; stroke-width: 1.8; }
-  .app-header .icon-button:not(.m-search-icon) :deep(svg) { width: 24px; height: 24px; }
-  .app-header.is-home .m-me { margin-left: 6px; }
+  .app-header .m-search-icon :deep(svg) { width: 27px; height: 27px; stroke-width: 1.8; }
+  .app-header .icon-button:not(.m-search-icon) :deep(svg) { width: 26px; height: 26px; }
+  /* Same 40px box for search, messages and the avatar. Buttons get the browser's own padding (larger on iOS),
+     which squeezed the magnifier: zero it and stop the glyphs from shrinking. */
+  .app-header .icon-button { padding: 0; -webkit-appearance: none; appearance: none; }
+  .app-header .icon-button :deep(svg), .m-me :deep(svg) { flex: 0 0 auto; max-width: none; }
+  .app-header.is-home .m-me { margin-left: 2px; }
   .app-header.is-inner .brand { display: none; }
   .app-header.is-inner .m-back { display: inline-flex; margin-left: -8px; border-color: transparent; background: transparent; }
   .app-header.is-inner .m-title { display: block; flex: 1 1 auto; min-width: 0; margin-left: 2px; font-family: var(--font-display); font-size: 17px; font-weight: 700; }

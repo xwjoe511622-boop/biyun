@@ -473,3 +473,39 @@
   :root[data-skin='okx'] .balances > section.summary .summary-actions .btn { border: 1px solid rgba(242, 198, 78, .35); background: rgba(0, 0, 0, .28); color: #f2c64e; }
   @media (prefers-reduced-motion: reduce) { :root[data-skin='okx'] .balances > section.summary::after { animation: none; } }
 }
+
+/* ------------------------------------------------------------------ phone platform fixes (owner 2026-11-17)
+   Real-device details the desktop emulator does not show. */
+@media (max-width: 720px) {
+  /* No grey flash on tap (Android / iOS). */
+  :root[data-skin='okx'] a, :root[data-skin='okx'] button, :root[data-skin='okx'] [role='tab'] { -webkit-tap-highlight-color: transparent; }
+  /* Dialogs follow the visible height: with 100vh their foot hid under the mobile browser's toolbar. */
+  @supports (height: 100dvh) {
+    :root[data-skin='okx'] .dlg, :root[data-skin='okx'] .dialog, :root[data-skin='okx'] .fd-panel, :root[data-skin='okx'] .dialog-panel { max-height: calc(100dvh - 32px); }
+  }
+  /* Text must not grow on its own when the phone is turned sideways. */
+  :root[data-skin='okx'] { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+}
+/* iOS zooms the whole page when a focused field's text is under 16px, and does not zoom back. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 720px) {
+    :root[data-skin='okx'] input:not([type='checkbox']):not([type='radio']):not([type='range']), :root[data-skin='okx'] textarea, :root[data-skin='okx'] select { font-size: 16px !important; }
+  }
+}
+/* Small phones (≤360px wide: iPhone SE, compact Androids): the terminal header and book tabs must not collide. */
+@media (max-width: 360px) {
+  :root[data-skin='okx'] .terminal .picker-trigger > svg { display: none; }
+  :root[data-skin='okx'] .terminal .symbol-picker { gap: 0; }
+  :root[data-skin='okx'] .terminal .pair-star { width: 26px; min-width: 0; padding: 0; margin: 0; }
+  :root[data-skin='okx'] .terminal .pair-block { font-size: 15px; }
+  :root[data-skin='okx'] .terminal .last-price { font-size: 15.5px; }
+  :root[data-skin='okx'] .terminal .change-line { font-size: 10px; }
+  :root[data-skin='okx'] .terminal .chart-toggle { width: 26px; margin-left: 2px; padding: 0; }
+  :root[data-skin='okx'] .terminal .bt-tabs { gap: 10px; padding-left: 8px; padding-right: 4px; }
+  :root[data-skin='okx'] .terminal .bt-tab { font-size: 13px; margin: 0; padding-left: 0; padding-right: 0; }
+}
+@media (max-width: 360px) {
+  :root[data-skin='okx'] .terminal--margin .terminal__header { flex-wrap: nowrap; }
+  :root[data-skin='okx'] .terminal--margin .terminal__header .last-price { font-size: 15.5px !important; }
+  :root[data-skin='okx'] .terminal--margin .terminal__header .ticker { min-width: 0; }
+}

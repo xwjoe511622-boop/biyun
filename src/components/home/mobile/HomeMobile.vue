@@ -85,6 +85,9 @@ function goTo(index: number): void {
   el.scrollTo({ left: index * el.clientWidth, behavior: 'smooth' })
 }
 
+/** Shown in the footer so the owner can tell which build a phone is showing (bump with each delivery). */
+const BUILD = 'v39'
+
 /* ------------------------------------------------------------------ quick entries */
 const entries = computed(() => [
   // Everything the old drawer offered stays one tap away: C2C and futures data have no other phone entry.
@@ -167,8 +170,28 @@ function trendOf(symbol: string): number[] {
   return values === undefined || values.length < 2 ? [] : values.slice(-ROW_TREND_POINTS)
 }
 
+/* The market tabs and column header pin to the top of the screen while the list is in view. Done by script with
+   `position: fixed` (works the same on every phone browser), with a spacer so nothing jumps. */
+const pinSentinel = ref<HTMLElement | null>(null)
+const pinBar = ref<HTMLElement | null>(null)
+const marketsBox = ref<HTMLElement | null>(null)
+const pinned = ref(false)
+const pinHeight = ref(0)
+function updatePin(): void {
+  const sentinel = pinSentinel.value
+  const bar = pinBar.value
+  const box = marketsBox.value
+  if (sentinel === null || bar === null || box === null) return
+  if (!pinned.value) pinHeight.value = bar.offsetHeight
+  // Pinned from the moment the bar's natural place reaches the top until the list's end passes under it.
+  pinned.value = sentinel.getBoundingClientRect().top <= 0 && box.getBoundingClientRect().bottom > pinHeight.value + 56
+}
+
 let stopStream: (() => void) | null = null
 onMounted(() => {
+  window.addEventListener('scroll', updatePin, { passive: true })
+  window.addEventListener('resize', updatePin)
+  updatePin()
   // Same data as the desktop home: the all-pair `review` stream and the public market config.
   stopStream = market.start('overview')
   void market.loadPublicInfo().catch(() => { /* the lists show their empty state */ })
@@ -178,6 +201,8 @@ onMounted(() => {
 })
 watch(locale, () => void loadNotices())
 onBeforeUnmount(() => {
+  window.removeEventListener('scroll', updatePin)
+  window.removeEventListener('resize', updatePin)
   stopStream?.()
   stopStream = null
   controller?.abort()
@@ -226,8 +251,9 @@ onBeforeUnmount(() => {
       <ChevronRight :size="14" aria-hidden="true" />
     </RouterLink>
 
-    <section class="mh-markets">
-      <div class="mh-sticky">
+    <section ref="marketsBox" class="mh-markets">
+      <div ref="pinSentinel" class="mh-pin-sentinel" :style="{ height: pinned ? `${pinHeight}px` : '0px' }"></div>
+      <div ref="pinBar" class="mh-sticky" :class="{ pinned }">
         <div class="mh-tabs" role="tablist">
         <button v-for="key in tabs" :key="key" type="button" role="tab" class="mh-tab" :class="{ active: tab === key }" :aria-selected="tab === key" :data-testid="`mhome-tab-${key}`" @click="tab = key">{{ t(key) }}</button>
         </div>
@@ -259,7 +285,7 @@ onBeforeUnmount(() => {
         <RouterLink to="/help">{{ t('help') }}</RouterLink><i></i><RouterLink :to="{ name: 'notices' }">{{ t('notices') }}</RouterLink><i></i><RouterLink to="/fees">{{ t('fees') }}</RouterLink>
       </nav>
       <p>{{ t('risk') }}</p>
-      <small>{{ BRAND_NAME }} © {{ new Date().getFullYear() }}</small>
+      <small>{{ BRAND_NAME }} © {{ new Date().getFullYear() }} · {{ BUILD }}</small>
     </footer>
   </div>
 </template>
@@ -332,10 +358,12 @@ onBeforeUnmount(() => {
 /* Edge to edge, no card: the list sits on the page like the markets tab's. */
 .mh-markets { margin: 2px -14px 0; }
 /* The tabs and the column header stay at the top of the screen while the list scrolls under them. */
-.mh-sticky { position: sticky; top: 0; z-index: 5; background: var(--color-bg); padding: env(safe-area-inset-top, 0px) 0 6px; box-shadow: 0 8px 10px -10px rgba(0, 0, 0, .5); }
-.mh-tabs { display: flex; gap: 22px; padding: 0 16px; overflow-x: auto; border-bottom: 1px solid var(--color-border); scrollbar-width: none; }
-.mh-tabs::-webkit-scrollbar { display: none; }
-.mh-tab { position: relative; flex: 0 0 auto; height: 42px; color: var(--color-text-muted); font-family: var(--font-display); font-size: 15.5px; font-weight: 700; transition: color .15s ease; }
+.mh-sticky { position: relative; z-index: 5; background: var(--color-bg); }
+.mh-sticky.pinned { position: fixed; top: 0; left: 0; right: 0; z-index: 40; padding-top: env(safe-area-inset-top, 0px); box-shadow: 0 10px 14px -12px rgba(0, 0, 0, .55); }
+.mh-pin-sentinel { width: 100%; }
+/* Fixed in place (owner 2026-11-17): the five tabs share the width evenly and the row cannot be dragged sideways. */
+.mh-tabs { display: flex; justify-content: space-between; gap: 0; padding: 0 16px; overflow: hidden; border-bottom: 1px solid var(--color-border); touch-action: pan-y; overscroll-behavior: none; }
+.mh-tab { position: relative; flex: 0 1 auto; min-width: 0; height: 42px; white-space: nowrap; color: var(--color-text-muted); font-family: var(--font-display); font-size: 15.5px; font-weight: 700; transition: color .15s ease; }
 .mh-tab.active { color: var(--color-text); }
 .mh-tab.active::after { content: ''; position: absolute; left: 18%; right: 18%; bottom: -1px; height: 2.5px; border-radius: 2px; background: var(--color-accent); box-shadow: 0 0 10px var(--color-accent); }
 .mh-list-head, .mh-row { display: grid; grid-template-columns: minmax(0, 1.25fr) 56px minmax(0, 1fr) 80px; align-items: center; gap: 8px; }
@@ -384,4 +412,5 @@ onBeforeUnmount(() => {
 .mh-row-name i.sk { margin: 0; padding: 0; }
 /* Only the colour flash here: the desktop home's flash bar (styles/home-fx.css) is not part of the phone home. */
 .mh-row-last::after { content: none !important; }
+@media (max-width: 360px) { .mh-tabs { padding: 0 12px; } .mh-tab { font-size: 14px; } }
 </style>
