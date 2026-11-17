@@ -86,7 +86,7 @@ function goTo(index: number): void {
 }
 
 /** Shown in the footer so the owner can tell which build a phone is showing (bump with each delivery). */
-const BUILD = 'v41'
+const BUILD = 'v42'
 
 /* ------------------------------------------------------------------ quick entries */
 const entries = computed(() => [

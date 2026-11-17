@@ -129,6 +129,8 @@ function onVisibility(): void {
   if (document.visibilityState === 'visible' && !prefersReducedMotion()) frame = requestAnimationFrame(loop)
 }
 onMounted(() => {
+  // The arc is animated by the SVG itself; hold it still for people who asked for less motion.
+  if (prefersReducedMotion()) (stage.value?.querySelector('svg') as SVGSVGElement | null)?.pauseAnimations?.()
   started = performance.now()
   place(started)
   if (!prefersReducedMotion()) frame = requestAnimationFrame(loop)
@@ -148,14 +150,24 @@ onBeforeUnmount(() => {
       <svg class="orbit-sky" viewBox="0 12 360 270" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <defs>
           <radialGradient id="ho-glow"><stop offset=".2" stop-color="#c99a4a" stop-opacity=".55" /><stop offset="1" stop-color="#c99a4a" stop-opacity="0" /></radialGradient>
-          <linearGradient id="ho-disk" x1="60" x2="300" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#6b4614" stop-opacity="0" /><stop offset=".25" stop-color="#d9a85a" /><stop offset=".45" stop-color="#fff2d2" /><stop offset=".72" stop-color="#d9a85a" /><stop offset="1" stop-color="#6b4614" stop-opacity="0" /></linearGradient>
-          <linearGradient id="ho-arc" x1="0" x2="0" y1="96" y2="140" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff2d2" /><stop offset=".5" stop-color="#f0c879" /><stop offset="1" stop-color="#f0c879" stop-opacity="0" /></linearGradient>
-          <linearGradient id="ho-w" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6b4410" /><stop offset=".5" stop-color="#3d2606" /><stop offset="1" stop-color="#5a390c" /></linearGradient>
           <radialGradient id="ho-ball" cx="180" cy="138" r="43" fx="164" fy="116" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff6d6" /><stop offset=".22" stop-color="#f8d777" /><stop offset=".55" stop-color="#dba53a" /><stop offset=".85" stop-color="#a06c16" /><stop offset="1" stop-color="#6b440c" /></radialGradient>
           <radialGradient id="ho-shade" cx="204" cy="166" r="50" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2a1803" stop-opacity=".6" /><stop offset=".6" stop-color="#2a1803" stop-opacity=".12" /><stop offset="1" stop-color="#2a1803" stop-opacity="0" /></radialGradient>
           <radialGradient id="ho-spec"><stop offset="0" stop-color="#fff" stop-opacity=".85" /><stop offset="1" stop-color="#fff" stop-opacity="0" /></radialGradient>
           <linearGradient id="ho-rim" x1="150" y1="100" x2="212" y2="178" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff8dc" /><stop offset=".5" stop-color="#f0c879" stop-opacity=".25" /><stop offset="1" stop-color="#ffe6b0" stop-opacity=".8" /></linearGradient>
           <linearGradient id="ho-sheen" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0" /><stop offset=".5" stop-color="#fff" stop-opacity=".42" /><stop offset="1" stop-color="#fff" stop-opacity="0" /></linearGradient>
+          <!-- The brand's arc (owner 2026-11-17): a tapered streak with a bright head circling the sphere on a tilted ring,
+               after the swoosh of the BIYUN logo. Layered dashes of growing width share one head; drawn twice, clipped
+               to the far half (behind the sphere) and the near half (in front). -->
+          <path id="ho-ring" pathLength="100" d="M62 138a118 33 0 1 1 236 0a118 33 0 1 1-236 0" />
+          <linearGradient id="ho-arc" x1="62" y1="105" x2="298" y2="171" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff2d2" /><stop offset=".45" stop-color="#f2c64e" /><stop offset="1" stop-color="#d9a85a" /></linearGradient>
+          <radialGradient id="ho-flare"><stop offset="0" stop-color="#fff" /><stop offset=".25" stop-color="#ffe9a0" stop-opacity=".9" /><stop offset="1" stop-color="#f2c64e" stop-opacity="0" /></radialGradient>
+          <g id="ho-swoosh" class="orbit-swoosh">
+            <use href="#ho-ring" fill="none" stroke="#d9a85a" stroke-opacity=".16" stroke-width=".8" />
+            <use href="#ho-ring" fill="none" stroke="url(#ho-arc)" stroke-width="1.4" stroke-linecap="round" stroke-opacity="0.45" stroke-dasharray="50 50" stroke-dashoffset="50"><animate attributeName="stroke-dashoffset" from="50" to="-50" dur="16s" repeatCount="indefinite" /></use><use href="#ho-ring" fill="none" stroke="url(#ho-arc)" stroke-width="2.6" stroke-linecap="round" stroke-opacity="0.6" stroke-dasharray="40 60" stroke-dashoffset="40"><animate attributeName="stroke-dashoffset" from="40" to="-60" dur="16s" repeatCount="indefinite" /></use><use href="#ho-ring" fill="none" stroke="url(#ho-arc)" stroke-width="3.9" stroke-linecap="round" stroke-opacity="0.75" stroke-dasharray="30 70" stroke-dashoffset="30"><animate attributeName="stroke-dashoffset" from="30" to="-70" dur="16s" repeatCount="indefinite" /></use><use href="#ho-ring" fill="none" stroke="url(#ho-arc)" stroke-width="5.3" stroke-linecap="round" stroke-opacity="0.9" stroke-dasharray="20 80" stroke-dashoffset="20"><animate attributeName="stroke-dashoffset" from="20" to="-80" dur="16s" repeatCount="indefinite" /></use><use href="#ho-ring" fill="none" stroke="url(#ho-arc)" stroke-width="6.8" stroke-linecap="round" stroke-opacity="1" stroke-dasharray="11 89" stroke-dashoffset="11"><animate attributeName="stroke-dashoffset" from="11" to="-89" dur="16s" repeatCount="indefinite" /></use>
+            <g><circle r="11" fill="url(#ho-flare)" opacity=".85" /><circle r="2.600" fill="#fff" /><animateMotion dur="16s" repeatCount="indefinite"><mpath href="#ho-ring" /></animateMotion></g>
+          </g>
+          <clipPath id="ho-back"><rect x="40" y="90" width="280" height="48" /></clipPath>
+          <clipPath id="ho-front"><rect x="40" y="138" width="280" height="60" /></clipPath>
           <clipPath id="ho-clip"><circle cx="180" cy="138" r="43" /></clipPath>
         </defs>
         <g fill="#fff">
@@ -168,20 +180,15 @@ onBeforeUnmount(() => {
           <ellipse cx="180" cy="138" rx="146" ry="84" stroke-opacity=".22" stroke-width=".8" stroke-dasharray="2 5" />
           <ellipse cx="180" cy="138" rx="104" ry="57" stroke-opacity=".28" stroke-width=".8" />
         </g>
-        <path d="M68 138A112 15 0 0 1 292 138" fill="none" stroke="url(#ho-disk)" stroke-width="5" opacity=".7" />
+        <g transform="rotate(-15 180 138)"><g clip-path="url(#ho-back)"><use href="#ho-swoosh" /></g></g>
         <!-- The centre is a lit gold sphere (owner 2026-11-17): body, soft terminator, rim light, specular, embossed W. -->
         <circle cx="180" cy="138" r="52" fill="url(#ho-glow)" opacity=".9" />
         <circle cx="180" cy="138" r="43" fill="url(#ho-ball)" />
         <circle cx="180" cy="138" r="43" fill="url(#ho-shade)" />
-        <g clip-path="url(#ho-clip)">
-          <g transform="translate(155.600 117.600) scale(.0308)" fill="#fff3c4" opacity=".55"><path d="M6 8H273L646 724 521 984Z" /><path d="M797 40 1031 440 913 665 797 440 681 665 563 440Z" /><path d="M1321 8H1588L1073 984 948 724Z" /></g>
-          <g class="orbit-w" transform="translate(155 116.800) scale(.0308)" fill="url(#ho-w)"><path d="M6 8H273L646 724 521 984Z" /><path d="M797 40 1031 440 913 665 797 440 681 665 563 440Z" /><path d="M1321 8H1588L1073 984 948 724Z" /></g>
-        </g>
         <g clip-path="url(#ho-clip)"><rect class="orbit-sheen" x="120" y="90" width="26" height="100" fill="url(#ho-sheen)" transform="rotate(18 180 138)" /></g>
         <ellipse cx="164" cy="113" rx="17" ry="9" transform="rotate(-28 164 113)" fill="url(#ho-spec)" />
         <circle cx="180" cy="138" r="42.400" fill="none" stroke="url(#ho-rim)" stroke-width="1.200" />
-        <path class="orbit-disk" d="M68 138A112 15 0 0 0 292 138" fill="none" stroke="url(#ho-disk)" stroke-width="6" />
-        <path d="M68 138A112 15 0 0 0 292 138" fill="none" stroke="url(#ho-disk)" stroke-width="18" opacity=".16" />
+        <g transform="rotate(-15 180 138)"><g clip-path="url(#ho-front)"><use href="#ho-swoosh" /></g></g>
       </svg>
       <canvas ref="trails" class="orbit-trails" aria-hidden="true"></canvas>
       <button
@@ -226,16 +233,12 @@ onBeforeUnmount(() => {
 .orbit-stage { position: relative; height: 270px; }
 .orbit-sky { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
 .orbit-trails { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-.orbit-w { animation: w-breathe 4.5s ease-in-out infinite; }
-.orbit-disk { stroke-dasharray: 60 14 26 10; animation: disk-flow 7s linear infinite; }
-@keyframes w-breathe { 50% { opacity: .78; } }
 /* The sphere turns: a band of light crosses it slowly. A few stars twinkle. */
 .orbit-sheen { animation: sheen-turn 7s ease-in-out infinite; }
 @keyframes sheen-turn { 0% { transform: rotate(18deg) translateX(-30px); opacity: 0; } 25% { opacity: 1; } 60% { opacity: 1; } 80%, 100% { transform: rotate(18deg) translateX(120px); opacity: 0; } }
 .orbit-sheen { transform-box: view-box; transform-origin: 180px 138px; }
 .tw { animation: star-tw 3.200s ease-in-out infinite; } .tw.t2 { animation-delay: .9s; } .tw.t3 { animation-delay: 1.700s; } .tw.t4 { animation-delay: 2.400s; }
 @keyframes star-tw { 0%, 100% { opacity: .15; } 50% { opacity: 1; } }
-@keyframes disk-flow { to { stroke-dashoffset: -110; } }
 
 .planet { position: absolute; top: 0; left: 0; display: flex; flex-direction: column; align-items: center; gap: 3px; will-change: transform; color: inherit; -webkit-tap-highlight-color: transparent; }
 /* Each coin is a little ball: a dark body under the icon, a highlight top-left, shade bottom-right, a rim light,
@@ -275,5 +278,5 @@ onBeforeUnmount(() => {
 .breadth .up { color: #2ad3a3; } .breadth .down { color: #ff5a6e; }
 .breadth-bar { flex: 1 1 auto; height: 2.5px; overflow: hidden; border-radius: 999px; background: #ff5a6e; }
 .breadth-bar i { display: block; height: 100%; border-right: 2px solid var(--color-bg); background: #2ad3a3; transition: width .6s ease; }
-@media (prefers-reduced-motion: reduce) { .orbit-w, .orbit-disk, .orbit-sheen, .tw { animation: none; } .orbit-sheen { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .orbit-sheen, .tw { animation: none; } .orbit-sheen { opacity: 0; } }
 </style>
