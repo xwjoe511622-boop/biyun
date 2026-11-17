@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { BRAND_NAME } from '@/core/brand'
 import { useI18n } from 'vue-i18n'
 import { Search } from '@lucide/vue'
 import AssetValuation from '@/components/wallet/AssetValuation.vue'
@@ -20,7 +21,7 @@ const { t } = useI18n({ useScope: 'local', messages: {
 
 <template>
   <div class="stack balances">
-    <section class="summary">
+    <section class="summary" :data-brand="BRAND_NAME">
       <div class="summary-main">
         <AssetValuation :label="props.title" total="0" symbol="BTC" :max-font="34" />
         <small class="overview-scope">{{ props.description }}</small>

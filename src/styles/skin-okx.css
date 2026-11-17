@@ -441,3 +441,32 @@
   :root[data-skin='okx'] .terminal .total-row > .muted { flex: 0 0 auto; white-space: nowrap; }
   :root[data-skin='okx'] .terminal .total-row > .num { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }
+
+/* ------------------------------------------------------------------ phone asset card (owner 2026-11-17)
+   A black-gold "member card" in both themes: gold-foil edge, fine engraved lines, an embossed W, a slow sheen, the
+   total in pale gold, the brand name in the corner. Shared by BalancesPanel and EmptyAccountPanel. */
+@media (max-width: 720px) {
+  :root[data-skin='okx'] .balances > section.summary {
+    --color-text: #f7f2e6; --color-text-secondary: rgba(247, 242, 230, .8); --color-text-muted: rgba(247, 242, 230, .58); --color-hover: rgba(255, 255, 255, .1);
+    position: relative; isolation: isolate; overflow: hidden; min-height: 184px; padding: 24px 22px 44px; color: var(--color-text);
+    border: 1px solid transparent; border-radius: 22px;
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1594 987'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe9a0' stop-opacity='.3'/%3E%3Cstop offset='1' stop-color='%23c08a22' stop-opacity='.06'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='url(%23g)'%3E%3Cpath d='M6 8H273L646 724 521 984Z'/%3E%3Cpath d='M797 40 1031 440 913 665 797 440 681 665 563 440Z'/%3E%3Cpath d='M1321 8H1588L1073 984 948 724Z'/%3E%3C/g%3E%3C/svg%3E") no-repeat right -26px bottom -22px / 190px auto padding-box,
+      repeating-linear-gradient(118deg, rgba(242, 198, 78, .055) 0 1px, transparent 1px 7px) padding-box,
+      radial-gradient(120% 90% at 0% 0%, rgba(242, 198, 78, .3), transparent 58%) padding-box,
+      radial-gradient(90% 80% at 100% 100%, rgba(176, 122, 24, .22), transparent 60%) padding-box,
+      linear-gradient(150deg, #1c160b, #0a0907 62%) padding-box,
+      linear-gradient(135deg, #ffe9a0, #8c5e12 30%, #f2c64e 55%, #5a3a0c 78%, #f6d36e) border-box;
+    box-shadow: 0 18px 36px -22px rgba(217, 168, 90, .85), 0 2px 0 rgba(255, 255, 255, .05) inset;
+  }
+  :root[data-skin='okx'] .balances > section.summary::before { content: attr(data-brand); position: absolute; left: 22px; bottom: 16px; z-index: 1; color: rgba(242, 198, 78, .78); font-family: var(--font-display); font-size: 11px; font-weight: 800; letter-spacing: .34em; }
+  :root[data-skin='okx'] .balances > section.summary::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(105deg, transparent 40%, rgba(255, 240, 200, .16) 50%, transparent 60%); background-size: 280% 100%; animation: asset-sheen 7s ease-in-out infinite; }
+  @keyframes asset-sheen { 0%, 50% { background-position: 140% 0; } 100% { background-position: -140% 0; } }
+  :root[data-skin='okx'] .balances > section.summary .val-label { font-size: 13px; letter-spacing: .02em; }
+  :root[data-skin='okx'] .balances > section.summary .val-num { background: linear-gradient(180deg, #ffffff 20%, #ffe9a0 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: 750; text-shadow: none; filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .45)); }
+  :root[data-skin='okx'] .balances > section.summary .val-unit { color: rgba(247, 242, 230, .8); }
+  :root[data-skin='okx'] .balances > section.summary .val-usd { color: rgba(247, 242, 230, .7); font-size: 13.500px; }
+  :root[data-skin='okx'] .balances > section.summary .overview-scope { color: rgba(247, 242, 230, .5); }
+  :root[data-skin='okx'] .balances > section.summary .summary-actions .btn { border: 1px solid rgba(242, 198, 78, .35); background: rgba(0, 0, 0, .28); color: #f2c64e; }
+  @media (prefers-reduced-motion: reduce) { :root[data-skin='okx'] .balances > section.summary::after { animation: none; } }
+}

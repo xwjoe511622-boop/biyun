@@ -10,17 +10,20 @@ withDefaults(defineProps<{ height?: number; tone?: 'gold' | 'ink' }>(), { height
 <template>
   <svg class="wordmark" :class="tone" viewBox="0 0 372 100" :height="height" :width="(height * 372) / 100" role="img" aria-label="BIYUN">
     <defs>
-      <linearGradient id="bw-g" x1="0" y1="0" x2="372" y2="100" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stop-color="#FFE9A0" /><stop offset=".22" stop-color="#F2C64E" /><stop offset=".48" stop-color="#C9952C" /><stop offset=".7" stop-color="#F6D36E" /><stop offset="1" stop-color="#B8821C" />
+      <!-- Polished metal, lit from above: pale top edge, warm body, a deep band below the middle, a lift at the foot. -->
+      <linearGradient id="bw-g" x1="0" y1="0" x2="0" y2="100" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#FFF6CF" /><stop offset=".3" stop-color="#F6D36E" /><stop offset=".52" stop-color="#D9A63A" /><stop offset=".66" stop-color="#B07A18" /><stop offset=".84" stop-color="#E2B44C" /><stop offset="1" stop-color="#F8DC8A" />
       </linearGradient>
       <clipPath id="bw-c"><rect x="0" y="1" width="372" height="98" /></clipPath>
     </defs>
-    <g clip-path="url(#bw-c)" fill="none" stroke-width="18" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="10">
-      <path d="M10 10V90H43a20 20 0 0 0 0-40H10M39 50a20 20 0 0 0 0-40H10" />
-      <path d="M103 10V90" />
-      <path d="M131-8 166 54 201-8M166 54V90" />
-      <path d="M229 10V58a29 29 0 0 0 58 0V10" />
-      <path d="M317 90V10L362 90V10" />
+    <!-- Wide geometric capitals on one 15-unit stroke. The B is cut like a stencil (its waist bar stops short of the
+         stem); Y and N share one diagonal; every terminal is a flat cut. -->
+    <g clip-path="url(#bw-c)" fill="none" stroke-width="15" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="12">
+      <path d="M8.5 1V99M1 8.500H44a20.750 20.750 0 0 1 0 41.500H25M25 50H48a20.750 20.750 0 0 1 0 41.500H1" />
+      <path d="M101.500 1V99" />
+      <path d="M126-8 162 55 198-8M162 52V99" />
+      <path d="M224.500 1V58a30 30 0 0 0 60 0V1" />
+      <path d="M314.500 99V1L364.500 99V1" />
     </g>
   </svg>
 </template>

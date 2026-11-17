@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { BRAND_NAME } from '@/core/brand'
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ArrowDownToLine, ArrowUpFromLine, ChevronDown, RotateCw, Search } from '@lucide/vue'
@@ -108,7 +109,7 @@ function rowLocked(row: CoinRow): string {
 
 <template>
   <div class="stack balances">
-    <section class="summary">
+    <section class="summary" :data-brand="BRAND_NAME">
       <div class="summary-main">
         <template v-if="props.scope === 'spot'">
           <AssetValuation :label="t('spotTotal')" :total="spotTotalBtc" symbol="BTC" :rows="allRows" :max-font="34" />

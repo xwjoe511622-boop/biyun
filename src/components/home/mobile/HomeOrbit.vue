@@ -195,7 +195,7 @@ onBeforeUnmount(() => {
         :data-testid="`orbit-${planet.entry.base}`"
         @click="selected = selected === planet.entry.symbol ? '' : planet.entry.symbol"
       >
-        <span class="planet-coin"><CoinMark :symbol="planet.entry.base" :icon-url="planet.entry.coin?.icon ?? ''" :size="36" /></span>
+        <span class="planet-coin"><CoinMark :symbol="planet.entry.base" :icon-url="planet.entry.coin?.icon ?? ''" :size="40" /></span>
         <span class="planet-label"><b>{{ planet.entry.base }}</b><i class="num" :class="planet.change.direction">{{ planet.change.text }}</i></span>
         <span class="planet-price num">{{ planet.last }}</span>
       </button>
@@ -238,7 +238,14 @@ onBeforeUnmount(() => {
 @keyframes disk-flow { to { stroke-dashoffset: -110; } }
 
 .planet { position: absolute; top: 0; left: 0; display: flex; flex-direction: column; align-items: center; gap: 3px; will-change: transform; color: inherit; -webkit-tap-highlight-color: transparent; }
-.planet-coin { display: inline-flex; border-radius: 50%; box-shadow: 0 0 0 1.5px rgba(242, 198, 78, .55), 0 0 16px rgba(242, 198, 78, .45); }
+/* Each coin is a little ball: a dark body under the icon, a highlight top-left, shade bottom-right, a rim light,
+   and a soft shadow underneath. */
+.planet-coin { position: relative; display: inline-flex; overflow: hidden; border-radius: 50%; background: radial-gradient(circle at 34% 28%, #3a3324, #0c0a06 72%);
+  box-shadow: 0 0 0 1.500px rgba(242, 198, 78, .6), 0 0 16px rgba(242, 198, 78, .42), 0 7px 10px -3px rgba(0, 0, 0, .75); }
+.planet-coin :deep(img), .planet-coin :deep(svg) { border-radius: 50%; }
+.planet-coin::after { content: ''; position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle at 31% 24%, rgba(255, 255, 255, .82) 0, rgba(255, 255, 255, .28) 16%, transparent 38%), radial-gradient(circle at 72% 82%, rgba(0, 0, 0, .6), transparent 58%);
+  box-shadow: inset 0 -5px 9px rgba(0, 0, 0, .55), inset 0 2px 3px rgba(255, 255, 255, .45), inset 0 0 0 1px rgba(255, 255, 255, .12); }
 .planet-label { display: inline-flex; align-items: center; gap: 4px; padding: 1px 6px; border-radius: 999px; background: rgba(10, 9, 6, .72); color: #f4efe3; font-size: 10.5px; line-height: 1.5; white-space: nowrap; }
 .planet-label b { font-weight: 700; }
 .planet-label i { font-style: normal; font-weight: 700; }

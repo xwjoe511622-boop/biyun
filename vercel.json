@@ -1,0 +1,5 @@
+{
+  "buildCommand": "vite build",
+  "outputDirectory": "dist",
+  "rewrites": [{ "source": "/((?!_lb/|favicon|apple-touch-icon|site.webmanifest|og-image).*)", "destination": "/index.html" }]
+}

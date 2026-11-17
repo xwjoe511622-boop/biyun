@@ -287,7 +287,7 @@ async function signOut(): Promise<void> {
     <RouterLink class="brand" to="/">
       <img v-if="brand.logoUrl !== ''" class="brand-logo" :src="brand.logoUrl" :alt="brand.name" />
       <BrandMark v-else :size="28" />
-      <BrandWordmark v-if="brand.name === 'BIYUN'" class="brand-wordmark" :height="17" />
+      <BrandWordmark v-if="brand.name === 'BIYUN'" class="brand-wordmark" :height="21" />
       <span class="brand-words" :class="{ 'has-wordmark': brand.name === 'BIYUN' }">
         <span class="brand-name ellipsis">{{ brand.name }}</span>
         <span v-if="BRAND_NAME_ZH !== ''" class="brand-zh">{{ BRAND_NAME_ZH }}</span>
@@ -540,6 +540,9 @@ async function signOut(): Promise<void> {
   .app-header.is-home .brand-words.has-wordmark { display: none; }
   .app-header.is-home .brand-name { font-size: 19px; font-weight: 800; letter-spacing: .04em; }
   .app-header.is-home .brand { gap: 9px; }
+  /* The home page shows the word mark alone (owner 2026-11-17); the W stays on the sphere below it. */
+  .app-header.is-home .brand:has(.brand-wordmark) > :not(.brand-wordmark) { display: none; }
+  .app-header.is-home .brand-wordmark { margin-left: 0; }
   /* Main pages: bare line icons, no discs — three on the home page (search, messages, avatar). */
   .app-header .icon-button { border-color: transparent !important; background: transparent !important; box-shadow: none !important; }
   .app-header .icon-button :deep(svg) { width: 22px; height: 22px; stroke-width: 1.9; }
