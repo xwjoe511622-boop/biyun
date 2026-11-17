@@ -190,7 +190,7 @@ async function signOut(): Promise<void> {
 .me-card {
   display: flex; align-items: center; gap: 14px; padding: 18px; overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--color-accent) 38%, var(--color-border)); border-radius: 18px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1594 987'%3E%3Cg fill='%23d9a85a' fill-opacity='.13'%3E%3Cpath d='M6 8H273L646 724 521 984Z'/%3E%3Cpath d='M797 40 1031 440 913 665 797 440 681 665 563 440Z'/%3E%3Cpath d='M1321 8H1588L1073 984 948 724Z'/%3E%3C/g%3E%3C/svg%3E") no-repeat right -14px bottom -12px / 150px auto,
+  background: url('@/assets/biyun-mark-watermark.png') no-repeat right -14px bottom -12px / 150px auto,
     linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 18%, var(--color-surface)), var(--color-surface) 62%);
 }
 .me-avatar { flex: 0 0 58px; }

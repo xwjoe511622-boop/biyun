@@ -37,7 +37,8 @@ function skinHtml(skin: SkinId, brand: BrandId): Plugin {
     name: 'skin-html',
     transformIndexHtml(html) {
       // Entry splash (scripts/boot-splash.ts): inline SVG + CSS that paints with the HTML, dismissed by src/core/boot-splash.ts.
-      const splash = bootSplashHtml(skin, brand === 'bitwinex' ? 'BIYUN' : 'LONGBIT', brand === 'bitwinex')
+      const logo = brand === 'bitwinex' ? `data:image/png;base64,${readFileSync(fileURLToPath(new URL('./src/assets/biyun-logo.png', import.meta.url))).toString('base64')}` : ''
+      const splash = bootSplashHtml(skin, brand === 'bitwinex' ? 'BIYUN' : 'LONGBIT', brand === 'bitwinex', logo)
       const out = html.replace(/<html lang="zh-CN"/, `<html lang="zh-CN" data-skin="${skin}"`).replace('<div id="app"></div>', `${splash}\n    <div id="app"></div>`)
       return skin === 'okx' ? out.replace(/<meta name="theme-color" content="[^"]*" \/>/, '<meta name="theme-color" content="#000000" />') : out
     },

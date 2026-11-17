@@ -451,7 +451,7 @@
     position: relative; isolation: isolate; overflow: hidden; min-height: 184px; padding: 24px 22px 44px; color: var(--color-text);
     border: 1px solid transparent; border-radius: 22px;
     background:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1594 987'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe9a0' stop-opacity='.3'/%3E%3Cstop offset='1' stop-color='%23c08a22' stop-opacity='.06'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='url(%23g)'%3E%3Cpath d='M6 8H273L646 724 521 984Z'/%3E%3Cpath d='M797 40 1031 440 913 665 797 440 681 665 563 440Z'/%3E%3Cpath d='M1321 8H1588L1073 984 948 724Z'/%3E%3C/g%3E%3C/svg%3E") no-repeat right -26px bottom -22px / 190px auto padding-box,
+      url('../assets/biyun-mark-watermark.png') no-repeat right -26px bottom -22px / 190px auto padding-box,
       repeating-linear-gradient(118deg, rgba(242, 198, 78, .055) 0 1px, transparent 1px 7px) padding-box,
       radial-gradient(120% 90% at 0% 0%, rgba(242, 198, 78, .3), transparent 58%) padding-box,
       radial-gradient(90% 80% at 100% 100%, rgba(176, 122, 24, .22), transparent 60%) padding-box,

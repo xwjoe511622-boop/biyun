@@ -285,7 +285,7 @@ async function signOut(): Promise<void> {
     <span v-else-if="!innerPage" class="m-main-title ellipsis">{{ mainTitle }}</span>
     <MobileSearch v-if="searchOpen" v-model:open="searchOpen" />
     <RouterLink v-if="supportPage && !homePage" class="m-support icon-button" to="/help" :aria-label="copy.support" :title="copy.support" data-testid="header-support"><Headset :size="19" :stroke-width="1.7" aria-hidden="true" /></RouterLink>
-    <RouterLink class="brand" to="/">
+    <RouterLink class="brand" :class="{ 'has-logo': brand.name === 'BIYUN' }" to="/">
       <img v-if="brand.logoUrl !== ''" class="brand-logo" :src="brand.logoUrl" :alt="brand.name" />
       <BrandMark v-else :size="28" />
       <img v-if="brand.name === 'BIYUN'" class="brand-wordmark" :src="biyunLogo" alt="BIYUN" width="344" height="108" />
@@ -529,7 +529,9 @@ async function signOut(): Promise<void> {
   .brand-zh, .brand-tag { display: none; }
   .header-link { display: none; }
 }
-.brand-wordmark { display: none; }
+.brand-wordmark { display: block; width: auto; height: 34px; }
+/* BIYUN shows its logo alone: the logo already spells the name. */
+.brand.has-logo > :not(.brand-wordmark) { display: none; }
 .m-back, .m-title, .m-me, .m-search, .m-search-icon, .m-support, .m-main-title { display: none; }
 @media (max-width: 720px) {
   /* Home: the brand on the left; search, support, messages and the avatar on the right (owner 2026-11-17). */
@@ -542,7 +544,6 @@ async function signOut(): Promise<void> {
   .app-header.is-home .brand-name { font-size: 19px; font-weight: 800; letter-spacing: .04em; }
   .app-header.is-home .brand { gap: 9px; }
   /* The home page shows the word mark alone (owner 2026-11-17); the W stays on the sphere below it. */
-  .app-header.is-home .brand:has(.brand-wordmark) > :not(.brand-wordmark) { display: none; }
   /* Main pages: bare line icons, no discs — three on the home page (search, messages, avatar). */
   .app-header .icon-button { border-color: transparent !important; background: transparent !important; box-shadow: none !important; }
   .app-header .icon-button :deep(svg) { width: 22px; height: 22px; stroke-width: 1.9; }

@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { BRAND_ID } from '@/core/brand'
+import { BRAND_ID, BRAND_NAME } from '@/core/brand'
+// BIYUN mark (owner 2026-11-17): the arc-and-B cut from the owner's logo, transparent background.
+import biyunMark from '@/assets/biyun-mark.png?inline'
 import { SKIN } from '@/core/skin'
 
 /**
@@ -19,7 +21,8 @@ const wOffsets = ['0', '.3', '.56', '.8', '1']
 </script>
 
 <template>
-  <svg v-if="BRAND_ID === 'bitwinex'" class="brand-mark bitwinex w-mark" :width="Math.round(size * 1.42)" :height="Math.round(size * 0.88)" viewBox="0 0 1594 987" aria-hidden="true">
+  <img v-if="BRAND_ID === 'bitwinex' && BRAND_NAME === 'BIYUN'" class="brand-mark biyun" :src="biyunMark" :width="Math.round(size * 1.3)" :height="Math.round(size * 1.3)" alt="" aria-hidden="true" />
+  <svg v-else-if="BRAND_ID === 'bitwinex'" class="brand-mark bitwinex w-mark" :width="Math.round(size * 1.42)" :height="Math.round(size * 0.88)" viewBox="0 0 1594 987" aria-hidden="true">
     <defs>
       <linearGradient :id="gradientId" x1="0" y1="0" x2="1" y2="1">
         <stop v-for="(c, i) in wStops" :key="i" :offset="wOffsets[i]" :stop-color="c" />
@@ -50,6 +53,7 @@ const wOffsets = ['0', '.3', '.56', '.8', '1']
 
 <style scoped>
 .brand-mark { flex: 0 0 auto; display: block; filter: drop-shadow(0 4px 12px rgba(240, 138, 12, 0.28)); }
+.brand-mark.biyun { filter: none; margin: -3px -2px; }
 .brand-mark.bitwinex { filter: drop-shadow(0 3px 10px rgba(46, 91, 255, 0.35)); }
 :root[data-skin='okx'] .brand-mark.bitwinex { filter: drop-shadow(0 3px 10px rgba(201, 150, 40, 0.35)); }
 </style>

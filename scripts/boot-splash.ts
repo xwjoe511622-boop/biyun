@@ -39,7 +39,7 @@ const W_PATHS = ['M6 8H273L646 724 521 984Z', 'M797 40 1031 440 913 665 797 440 
  * `mark`: draw the gold W rising out of the hole and the BITWINEX tagline (bitwinex brand); otherwise only the
  * wordmark is shown under the black hole.
  */
-export function bootSplashHtml(skin: SkinId, wordmark: string, mark: boolean): string {
+export function bootSplashHtml(skin: SkinId, wordmark: string, mark: boolean, logo = ''): string {
   const c = COLORS[skin]
   // Disk: back half (behind the hole), lensed arcs, hole, photon ring, front half; dashes ride the disk to show spin.
   const back = 'M-92 0A92 12 0 0 1 92 0'
@@ -47,8 +47,11 @@ export function bootSplashHtml(skin: SkinId, wordmark: string, mark: boolean): s
   // The far side of the disk, bent over the top of the hole by its gravity (Gargantua look).
   const arc = 'M-40 1A40 37 0 0 1 40 1'
   // The W (34 × 21 units) sits in the event horizon and rises from behind the front of the disk.
-  const w = mark ? `<g class="bm"><g transform="translate(-17 -23) scale(.02133)" fill="url(#bw)">${W_PATHS.map((d) => `<path d="${d}"/>`).join('')}</g></g>\n` : ''
-  const tagline = mark ? '<i><s></s><span><em>WIN</em> THE FUTURE</span><s></s></i>' : ''
+  // With a logo image (BIYUN, owner 2026-11-17) the hole stays empty and the logo stands under it instead of the
+  // W, the plain word mark and the old tagline.
+  const w = mark && logo === '' ? `<g class="bm"><g transform="translate(-17 -23) scale(.02133)" fill="url(#bw)">${W_PATHS.map((d) => `<path d="${d}"/>`).join('')}</g></g>\n` : ''
+  const tagline = mark && logo === '' ? '<i><s></s><span><em>WIN</em> THE FUTURE</span><s></s></i>' : ''
+  const name = logo === '' ? `<b>${wordmark}</b>` : `<img class="bl" src="${logo}" alt="${wordmark}"/>`
   const sparks = [0, 1, 2, 3].map((i) => `<circle class="bs" r="2.2" style="animation-delay:${(i * 0.55).toFixed(2)}s"/>`).join('')
   return `<div id="boot" aria-hidden="true"><svg viewBox="-100 -64 200 128">
 <defs><radialGradient id="bg"><stop offset=".25" stop-color="${c.glow}" stop-opacity=".5"/><stop offset="1" stop-color="${c.glow}" stop-opacity="0"/></radialGradient>
@@ -61,7 +64,7 @@ export function bootSplashHtml(skin: SkinId, wordmark: string, mark: boolean): s
 <path d="M-28 3A28 23 0 0 0 28 3" stroke="${c.arc}" stroke-width="5" opacity=".18"/><path d="M-28 3A28 23 0 0 0 28 3" stroke="${c.arc}" stroke-width="1.3" opacity=".7"/>
 <circle r="23" fill="#000"/><circle r="24.2" stroke="${c.ring}" stroke-width="2.4" opacity=".25"/><circle r="24.2" stroke="${c.ring}" stroke-width=".8"/>
 ${w}<path d="${front}" stroke="url(#bd)" stroke-width="18" opacity=".18"/><path d="${front}" stroke="url(#bd)" stroke-width="5.5"/><path d="${front}" stroke="${c.diskHot}" stroke-width="1" opacity=".7"/><path class="fr" d="${front}"/>
-<g transform="scale(1 .15)">${sparks}</g></svg><b>${wordmark}</b>${tagline}</div>
+<g transform="scale(1 .15)">${sparks}</g></svg>${name}${tagline}</div>
 <style>
 #boot{position:fixed;inset:0;z-index:2147483000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2vmin;background:${c.bg};pointer-events:none;animation:bw-in .35s ease-out .18s both,bw-out .4s ease-in 12s forwards}
 #boot svg{width:min(92vmin,620px);overflow:visible;fill:none;animation:bw-grow 1.2s cubic-bezier(.2,.7,.2,1) .18s both}
@@ -73,6 +76,7 @@ ${w}<path d="${front}" stroke="url(#bd)" stroke-width="18" opacity=".18"/><path 
 #boot i{display:flex;align-items:center;gap:1.4vmin;font:500 clamp(10px,1.7vmin,13px)/1 system-ui,sans-serif;font-style:normal;letter-spacing:.32em;color:#e9e9ee;animation:bw-in .6s ease-out .95s both}
 #boot i span{margin-right:-.32em}#boot em{font-style:normal;color:${c.accent}}
 #boot s{width:clamp(28px,7vmin,64px);height:1px;background:linear-gradient(90deg,transparent,${c.rule})}#boot s:last-child{transform:scaleX(-1)}
+#boot .bl{width:min(58vmin,300px);height:auto;margin-top:-2vmin;animation:bw-in .6s ease-out .7s both,bw-rise 1s cubic-bezier(.2,.8,.2,1) .7s both}
 #boot .bm{animation:bw-rise 1.1s cubic-bezier(.2,.8,.2,1) .35s both}
 #boot.out{animation:bw-gone .4s ease-in forwards}
 #boot.out svg{transition:transform .4s ease-in;transform:scale(1.18)}

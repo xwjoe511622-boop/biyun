@@ -195,7 +195,7 @@ const { t } = useI18n({
   .auth-mobile-brand {
     display: flex; flex-direction: column; gap: 6px; padding: 20px 18px; overflow: hidden; border-radius: 18px; color: #f4efe3;
     border: 1px solid rgba(217, 168, 90, .42);
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1594 987'%3E%3Cg fill='%23d9a85a' fill-opacity='.16'%3E%3Cpath d='M6 8H273L646 724 521 984Z'/%3E%3Cpath d='M797 40 1031 440 913 665 797 440 681 665 563 440Z'/%3E%3Cpath d='M1321 8H1588L1073 984 948 724Z'/%3E%3C/g%3E%3C/svg%3E") no-repeat right -16px bottom -14px / 170px auto,
+    background: url('@/assets/biyun-mark-watermark.png') no-repeat right -16px bottom -14px / 170px auto,
       radial-gradient(120% 140% at 100% 0%, rgba(217, 168, 90, .34), transparent 60%), linear-gradient(120deg, #17120a, #0c0c0e 70%);
   }
   .amb-row { display: flex; align-items: center; gap: 9px; font-family: var(--font-display); font-size: 19px; font-weight: 750; letter-spacing: -0.01em; }
