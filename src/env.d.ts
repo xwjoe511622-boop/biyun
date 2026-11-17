@@ -45,9 +45,9 @@ interface ImportMetaEnv {
   readonly VITE_SPOT_V3_ORDERS?: string
   /** exchange-otc-api prefix (default `/otc-api/`). */
   readonly VITE_OTC_API_BASE?: string
-  /** Display brand: `bitwinex` (AWS production) or `longbit` (Aliyun test, default). See `src/core/brand.ts`. */
   /** `1` = demo mode: the in-browser mock backend is injected (vite.config.ts `demoHtml`); empty otherwise. */
   readonly VITE_DEMO?: string
+  /** Display brand: `bitwinex` (AWS production) or `longbit` (Aliyun test, default). See `src/core/brand.ts`. */
   readonly VITE_BRAND?: string
   /** Layout skin, build-time literal: 'binance' | 'okx' (vite.config.ts resolveSkin). */
   readonly VITE_SKIN?: string
