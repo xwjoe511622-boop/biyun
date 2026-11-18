@@ -25,7 +25,19 @@ const { t } = useI18n({
 const market = useMarketStore()
 const router = useRouter()
 
-const PREFERRED = ['BTC', 'ETH', 'SOL', 'WIN', 'HYPE', 'XAUT']
+// Bitcoin is the sphere itself (its live price is engraved on it), so it does not orbit.
+const PREFERRED = ['ETH', 'SOL', 'WIN', 'HYPE', 'XAUT', 'BNB']
+/** The centre of the scene (owner 2026-11-18): BTC/USDT's live price and 24h move, whole dollars so it fits the ball. */
+const core = computed(() => {
+  const entry = market.symbols.find((item) => item.base === 'BTC' && item.quote === 'USDT') ?? market.symbols.find((item) => item.base === 'BTC')
+  const tick = entry === undefined ? undefined : market.tickers[entry.symbol.toLowerCase()]
+  const rose = tick?.rose ?? ''
+  return {
+    pair: entry?.pair ?? '',
+    price: tick !== undefined && isDecimalString(tick.close) ? groupDigits(tick.close, 0) : '--',
+    change: rose === '' ? { text: '', direction: 'flat' as const } : percentView(rose),
+  }
+})
 const planets = computed(() => {
   const all = market.symbols
   const picked = PREFERRED.map((base) => all.find((entry) => entry.base === base)).filter((entry) => entry !== undefined)
@@ -185,9 +197,16 @@ onBeforeUnmount(() => {
         <circle cx="180" cy="138" r="52" fill="url(#ho-glow)" opacity=".9" />
         <circle cx="180" cy="138" r="43" fill="url(#ho-ball)" />
         <circle cx="180" cy="138" r="43" fill="url(#ho-shade)" />
+        <!-- Engraved read-out: a pale copy one step down-right, the dark figure on top; the sheen and highlight pass over it. -->
+        <g class="orbit-core" text-anchor="middle">
+          <text x="180.600" y="123.600" class="oc-label oc-lit">BTC</text><text x="180" y="123" class="oc-label">BTC</text>
+          <text x="180.700" y="145.700" class="oc-price oc-lit">{{ core.price }}</text><text x="180" y="145" class="oc-price">{{ core.price }}</text>
+          <text v-if="core.change.text !== ''" x="180" y="159" class="oc-change">{{ core.change.direction === 'down' ? '▼' : '▲' }} {{ core.change.text.replace(/^[+-]/, '') }}</text>
+        </g>
         <g clip-path="url(#ho-clip)"><rect class="orbit-sheen" x="120" y="90" width="26" height="100" fill="url(#ho-sheen)" transform="rotate(18 180 138)" /></g>
         <ellipse cx="164" cy="113" rx="17" ry="9" transform="rotate(-28 164 113)" fill="url(#ho-spec)" />
         <circle cx="180" cy="138" r="42.400" fill="none" stroke="url(#ho-rim)" stroke-width="1.200" />
+        <circle v-if="core.pair !== ''" class="orbit-core-hit" cx="180" cy="138" r="43" fill="transparent" role="link" tabindex="0" :aria-label="`BTC ${core.price}`" data-testid="orbit-core" @click="open(core.pair)" @keydown.enter="open(core.pair)" />
         <g transform="rotate(-15 180 138)"><g clip-path="url(#ho-front)"><use href="#ho-swoosh" /></g></g>
       </svg>
       <canvas ref="trails" class="orbit-trails" aria-hidden="true"></canvas>
@@ -237,6 +256,12 @@ onBeforeUnmount(() => {
 .orbit-sheen { animation: sheen-turn 7s ease-in-out infinite; }
 @keyframes sheen-turn { 0% { transform: rotate(18deg) translateX(-30px); opacity: 0; } 25% { opacity: 1; } 60% { opacity: 1; } 80%, 100% { transform: rotate(18deg) translateX(120px); opacity: 0; } }
 .orbit-sheen { transform-box: view-box; transform-origin: 180px 138px; }
+.orbit-core text { font-family: var(--font-display); font-variant-numeric: tabular-nums; fill: #3a2405; }
+.orbit-core .oc-lit { fill: #fff3c4; opacity: .55; }
+.oc-label { font-size: 9.500px; font-weight: 800; letter-spacing: .22em; }
+.oc-price { font-size: 17px; font-weight: 800; letter-spacing: -.01em; }
+.oc-change { font-size: 8.500px; font-weight: 800; letter-spacing: .02em; opacity: .82; }
+.orbit-core-hit { pointer-events: auto; cursor: pointer; outline: none; }
 .tw { animation: star-tw 3.200s ease-in-out infinite; } .tw.t2 { animation-delay: .9s; } .tw.t3 { animation-delay: 1.700s; } .tw.t4 { animation-delay: 2.400s; }
 @keyframes star-tw { 0%, 100% { opacity: .15; } 50% { opacity: 1; } }
 
