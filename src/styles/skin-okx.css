@@ -443,7 +443,7 @@
 }
 
 /* ------------------------------------------------------------------ phone asset card (owner 2026-11-17)
-   A black-gold "member card" in both themes: gold-foil edge, fine engraved lines, an embossed W, a slow sheen, the
+   A black-gold "member card" in both themes: gold-foil edge, fine engraved lines, a slow sheen, the
    total in pale gold, the brand name in the corner. Shared by BalancesPanel and EmptyAccountPanel. */
 @media (max-width: 720px) {
   :root[data-skin='okx'] .balances > section.summary {
@@ -451,7 +451,6 @@
     position: relative; isolation: isolate; overflow: hidden; min-height: 184px; padding: 24px 22px 44px; color: var(--color-text);
     border: 1px solid transparent; border-radius: 22px;
     background:
-      url('../assets/biyun-mark-watermark.png') no-repeat right -26px bottom -22px / 190px auto padding-box,
       repeating-linear-gradient(118deg, rgba(242, 198, 78, .055) 0 1px, transparent 1px 7px) padding-box,
       radial-gradient(120% 90% at 0% 0%, rgba(242, 198, 78, .3), transparent 58%) padding-box,
       radial-gradient(90% 80% at 100% 100%, rgba(176, 122, 24, .22), transparent 60%) padding-box,

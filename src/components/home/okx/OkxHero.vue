@@ -235,8 +235,7 @@ function openContract(row: BoardRow): void {
   /* The bottom navigation already offers 交易 / 资产; the card is the brand total card (owner 11-17). */
   .okx-balance-actions { display: none; }
   .okx-balance { padding: 20px 18px 18px; border: 1px solid color-mix(in srgb, var(--color-accent) 38%, var(--color-border)); border-radius: 18px;
-    background: url('@/assets/biyun-mark-watermark.png') no-repeat right -14px bottom -12px / 150px auto,
-      linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 18%, var(--color-surface)), var(--color-surface) 62%);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 18%, var(--color-surface)), var(--color-surface) 62%);
     box-shadow: 0 10px 28px -18px color-mix(in srgb, var(--color-accent) 70%, transparent); }
   .okx-hero-inner { padding: 32px 16px 40px; gap: 32px; }
   .okx-hero-lead { font-size: 15.5px; margin-top: 20px; }

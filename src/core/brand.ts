@@ -25,7 +25,7 @@ interface BrandDef {
 export const BRAND_ID: BrandId = import.meta.env.VITE_BRAND === 'bitwinex' ? 'bitwinex' : 'longbit'
 const def: BrandDef =
   import.meta.env.VITE_BRAND === 'bitwinex'
-    ? { name: 'BIYUN', nameLocal: '' } // owner 2026-11-17: renamed from BITWINEX; no Chinese name; the gold W mark stays
+    ? { name: 'BITWINEX', nameLocal: '' } // owner 2026-11-18: BITWINEX again, shown as plain text; no logo or mark anywhere
     : { name: 'Longbit', nameLocal: '龙比特' }
 
 const override = (raw: string | undefined): string | undefined => (raw !== undefined && raw.trim() !== '' ? raw.trim() : undefined)

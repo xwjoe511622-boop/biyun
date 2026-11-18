@@ -156,7 +156,7 @@ onBeforeUnmount(() => {
           <linearGradient id="ho-rim" x1="150" y1="100" x2="212" y2="178" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff8dc" /><stop offset=".5" stop-color="#f0c879" stop-opacity=".25" /><stop offset="1" stop-color="#ffe6b0" stop-opacity=".8" /></linearGradient>
           <linearGradient id="ho-sheen" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0" /><stop offset=".5" stop-color="#fff" stop-opacity=".42" /><stop offset="1" stop-color="#fff" stop-opacity="0" /></linearGradient>
           <!-- The brand's arc (owner 2026-11-17): a tapered streak with a bright head circling the sphere on a tilted ring,
-               after the swoosh of the BIYUN logo. Layered dashes of growing width share one head; drawn twice, clipped
+               a comet-like arc. Layered dashes of growing width share one head; drawn twice, clipped
                to the far half (behind the sphere) and the near half (in front). -->
           <path id="ho-ring" pathLength="100" d="M62 138a118 33 0 1 1 236 0a118 33 0 1 1-236 0" />
           <linearGradient id="ho-arc" x1="62" y1="105" x2="298" y2="171" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff2d2" /><stop offset=".45" stop-color="#f2c64e" /><stop offset="1" stop-color="#d9a85a" /></linearGradient>

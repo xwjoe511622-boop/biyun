@@ -28,7 +28,7 @@ describe('owner-published BITWINEX v0.1 rules', () => {
   it.each([['earn', 'zh'], ['earn', 'en'], ['loan', 'zh'], ['loan', 'en']] as const)('publishes %s/%s as readable site rules when no dedicated online text exists', async (kind, lang) => {
     const result = await loadAgreement(kind, new AbortController().signal, lang)
     expect(result).toMatchObject({ source: 'site', version: '0.1', versionDate: '2026-10-30', language: lang, cmsStatus: 'missing' })
-    expect(result?.content).toContain('BIYUN')
+    expect(result?.content).toContain('BITWINEX')
     expect(result?.content).toContain(kind === 'loan' ? '8760' : '365')
     expect(result?.content).not.toMatch(/草案|未发布|运营主体全称|\[.*主体.*\]|Binance|OKX|CMS|schema/)
     expect(fetchCmsArticle).not.toHaveBeenCalled()

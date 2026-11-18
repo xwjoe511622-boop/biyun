@@ -1,4 +1,4 @@
-/* BIYUN 演示模式的模拟后端（仅在 VITE_DEMO=1 时由 vite.config.ts 注入页面，正式构建不包含）：真实币种 + 2026-11-16 前后的真实价格作起点，在浏览器里模拟跳动。
+/* BITWINEX 演示模式的模拟后端（仅在 VITE_DEMO=1 时由 vite.config.ts 注入页面，正式构建不包含）：真实币种 + 2026-11-16 前后的真实价格作起点，在浏览器里模拟跳动。
  * 拦截 fetch 与 WebSocket，不连接任何真实服务器。 */
 (function () {
   'use strict'
@@ -292,7 +292,7 @@
     })
     ;[['USDC', '#2775CA'], ['NVDA', '#76B900'], ['TSLA', '#CC0000']].forEach(function (r, i) { coinList[r[0]] = { name: r[0], showName: r[0], showPrecision: 4, icon: icon(r[0], r[1]), sort: 100 + i, isFiat: 0, otcOpen: 0 } })
     return {
-      msg: { company_name: 'BIYUN', logoUrl: '', iconUrl: '', contact_email: 'support@exchange.invalid' },
+      msg: { company_name: 'BITWINEX', logoUrl: '', iconUrl: '', contact_email: 'support@exchange.invalid' },
       nc: { nc_appkey: '', nc_prefix: '', nc_lang: 'cn' },
       switch: { otc_open: '1', lever_open: '1', is_enforce_google: '0', index_international_open: '1', fiat_trade_open: '1' },
       url: {},
@@ -313,7 +313,7 @@
   function ok(data) { return { code: '0', msg: 'suc', data: data } }
   function raw(body) { return { __raw: true, body: body } }
   var INTRO = [
-    ['WIN', 'WIN 已在 BIYUN 开放现货交易。（演示文案，上线前请替换为正式币种介绍）', 'https://www.exchange.invalid', 'https://etherscan.io'],
+    ['WIN', 'WIN 已在 BITWINEX 开放现货交易。（演示文案，上线前请替换为正式币种介绍）', 'https://www.exchange.invalid', 'https://etherscan.io'],
     ['BTC', '比特币是第一个去中心化数字货币，总量 2100 万枚，采用工作量证明共识。', 'https://bitcoin.org', 'https://mempool.space'],
     ['ETH', '以太坊是支持智能合约的公链，原生代币 ETH 用于支付 Gas 与质押。', 'https://ethereum.org', 'https://etherscan.io'],
     ['SOL', 'Solana 是高性能公链，以低费用和高吞吐量著称。', 'https://solana.com', 'https://solscan.io'],
@@ -325,15 +325,15 @@
   var NOTICES = [
     ['合约行情已上线：加密货币、黄金与美股永续合约行情开放浏览', 3, '合约行情、K 线与盘口已开放浏览，合约交易功能即将开放，具体时间请留意公告。'],
     ['行情中心新增 AI、RWA、黄金、Meme 等板块分类', 20, '行情中心与探索页已支持按板块浏览币种。'],
-    ['关于 BIYUN 系统升级维护的公告', 70, '为提供更好的服务，BIYUN 将于近期进行系统升级，届时充提业务将短暂暂停。'],
-    ['TAO、ONDO、RENDER 等现货交易对上线公告', 168, 'BIYUN 已上线多个 AI 与 RWA 板块现货交易对。'],
+    ['关于 BITWINEX 系统升级维护的公告', 70, '为提供更好的服务，BITWINEX 将于近期进行系统升级，届时充提业务将短暂暂停。'],
+    ['TAO、ONDO、RENDER 等现货交易对上线公告', 168, 'BITWINEX 已上线多个 AI 与 RWA 板块现货交易对。'],
   ]
   var EARN_FLEX = [['USDT', '0.1200', '10'], ['USDC', '0.0850', '10'], ['BTC', '0.0215', '0.0001'], ['ETH', '0.0312', '0.001'], ['SOL', '0.0560', '0.1'], ['XAUT', '0.0180', '0.001']]
   var EARN_LOCK = [['USDT', 30, '0.1500', '50000', '100'], ['USDT', 90, '0.1800', '50000', '100'], ['BTC', 60, '0.0420', '2', '0.001'], ['ETH', 30, '0.0560', '50', '0.01'], ['SOL', 120, '0.0980', '2000', '1']]
   var VIP = [[0, '0', '0', '0', '0.0010', '0.0010', '0.0002', '0.0005'], [1, '1000000', '15000000', '25000', '0.0009', '0.0010', '0.00016', '0.0004'], [2, '5000000', '50000000', '100000', '0.0008', '0.0009', '0.00014', '0.00035'], [3, '20000000', '100000000', '250000', '0.0007', '0.0008', '0.00012', '0.00032'], [4, '100000000', '600000000', '500000', '0.0005', '0.0007', '0.0001', '0.0003'], [5, '150000000', '1000000000', '1000000', '0.0004', '0.0006', '0.00008', '0.00027']]
   // ---------- 演示账户 ----------
   var NOW = Date.now()
-  var USER = { id: 10086512, uid: 10086512, nickName: 'BIYUN_Demo', userAccount: 'demo***@biyun.com', email: 'demo***@biyun.com', mobileNumber: '', countryCode: '+86', authLevel: 1, realName: '演示用户', accountStatus: '0', googleStatus: 1, isOpenMobileCheck: 0, isOpenEmailCheck: 1, isCapitalPwordSet: 1, inviteCode: 'BW8K2Q', lastLoginTime: NOW - 3600e3 }
+  var USER = { id: 10086512, uid: 10086512, nickName: 'BITWINEX_Demo', userAccount: 'demo***@bitwinex.com', email: 'demo***@bitwinex.com', mobileNumber: '', countryCode: '+86', authLevel: 1, realName: '演示用户', accountStatus: '0', googleStatus: 1, isOpenMobileCheck: 0, isOpenEmailCheck: 1, isCapitalPwordSet: 1, inviteCode: 'BW8K2Q', lastLoginTime: NOW - 3600e3 }
   // 现货持仓：[币, 可用, 冻结]
   var HOLD = [['USDT', 25860.42, 1268.10], ['BTC', 0.42150, 0.05], ['ETH', 6.8215, 0], ['WIN', 12500, 0], ['SOL', 120.5, 0], ['XAUT', 1.2504, 0], ['BNB', 3.105, 0], ['XRP', 2860, 0], ['DOGE', 15000, 0]]
   function px(coin) { if (coin === 'USDT' || coin === 'USDC') return 1; var s = M[coin.toLowerCase() + 'usdt']; return s ? s.p : 0 }
@@ -429,7 +429,7 @@
     if (/\/security\/setting_history$/.test(p)) return ok({ count: 0, historySettingList: [] })
     if (/\/openapi\/my_api_list$/.test(p)) return ok({ count: 0, apiList: null })
     if (/\/message\/user_message$/.test(p)) return ok({ userMessageList: [
-      { id: 301, receiveUid: USER.id, messageType: 1, messageContent: '欢迎来到 BIYUN！您的账户已完成注册，开启安全验证可提高账户安全等级。', status: 2, ctime: NOW - 86400e3 * 20 },
+      { id: 301, receiveUid: USER.id, messageType: 1, messageContent: '欢迎来到 BITWINEX！您的账户已完成注册，开启安全验证可提高账户安全等级。', status: 2, ctime: NOW - 86400e3 * 20 },
       { id: 302, receiveUid: USER.id, messageType: 4, messageContent: '您的身份认证已通过审核。', status: 2, ctime: NOW - 86400e3 * 19 },
       { id: 303, receiveUid: USER.id, messageType: 2, messageContent: '您的 25,000 USDT 充值已到账。', status: 2, ctime: NOW - 86400e3 * 15 },
       { id: 304, receiveUid: USER.id, messageType: 3, messageContent: '您的账户于 Mac Chrome 登录，如非本人操作请立即修改密码。', status: 1, ctime: NOW - 3600e3 },
@@ -469,7 +469,7 @@
     }
     if (/\/notice\/notice_info$/.test(p)) {
       var n = NOTICES[(Number(body && body.id) || 1) - 1] || NOTICES[0]
-      return ok({ noticeInfo: { id: Number(body && body.id) || 1, title: n[0], lang: 'zh_CN', ctime: Date.now() - n[1] * 3600e3, content: '<p>' + n[2] + '</p><p>感谢您对 BIYUN 的支持。</p><p>BIYUN 团队</p>' } })
+      return ok({ noticeInfo: { id: Number(body && body.id) || 1, title: n[0], lang: 'zh_CN', ctime: Date.now() - n[1] * 3600e3, content: '<p>' + n[2] + '</p><p>感谢您对 BITWINEX 的支持。</p><p>BITWINEX 团队</p>' } })
     }
     if (/\/fee_info$/.test(p)) {
       return ok({ pairMapList: SPOT.map(function (r) { var o = { symbol: r[0] + '/USDT' }; for (var v = 0; v <= 9; v++) { o['TRADE_MAKER_VIP' + v] = (0.001 - v * 0.0001).toFixed(4); o['TRADE_TAKER_VIP' + v] = (0.001 - v * 0.00008).toFixed(5) } return o }) })

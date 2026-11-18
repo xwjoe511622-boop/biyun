@@ -190,8 +190,7 @@ async function signOut(): Promise<void> {
 .me-card {
   display: flex; align-items: center; gap: 14px; padding: 18px; overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--color-accent) 38%, var(--color-border)); border-radius: 18px;
-  background: url('@/assets/biyun-mark-watermark.png') no-repeat right -14px bottom -12px / 150px auto,
-    linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 18%, var(--color-surface)), var(--color-surface) 62%);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 18%, var(--color-surface)), var(--color-surface) 62%);
 }
 .me-avatar { flex: 0 0 58px; }
 .me-id { display: flex; flex-direction: column; gap: 3px; min-width: 0; }

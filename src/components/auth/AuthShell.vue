@@ -195,8 +195,7 @@ const { t } = useI18n({
   .auth-mobile-brand {
     display: flex; flex-direction: column; gap: 6px; padding: 20px 18px; overflow: hidden; border-radius: 18px; color: #f4efe3;
     border: 1px solid rgba(217, 168, 90, .42);
-    background: url('@/assets/biyun-mark-watermark.png') no-repeat right -16px bottom -14px / 170px auto,
-      radial-gradient(120% 140% at 100% 0%, rgba(217, 168, 90, .34), transparent 60%), linear-gradient(120deg, #17120a, #0c0c0e 70%);
+    background: radial-gradient(120% 140% at 100% 0%, rgba(217, 168, 90, .34), transparent 60%), linear-gradient(120deg, #17120a, #0c0c0e 70%);
   }
   .amb-row { display: flex; align-items: center; gap: 9px; font-family: var(--font-display); font-size: 19px; font-weight: 750; letter-spacing: -0.01em; }
   .auth-mobile-brand strong { margin-top: 8px; font-family: var(--font-display); font-size: 20px; font-weight: 750; line-height: 1.3; }

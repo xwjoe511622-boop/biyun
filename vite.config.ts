@@ -37,8 +37,8 @@ function skinHtml(skin: SkinId, brand: BrandId): Plugin {
     name: 'skin-html',
     transformIndexHtml(html) {
       // Entry splash (scripts/boot-splash.ts): inline SVG + CSS that paints with the HTML, dismissed by src/core/boot-splash.ts.
-      const logo = brand === 'bitwinex' ? `data:image/png;base64,${readFileSync(fileURLToPath(new URL('./src/assets/biyun-logo.png', import.meta.url))).toString('base64')}` : ''
-      const splash = bootSplashHtml(skin, brand === 'bitwinex' ? 'BIYUN' : 'LONGBIT', brand === 'bitwinex', logo)
+      // BITWINEX shows its name only (owner 2026-11-18): no mark rises out of the hole, no logo image.
+      const splash = bootSplashHtml(skin, brand === 'bitwinex' ? 'BITWINEX' : 'LONGBIT', false)
       const out = html.replace(/<html lang="zh-CN"/, `<html lang="zh-CN" data-skin="${skin}"`).replace('<div id="app"></div>', `${splash}\n    <div id="app"></div>`)
       return skin === 'okx' ? out.replace(/<meta name="theme-color" content="[^"]*" \/>/, '<meta name="theme-color" content="#000000" />') : out
     },
@@ -63,8 +63,8 @@ function demoHtml(): Plugin {
 }
 
 const BITWINEX_HEAD = {
-  title: 'BIYUN',
-  description: 'BIYUN — Spot, USDT-margined perpetuals on crypto, gold and US stocks, copy trading and earn in one account.',
+  title: 'BITWINEX',
+  description: 'BITWINEX — Spot, USDT-margined perpetuals on crypto, gold and US stocks, copy trading and earn in one account.',
   themeColor: '#070b18',
 }
 

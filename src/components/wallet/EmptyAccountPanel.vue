@@ -76,8 +76,7 @@ const { t } = useI18n({ useScope: 'local', messages: {
 .table th:last-child { padding-right: 18px; }
 @media (max-width: 720px) {
   .summary { padding: 20px 18px 18px; border: 1px solid color-mix(in srgb, var(--color-accent) 38%, var(--color-border)); border-radius: 18px;
-    background: url('@/assets/biyun-mark-watermark.png') no-repeat right -14px bottom -12px / 150px auto,
-      linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 18%, var(--color-surface)), var(--color-surface) 62%);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 18%, var(--color-surface)), var(--color-surface) 62%);
     box-shadow: 0 10px 28px -18px color-mix(in srgb, var(--color-accent) 70%, transparent); }
   .wallet-toolbar { padding: 12px; }
   .wallet-search { width: 100%; }

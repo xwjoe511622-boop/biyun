@@ -3,8 +3,6 @@ import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { ChevronRight, Megaphone } from '@lucide/vue'
-import biyunLogo from '@/assets/biyun-logo.png?inline'
-import BrandMark from '@/components/common/BrandMark.vue'
 import Sparkline from '@/components/market/Sparkline.vue'
 import ProductArt from '@/components/common/ProductArt.vue'
 import CoinMark from '@/components/common/CoinMark.vue'
@@ -86,7 +84,7 @@ function goTo(index: number): void {
 }
 
 /** Shown in the footer so the owner can tell which build a phone is showing (bump with each delivery). */
-const BUILD = 'v45'
+const BUILD = 'v46'
 
 /* ------------------------------------------------------------------ quick entries */
 const entries = computed(() => [
@@ -280,7 +278,7 @@ onBeforeUnmount(() => {
     </section>
 
     <footer class="mh-foot">
-      <div class="mh-sign"><img v-if="BRAND_NAME === 'BIYUN'" class="mh-sign-logo" :src="biyunLogo" alt="BIYUN" width="344" height="108" /><template v-else><BrandMark :size="30" /><strong>{{ BRAND_NAME }}</strong></template></div>
+      <div class="mh-sign"><strong>{{ BRAND_NAME }}</strong></div>
       <nav class="mh-links">
         <RouterLink to="/help">{{ t('help') }}</RouterLink><i></i><RouterLink :to="{ name: 'notices' }">{{ t('notices') }}</RouterLink><i></i><RouterLink to="/fees">{{ t('fees') }}</RouterLink>
       </nav>
@@ -302,8 +300,7 @@ onBeforeUnmount(() => {
 
 .mh-card {
   position: relative; padding: 20px 18px 18px; overflow: hidden; border: 1px solid color-mix(in srgb, var(--color-accent) 38%, var(--color-border)); border-radius: 18px;
-  background: url('@/assets/biyun-mark-watermark.png') no-repeat right -14px bottom -12px / 150px auto,
-    linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 18%, var(--color-surface)), var(--color-surface) 62%);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 18%, var(--color-surface)), var(--color-surface) 62%);
   box-shadow: 0 10px 28px -18px color-mix(in srgb, var(--color-accent) 70%, transparent);
 }
 .mh-guest { display: flex; align-items: center; gap: 8px; padding: 10px 12px 10px 14px; border: 1px solid var(--color-border); border-radius: 14px; background: var(--color-surface); }
@@ -387,7 +384,6 @@ onBeforeUnmount(() => {
 
 .mh-foot { display: flex; flex-direction: column; align-items: center; padding: 18px 6px 0; color: var(--color-text-muted); text-align: center; }
 .mh-sign { display: flex; align-items: center; gap: 9px; color: var(--color-text); }
-.mh-sign-logo { width: auto; height: 44px; }
 .mh-sign strong { font-family: var(--font-display); font-size: 18px; font-weight: 800; letter-spacing: .06em; }
 .mh-links { display: flex; align-items: center; gap: 14px; margin: 12px 0 14px; }
 .mh-links a { color: var(--color-text-secondary); font-size: 12.5px; text-decoration: none; }

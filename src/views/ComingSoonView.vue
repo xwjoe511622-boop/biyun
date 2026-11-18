@@ -66,8 +66,7 @@ const key = computed(() => KEYS.find((entry) => entry === route.meta.soon) ?? 'e
 .soon-hero {
   position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 26px 22px 24px; overflow: hidden; color: #f4efe3;
   border: 1px solid rgba(217, 168, 90, .45); border-radius: 22px;
-  background: url('@/assets/biyun-mark-watermark.png') no-repeat right -24px bottom -18px / 210px auto,
-    radial-gradient(130% 150% at 100% 0%, rgba(217, 168, 90, .40), transparent 58%), linear-gradient(125deg, #1a140a, #0c0c0e 72%);
+  background: radial-gradient(130% 150% at 100% 0%, rgba(217, 168, 90, .40), transparent 58%), linear-gradient(125deg, #1a140a, #0c0c0e 72%);
 }
 .soon-art { position: absolute; top: 22px; right: 20px; }
 .soon-chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 999px; background: rgba(217, 168, 90, .22); color: #f2c64e; font-size: 12px; font-weight: 700; }
