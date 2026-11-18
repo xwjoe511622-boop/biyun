@@ -26,7 +26,7 @@ interface TickSnapshot {
 }
 
 const GOLD = new Set(['XAUT', 'PAXG', 'XAU'])
-const STOCKS = new Set(['NVDA', 'TSLA', 'AAPL', 'MSFT', 'AMZN', 'GOOGL', 'META', 'COIN', 'MSTR'])
+const STOCKS = new Set(['NVDA', 'TSLA', 'AAPL', 'MSFT', 'AMZN', 'GOOGL', 'META', 'COIN', 'MSTR', 'AMD', 'NFLX', 'PLTR', 'INTC'])
 
 export function contractKind(base: string): BoardRow['kind'] {
   const upper = base.toUpperCase()

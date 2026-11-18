@@ -2,7 +2,7 @@
 /**
  * Small gold illustrations for the product tiles (owner 2026-11-17), drawn in SVG in the same black-gold language
  * as the home banners: earn (coin stacks), loans (coin in a cycle), launchpad (rocket), launchpool (sprout on
- * coins), vesting (padlock), predict (cloud with up / down arrows), copy (mirrored chart cards). Also the home quick entries: buy, c2c, sectors, candles, data, help, gift, vip, notice. Unknown kinds render nothing.
+ * coins), vesting (padlock), predict (cloud with up / down arrows), copy (mirrored chart cards). Also the home quick entries: buy, c2c, sectors, candles, data, help, gift, vip, notice, deposit. Unknown kinds render nothing.
  */
 defineProps<{ kind: string; size?: number }>()
 </script>
@@ -26,6 +26,7 @@ defineProps<{ kind: string; size?: number }>()
     <template v-else-if="kind === 'gift'"><rect x="8" y="22" width="32" height="20" rx="4" fill="#c08a22"/><rect x="5" y="14" width="38" height="10" rx="3.500" fill="url(#pa-g)"/><rect x="21" y="14" width="6" height="28" fill="#ffe9a0"/><path d="M24 14c-3-7-12-8-12-3s8 3 12 3zM24 14c3-7 12-8 12-3s-8 3-12 3z" fill="none" stroke="url(#pa-g)" stroke-width="2.600" stroke-linejoin="round"/><path opacity="0.9" fill="#ffe9a0" d="M41 4.4L41.572 6.428 43.6 7 41.572 7.572 41 9.6 40.428 7.572 38.4 7 40.428 6.428Z"/></template>
     <template v-else-if="kind === 'vip'"><path d="M6 16l8.500 8L24 9l9.500 15L42 16l-4 20H10z" fill="url(#pa-g)"/><rect x="10" y="37.500" width="28" height="4.500" rx="2.200" fill="#c08a22"/><circle cx="24" cy="28" r="3" fill="#1b150a"/><circle cx="6" cy="15" r="2.600" fill="#ffe9a0"/><circle cx="42" cy="15" r="2.600" fill="#ffe9a0"/><circle cx="24" cy="8" r="2.800" fill="#ffe9a0"/></template>
     <template v-else-if="kind === 'notice'"><path d="M9 19h9l15-9v28l-15-9H9a3 3 0 0 1-3-3v-4a3 3 0 0 1 3-3z" fill="url(#pa-g)"/><path d="M18 19v10" stroke="#8c5e12" stroke-width="1.600"/><path d="M12 29l2.500 10.500a2.500 2.500 0 0 0 2.400 1.900h1.600a2 2 0 0 0 1.900-2.500L18 29z" fill="#c08a22"/><path d="M38 18.500a8 8 0 0 1 0 11M41.500 14a14 14 0 0 1 0 20" fill="none" stroke="#ffe9a0" stroke-width="2.200" stroke-linecap="round"/><path opacity="0.8" fill="#ffe9a0" d="M9 7.4L9.572 9.428 11.6 10 9.572 10.572 9 12.6 8.428 10.572 6.4 10 8.428 9.428Z"/></template>
+    <template v-else-if="kind === 'deposit'"><path d="M24 5v19" stroke="url(#pa-g)" stroke-width="5" stroke-linecap="round"/><path d="M14.500 16.500 24 26.500l9.500-10" fill="none" stroke="url(#pa-g)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 28h9.500l2.500 5h12l2.500-5H42v10a5 5 0 0 1-5 5H11a5 5 0 0 1-5-5z" fill="url(#pa-g)"/><path d="M12 38.500h10" stroke="#8c5e12" stroke-width="1.800" stroke-linecap="round"/><path opacity=".9" fill="#ffe9a0" d="M40 8l.7 2.300L43 11l-2.300.7L40 14l-.7-2.300L37 11l2.300-.7Z"/></template>
   </svg>
 </template>
 

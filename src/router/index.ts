@@ -47,10 +47,12 @@ const routes: RouteRecordRaw[] = [
   // 快捷买币: a spot market order sized in USDT (owner 10-22).
   { path: '/quick-buy', name: 'quick-buy', component: () => import('@/views/QuickBuyView.vue'), meta: { titleKey: 'navigation.quickBuy' } },
   // C2C / OTC.
-  { path: '/otc', name: 'otc', component: () => import('@/views/otc/OtcMarketView.vue'), meta: { titleKey: 'nav.otc' } },
-  { path: '/otc/orders', name: 'otc-orders', component: () => import('@/views/otc/OtcOrdersView.vue'), meta: { titleKey: 'nav.otcOrders' } },
-  { path: '/otc/orders/:id', name: 'otc-order', component: () => import('@/views/otc/OtcOrderDetailView.vue'), meta: { titleKey: 'nav.otcOrders' } },
-  { path: '/otc/adverts', name: 'otc-adverts', component: () => import('@/views/otc/OtcAdvertsView.vue'), meta: { titleKey: 'nav.otcAdverts' } },
+  ...(isFeatureEnabled('otc') ? [
+    { path: '/otc', name: 'otc', component: () => import('@/views/otc/OtcMarketView.vue'), meta: { titleKey: 'nav.otc' } },
+    { path: '/otc/orders', name: 'otc-orders', component: () => import('@/views/otc/OtcOrdersView.vue'), meta: { titleKey: 'nav.otcOrders' } },
+    { path: '/otc/orders/:id', name: 'otc-order', component: () => import('@/views/otc/OtcOrderDetailView.vue'), meta: { titleKey: 'nav.otcOrders' } },
+    { path: '/otc/adverts', name: 'otc-adverts', component: () => import('@/views/otc/OtcAdvertsView.vue'), meta: { titleKey: 'nav.otcAdverts' } },
+  ] : [{ path: '/otc/:rest(.*)*', redirect: '/' }]),
   // Content and account services.
   ...PRODUCT_TERMS_ROUTES,
   { path: '/notices', name: 'notices', component: () => import('@/views/content/NoticeListView.vue'), meta: { titleKey: 'nav.notices' } },

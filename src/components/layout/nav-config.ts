@@ -63,7 +63,7 @@ const NO_TITLE: Copy = ''
 
 /* ------------------------------------------------------------------ shared entries (one definition each) */
 const QUICK_BUY: NavItemDef = { to: '/quick-buy', label: 'navigation.quickBuy', desc: 'navigation.buyOrSellAtMarketPriceWithUsdt', icon: Zap }
-const C2C: NavItemDef = { to: '/otc', label: 'navigation.c2cTrading', desc: 'navigation.tradeUsdtWithMerchantsManyPaymentMethods', icon: Wallet }
+const C2C: NavItemDef = { to: '/otc', label: 'navigation.c2cTrading', desc: 'navigation.tradeUsdtWithMerchantsManyPaymentMethods', icon: Wallet, flag: 'otc' }
 const MARKETS: NavItemDef = { to: '/markets', label: 'navigation.markets', desc: 'navigation.livePricesAndMovesForEveryPair', icon: ChartLine }
 const FUTURES_DATA: NavItemDef = { to: '/futures/data', label: 'navigation.futuresData', desc: 'navigation.fundingIndexAndMarkPrices', icon: ChartColumn }
 const NOTICES: NavItemDef = { to: '/notices', label: 'navigation.announcements', desc: 'navigation.platformNewsAndListings', icon: Megaphone }
@@ -178,7 +178,7 @@ export const FOOTER_COLUMNS: readonly FooterColumnDef[] = [
   {
     key: 'products',
     links: [
-      { to: '/quick-buy', key: 'quickBuy' }, { to: '/otc', key: 'otc' },
+      { to: '/quick-buy', key: 'quickBuy' }, { to: '/otc', key: 'otc', flag: 'otc' },
       { to: '/trade', key: 'spot' }, { to: '/margin', key: 'margin' }, { to: '/futures', key: 'futures' },
       { to: '/copy-trading', key: 'copy' }, { to: '/earn', key: 'earn' }, { to: '/launchpad', key: 'launchpad' },
       { to: '/launchpool', key: 'launchpool' }, { to: '/vesting', key: 'vesting', flag: 'vesting' }, { to: '/loans', key: 'loans' },

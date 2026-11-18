@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isFeatureEnabled } from '@/core/feature-flags'
 import { useI18n } from 'vue-i18n'
 import { Banknote, Crown, HandCoins, PiggyBank, Rocket, Users } from '@lucide/vue'
 import { useProductFacts } from './use-product-facts'
@@ -63,6 +64,7 @@ const { t } = useI18n({
 })
 
 const facts = useProductFacts()
+const otcOpen = isFeatureEnabled('otc')
 </script>
 
 <template>
@@ -114,7 +116,7 @@ const facts = useProductFacts()
             <span class="fx-prod-more">{{ t('more') }}</span>
           </RouterLink>
         </li>
-        <li class="fx-prod glass">
+        <li v-if="otcOpen" class="fx-prod glass">
           <RouterLink class="fx-prod-main" to="/otc">
             <span class="fx-prod-icon"><Banknote :size="20" :stroke-width="1.75" /></span>
             <h3>{{ t('otcTitle') }}</h3>

@@ -54,6 +54,23 @@
     ['NEXO', 0.67, 0.33, 4, 1, 6e6, '#1A4199'],
     ['XDC', 0.02965, 3.89, 5, 0, 4e6, '#254C81'],
     ['VET', 0.004908, 6.24, 6, 0, 1.27e7, '#15BDFF'],
+    ['HBAR', 0.0576, 2.0, 4, 1, 4.9e7, '#111111'],
+    ['ALGO', 0.08, 0.78, 4, 1, 4.7e7, '#000000'],
+    ['KAS', 0.0274, 1.7, 4, 1, 7.6e6, '#70C7BA'],
+    ['SEI', 0.0386, -0.81, 4, 1, 1.1e7, '#9E1F19'],
+    ['OP', 0.11, -2.23, 4, 1, 3.4e7, '#FF0420'],
+    ['POL', 0.08, 0.35, 4, 1, 2.2e7, '#7B3FE4'],
+    ['IMX', 0.119, -2.38, 4, 1, 4.5e6, '#17B5CB'],
+    ['LDO', 0.33, 1.8, 4, 1, 2.3e7, '#F69988'],
+    ['PENDLE', 1.75, 2.3, 3, 2, 5.4e7, '#1BE3C2'],
+    ['GRT', 0.0198, 2.0, 5, 0, 7.2e6, '#6747ED'],
+    ['AXS', 0.832, 0.4, 4, 1, 6e6, '#0055D5'],
+    ['MANA', 0.0724, 1.67, 4, 1, 6e6, '#FF2D55'],
+    ['SAND', 0.0447, 2.5, 4, 1, 5.5e6, '#00ADEF'],
+    ['GALA', 0.00165, 5.34, 6, 0, 6.1e6, '#231F20'],
+    ['APE', 0.08, 0.82, 4, 1, 7.1e6, '#0054F9'],
+    ['KCS', 6.18, 0.22, 3, 2, 3e6, '#23AF91'],
+    ['GT', 7.47, 0.31, 3, 2, 4e6, '#DE5959'],
     ['SHIB', 6.08e-06, -0.34, 8, 0, 1.5e7, '#FFA409'],
     ['XAUT', 3836.52, -0.82, 2, 4, 6.4e7, '#D4AF37'],
     ['PAXG', 3838.3, -0.16, 2, 4, 8.3e7, '#E4CE4D'],
@@ -65,11 +82,31 @@
     ['SOL', 71.62, 0.58, 3, '0.1', 75, 6.2e8],
     ['XRP', 0.9545, 0.64, 4, '10', 75, 3.3e8],
     ['BNB', 590.82, 0.42, 2, '0.01', 75, 1.9e8],
-    ['DOGE', 0.05883, 0.40, 5, '100', 75, 2.1e8],
+    ['DOGE', 0.05883, 0.4, 5, '100', 75, 2.1e8],
     ['HYPE', 69.02, 3.36, 3, '0.1', 50, 2.6e8],
-    ['XAUT', 3837.4, -0.80, 1, '0.001', 100, 4.2e8],
-    ['NVDA', 168.89, -5.47, 2, '0.01', 20, 1.6e8],
-    ['TSLA', 379.78, 0.46, 2, '0.01', 20, 1.2e8],
+    ['ZEC', 902.6, 1.18, 2, '0.01', 50, 4.4e8],
+    ['XMR', 494.1, 0.27, 2, '0.01', 50, 1.1e8],
+    ['SUI', 0.7204, -1.52, 4, '10', 50, 2.4e8],
+    ['ADA', 0.1525, -0.47, 4, '10', 50, 1.9e8],
+    ['TRX', 0.3052, 0.61, 4, '10', 50, 1.3e8],
+    ['LINK', 9.094, 0.74, 3, '1', 50, 1.5e8],
+    ['AVAX', 7.086, 0.27, 3, '1', 50, 8e7],
+    ['LTC', 44.45, 0.18, 2, '0.1', 50, 7.2e7],
+    ['BCH', 207.7, 0.06, 2, '0.01', 50, 6.8e7],
+    ['DOT', 0.7304, -1.06, 4, '10', 50, 4.1e7],
+    ['NEAR', 3.132, 1.16, 3, '1', 50, 1.2e8],
+    ['TAO', 190.7, -1.45, 2, '0.01', 50, 9e7],
+    ['AAVE', 108.7, 4.66, 2, '0.1', 50, 1.4e8],
+    ['UNI', 5.133, 6.38, 3, '1', 50, 2.2e8],
+    ['ARB', 0.1321, -3.15, 4, '10', 50, 5e7],
+    ['PEPE', 2.5e-06, 1.26, 8, '1000000', 50, 1.8e8],
+    ['XAUT', 3837.4, -0.8, 1, '0.001', 100, 4.2e8],
+    ['NVDA', 155.46, -0.48, 2, '0.01', 20, 1.6e8],
+    ['TSLA', 380.11, 0.1, 2, '0.01', 20, 1.2e8],
+    ['AAPL', 351.91, -0.25, 2, '0.01', 20, 9e7],
+    ['GOOGL', 280.2, -1.24, 2, '0.01', 20, 7e7],
+    ['META', 618.87, -1.2, 2, '0.01', 20, 6.5e7],
+    ['AMD', 503.41, -0.17, 2, '0.01', 20, 8e7],
   ]
   var SCALES = ['1min', '5min', '15min', '30min', '60min', '4h', '1day', '1week', '1month']
   var SEC = { '1min': 60, '5min': 300, '15min': 900, '30min': 1800, '60min': 3600, '4h': 14400, '1day': 86400, '1week': 604800, '1month': 2592000 }
@@ -281,7 +318,7 @@
   // ---------- HTTP ----------
   var KLINE = SCALES
   // 板块标签（演示）：后台“币种标签”配置的序号
-  var TAGS = { TAO: 2, RENDER: 2, WLD: 2, NEAR: 2, FET: 2, ONDO: 3, LINK: 3, AVAX: 3, XDC: 3, XAUT: 4, PAXG: 4, DOGE: 5, SHIB: 5, PEPE: 5, UNI: 6, HYPE: 6, AAVE: 6, JUP: 6, CAKE: 6, RAY: 6, CRV: 6, ZEC: 7, XMR: 7, DASH: 7, SUI: 8, ADA: 8, TRX: 8, DOT: 8, ARB: 8, ATOM: 8, APT: 8, ICP: 8, ETC: 8, FIL: 8, MNT: 8, STX: 8, TIA: 8, XLM: 8, VET: 8 }
+  var TAGS = { TAO: 2, RENDER: 2, WLD: 2, NEAR: 2, FET: 2, GRT: 2, ONDO: 3, LINK: 3, AVAX: 3, XDC: 3, XAUT: 4, PAXG: 4, DOGE: 5, SHIB: 5, PEPE: 5, UNI: 6, HYPE: 6, AAVE: 6, JUP: 6, CAKE: 6, RAY: 6, CRV: 6, LDO: 6, PENDLE: 6, ZEC: 7, XMR: 7, DASH: 7, SUI: 8, ADA: 8, TRX: 8, DOT: 8, ATOM: 8, APT: 8, ICP: 8, ETC: 8, FIL: 8, STX: 8, TIA: 8, XLM: 8, VET: 8, HBAR: 8, ALGO: 8, KAS: 8, SEI: 8, ARB: 9, OP: 9, POL: 9, MNT: 9, IMX: 9, AXS: 10, MANA: 10, SAND: 10, GALA: 10, APE: 10 }
   function spotInfo() {
     var market = { USDT: {} }, coinList = { USDT: { name: 'USDT', showName: 'USDT', showPrecision: 2, icon: icon('USDT', '#26A17B'), sort: 0, isFiat: 0, otcOpen: 1 } }
     SPOT.forEach(function (r, i) {
@@ -290,14 +327,14 @@
       market.USDT[b + '/USDT'] = { symbol: b.toLowerCase() + 'usdt', name: b + '/USDT', showName: b + '/USDT', price: pd, volume: vd, depth: steps.join(','), limitPriceMin: Math.pow(10, -pd).toFixed(pd), limitVolumeMin: vd > 0 ? Math.pow(10, -vd).toFixed(vd) : '1', marketBuyMin: '5', marketSellMin: vd > 0 ? Math.pow(10, -vd).toFixed(vd) : '1', sort: i + 1, isShow: 1, newcoinFlag: b === 'HYPE' || b === 'TAO' ? 1 : 0, is_open_lever: ['BTC', 'ETH', 'SOL'].indexOf(b) >= 0 ? 1 : 0, multiple: ['BTC', 'ETH', 'SOL'].indexOf(b) >= 0 ? 5 : 0, borrowRuleConfigured: ['BTC', 'ETH', 'SOL', 'XRP', 'BNB', 'DOGE'].indexOf(b) >= 0 }
       coinList[b] = { name: b, showName: b, showPrecision: Math.max(vd, 4), icon: icon(b, r[6]), sort: i + 1, isFiat: 0, otcOpen: ['BTC', 'ETH'].indexOf(b) >= 0 ? 1 : 0, mainChainType: 1, coinTag: TAGS[b] || 1 }
     })
-    ;[['USDC', '#2775CA'], ['NVDA', '#76B900'], ['TSLA', '#CC0000']].forEach(function (r, i) { coinList[r[0]] = { name: r[0], showName: r[0], showPrecision: 4, icon: icon(r[0], r[1]), sort: 100 + i, isFiat: 0, otcOpen: 0 } })
+    ;[['USDC', '#2775CA'], ['NVDA', '#76B900'], ['TSLA', '#CC0000'], ['AAPL', '#1D1D1F'], ['GOOGL', '#4285F4'], ['META', '#0467DF'], ['AMD', '#1A1A1A']].forEach(function (r, i) { coinList[r[0]] = { name: r[0], showName: r[0], showPrecision: 4, icon: icon(r[0], r[1]), sort: 100 + i, isFiat: 0, otcOpen: 0 } })
     return {
       msg: { company_name: 'BITWINEX', logoUrl: '', iconUrl: '', contact_email: 'support@exchange.invalid' },
       nc: { nc_appkey: '', nc_prefix: '', nc_lang: 'cn' },
       switch: { otc_open: '1', lever_open: '1', is_enforce_google: '0', index_international_open: '1', fiat_trade_open: '1' },
       url: {},
       HIT: 'WIN',
-      market: { market: market, coinList: coinList, followCoinList: {}, coinTagLangs: { zh_CN: { 1: '主流', 2: 'AI', 3: 'RWA', 4: '黄金', 5: 'Meme', 6: 'DeFi', 7: '隐私', 8: '公链' }, en_US: { 1: 'Major', 2: 'AI', 3: 'RWA', 4: 'Gold', 5: 'Meme', 6: 'DeFi', 7: 'Privacy', 8: 'Layer 1' } }, wsUrl: 'wss://ws.exchange.invalid/kline-api/ws', klineScale: KLINE, marketSort: ['USDT'], rate: { zh_CN: { USDT: '7.10' } } },
+      market: { market: market, coinList: coinList, followCoinList: {}, coinTagLangs: { zh_CN: { 1: '主流', 2: 'AI', 3: 'RWA', 4: '黄金', 5: 'Meme', 6: 'DeFi', 7: '隐私', 8: '公链', 9: 'Layer 2', 10: 'GameFi' }, en_US: { 1: 'Major', 2: 'AI', 3: 'RWA', 4: 'Gold', 5: 'Meme', 6: 'DeFi', 7: 'Privacy', 8: 'Layer 1', 9: 'Layer 2', 10: 'GameFi' } }, wsUrl: 'wss://ws.exchange.invalid/kline-api/ws', klineScale: KLINE, marketSort: ['USDT'], rate: { zh_CN: { USDT: '7.10' } } },
     }
   }
   function futInfo() {

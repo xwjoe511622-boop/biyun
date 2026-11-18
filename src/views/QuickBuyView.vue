@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isFeatureEnabled } from '@/core/feature-flags'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
@@ -512,6 +513,7 @@ onBeforeUnmount(() => {
 })
 
 const faqs = computed(() => [1, 2, 3, 4, 5].map((index) => ({ q: t(`q${index}`), a: t(`a${index}`), index })))
+const otcOpen = isFeatureEnabled('otc')
 </script>
 
 <template>
@@ -520,7 +522,7 @@ const faqs = computed(() => [1, 2, 3, 4, 5].map((index) => ({ q: t(`q${index}`),
       <div class="qb-top-inner">
         <span class="qb-crumb">{{ gt('quickBuyUi.buyCrypto') }} <span aria-hidden="true">/</span> <strong>{{ gt('quickBuyUi.quickBuy') }}</strong></span>
         <span class="qb-top-links">
-          <RouterLink to="/otc"><span>{{ t('c2c') }}</span></RouterLink>
+          <RouterLink v-if="otcOpen" to="/otc"><span>{{ t('c2c') }}</span></RouterLink>
           <RouterLink v-if="sessionStore.isAuthenticated" to="/orders"><History :size="16" aria-hidden="true" /><span>{{ t('history') }}</span></RouterLink>
         </span>
       </div>
@@ -661,7 +663,7 @@ const faqs = computed(() => [1, 2, 3, 4, 5].map((index) => ({ q: t(`q${index}`),
           <p>
             {{ item.a }}
             <RouterLink v-if="item.index === 3" to="/fees">{{ t('feesLink') }}</RouterLink>
-            <RouterLink v-else-if="item.index === 4" to="/otc">{{ t('c2cLink') }}</RouterLink>
+            <RouterLink v-else-if="item.index === 4 && otcOpen" to="/otc">{{ t('c2cLink') }}</RouterLink>
             <RouterLink v-else-if="item.index === 5" to="/orders">{{ t('ordersLink') }}</RouterLink>
           </p>
         </details>

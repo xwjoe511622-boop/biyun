@@ -38,7 +38,7 @@ const { t, locale } = useI18n({
       b1Tag: '热门', b1Title: 'WIN/USDT 现货交易', b1Sub: '现货交易已开放',
       b2Tag: '合约行情', b2Title: '黄金与美股永续合约', b2Sub: '行情已上线 · 交易暂未开放',
       b3Tag: '热门板块', b3Title: 'AI · RWA · 美股 · 黄金', b3Sub: '按板块发现市场机会',
-      quick: '快捷入口', quickBuy: '快捷买币', c2c: 'C2C 交易', futuresData: '合约数据', sectors: '热门板块', futuresQuotes: '合约行情', help: '帮助中心', earn: '理财', copy: '跟单', launchpad: 'Launchpad', launchpool: 'Launchpool', loans: '借币', invite: '邀请返佣', vip: 'VIP',
+      quick: '快捷入口', quickBuy: '快捷买币', deposit: '充值', futuresData: '合约数据', sectors: '热门板块', futuresQuotes: '合约行情', help: '帮助中心', earn: '理财', copy: '跟单', launchpad: 'Launchpad', launchpool: 'Launchpool', loans: '借币', invite: '邀请返佣', vip: 'VIP',
       notices: '公告', hot: '热门', gainers: '涨幅榜', fresh: '新币', volume: '成交额', futures: '合约',
       name: '名称', last: '最新价', change: '24h 涨跌', all: '查看全部行情', none: '暂无数据', perp: '永续',
       fees: '费率标准', risk: '风险提示：数字资产及合约价格波动剧烈，杠杆交易可能放大亏损。请在充分了解风险后谨慎决策。',
@@ -49,7 +49,7 @@ const { t, locale } = useI18n({
       b1Tag: 'Hot', b1Title: 'WIN/USDT spot', b1Sub: 'Spot trading is open',
       b2Tag: 'Futures quotes', b2Title: 'Gold and US-stock perpetuals', b2Sub: 'Quotes are live · trading opens soon',
       b3Tag: 'Sectors', b3Title: 'AI · RWA · US stocks · Gold', b3Sub: 'Discover the market by sector',
-      quick: 'Shortcuts', quickBuy: 'Buy crypto', c2c: 'C2C', futuresData: 'Futures data', sectors: 'Sectors', futuresQuotes: 'Futures', help: 'Help', earn: 'Earn', copy: 'Copy', launchpad: 'Launchpad', launchpool: 'Launchpool', loans: 'Loans', invite: 'Referral', vip: 'VIP',
+      quick: 'Shortcuts', quickBuy: 'Buy crypto', deposit: 'Deposit', futuresData: 'Futures data', sectors: 'Sectors', futuresQuotes: 'Futures', help: 'Help', earn: 'Earn', copy: 'Copy', launchpad: 'Launchpad', launchpool: 'Launchpool', loans: 'Loans', invite: 'Referral', vip: 'VIP',
       notices: 'Announcements', hot: 'Popular', gainers: 'Gainers', fresh: 'New', volume: 'Volume', futures: 'Futures',
       name: 'Name', last: 'Last price', change: '24h change', all: 'View all markets', none: 'No data yet', perp: 'Perp',
       fees: 'Fees', risk: 'Risk warning: digital asset and derivative prices are highly volatile and leverage can magnify losses. Trade only after you understand the risks.',
@@ -84,13 +84,12 @@ function goTo(index: number): void {
 }
 
 /** Shown in the footer so the owner can tell which build a phone is showing (bump with each delivery). */
-const BUILD = 'v46'
+const BUILD = 'v47'
 
 /* ------------------------------------------------------------------ quick entries */
 const entries = computed(() => [
-  // Everything the old drawer offered stays one tap away: C2C and futures data have no other phone entry.
   { key: 'quickBuy', to: '/quick-buy', art: 'buy' },
-  { key: 'c2c', to: '/otc', art: 'c2c' },
+  { key: 'deposit', to: { path: '/assets', query: { tab: 'deposit' } }, art: 'deposit' },
   { key: 'sectors', to: '/explore', art: 'sectors' },
   { key: 'notices', to: '/notices', art: 'notice' },
   { key: 'futuresData', to: '/futures/data', art: 'data' },

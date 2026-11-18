@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import { computed, defineAsyncComponent, onMounted, ref, shallowRef, watch, type Component } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ArrowDownToLine, ArrowLeftRight, ArrowUpFromLine, BookUser, ClipboardList, Coins, Cpu, Ellipsis, FileChartLine, Landmark, Sprout, Wallet } from '@lucide/vue'
@@ -143,6 +144,9 @@ const market = useMarketStore()
 const sessionStore = useSessionStore()
 
 const active = ref<WalletTabId>('overview')
+/** `/assets?tab=deposit` (the home page's 充值 shortcut) opens straight on that tab. */
+// The page is also mounted without a router (embedded panels, unit tests): no route means no requested tab.
+const requestedTab = String((useRouter() as Partial<ReturnType<typeof useRouter>> | undefined)?.currentRoute?.value.query.tab ?? '')
 const coin = ref('')
 /** Records tab opened from a flow shortcut lands on that kind. */
 const recordsKind = ref<'deposit' | 'withdraw'>('deposit')
@@ -242,6 +246,7 @@ watch(coins, (rows) => {
 }, { immediate: true })
 
 onMounted(() => {
+  if (requestedTab !== '') selectTab(requestedTab)
   if (market.publicInfo === null) {
     void market.loadPublicInfo().catch(() => {
       // The market store renders its own error; the wallet still works with balance data.

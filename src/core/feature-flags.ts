@@ -34,6 +34,8 @@ export interface FeatureFlags {
   launchpad: boolean
   launchpool: boolean
   vesting: boolean
+  /** C2C / OTC desk: its menu entries, links and pages (owner 2026-11-18: hidden until re-opened). */
+  otc: boolean
 }
 
 export type FeatureFlagKey = keyof FeatureFlags
@@ -58,6 +60,7 @@ export const defaultFeatureFlags: FeatureFlags = {
   launchpad: productOpen('VITE_OPEN_LAUNCHPAD'),
   launchpool: productOpen('VITE_OPEN_LAUNCHPOOL'),
   vesting: productOpen('VITE_OPEN_VESTING'),
+  otc: productOpen('VITE_OPEN_OTC'),
 }
 
 /** Mutable runtime copy. Overrides may only come from local build config, never from the API. */

@@ -264,7 +264,7 @@ export default defineConfig(({ mode }) => {
       restoreMocks: true,
       // Store specs must not open the real sequenced depth feed; its own spec enables it explicitly.
       // The product suites test the real pages, so every product is open under Vitest (core/feature-flags.ts).
-      env: { VITE_FUTURES_SEQ_DEPTH: '0', VITE_OPEN_FUTURES_TRADING: '1', VITE_OPEN_COPY_TRADING: '1', VITE_OPEN_EARN: '1', VITE_OPEN_LOANS: '1', VITE_OPEN_LAUNCHPAD: '1', VITE_OPEN_LAUNCHPOOL: '1', VITE_OPEN_VESTING: '1' },
+      env: { VITE_FUTURES_SEQ_DEPTH: '0', VITE_OPEN_FUTURES_TRADING: '1', VITE_OPEN_OTC: '1', VITE_OPEN_COPY_TRADING: '1', VITE_OPEN_EARN: '1', VITE_OPEN_LOANS: '1', VITE_OPEN_LAUNCHPAD: '1', VITE_OPEN_LAUNCHPOOL: '1', VITE_OPEN_VESTING: '1' },
     },
   }
 })
