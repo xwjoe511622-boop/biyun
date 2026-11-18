@@ -69,7 +69,7 @@ ${w}<path d="${front}" stroke="url(#bd)" stroke-width="18" opacity=".18"/><path 
 #boot .bk,#boot .fr{stroke:${c.diskHot};stroke-width:1.2;stroke-linecap:round;stroke-dasharray:1 7 5 13;opacity:.4;animation:bw-spin 1.4s linear infinite}
 #boot .bk{animation-direction:reverse;opacity:.22}
 #boot .bs{fill:${c.diskHot};animation:bw-fall 2.2s cubic-bezier(.5,0,.9,.6) infinite}
-#boot b{font:600 clamp(15px,3.2vmin,24px)/1 system-ui,sans-serif;letter-spacing:.5em;margin-right:-.5em;color:#fff;animation:bw-in .6s ease-out .7s both}
+#boot b{font:900 clamp(20px,5vmin,34px)/1.1 'Archivo Black','Arial Black',system-ui,sans-serif;letter-spacing:.06em;color:#e2b44c;background:linear-gradient(180deg,#fff3c4 0%,#f6d36e 34%,#d9a63a 58%,#b8821c 74%,#f0cb63 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:bw-in .6s ease-out .7s both}
 #boot i{display:flex;align-items:center;gap:1.4vmin;font:500 clamp(10px,1.7vmin,13px)/1 system-ui,sans-serif;font-style:normal;letter-spacing:.32em;color:#e9e9ee;animation:bw-in .6s ease-out .95s both}
 #boot i span{margin-right:-.32em}#boot em{font-style:normal;color:${c.accent}}
 #boot s{width:clamp(28px,7vmin,64px);height:1px;background:linear-gradient(90deg,transparent,${c.rule})}#boot s:last-child{transform:scaleX(-1)}

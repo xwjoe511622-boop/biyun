@@ -543,3 +543,16 @@
   :root[data-skin='okx'] .terminal .ocp-bar .scale { min-width: 0; padding: 0 5px; font-size: 12.5px; }
   :root[data-skin='okx'] .terminal .ocp-icon { width: 32px; }
 }
+
+/* ------------------------------------------------------------------ the BITWINEX name (owner 2026-11-18)
+   Wherever the name stands as the brand it is set in a heavy grotesque and filled with polished gold: pale top,
+   warm body, a deep band under the middle, a lift at the foot. Plain text, no mark. Darker gold on light pages. */
+.brand-wordtext.brand-wordtext {
+  font-family: 'Archivo Black', 'Arial Black', var(--font-display) !important; font-weight: 400 !important; letter-spacing: .03em !important;
+  color: #e2b44c; background: linear-gradient(180deg, #fff3c4 0%, #f6d36e 34%, #d9a63a 58%, #b8821c 74%, #f0cb63 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; padding-bottom: 1px;
+}
+:root[data-theme='light'] .brand-wordtext.brand-wordtext { color: #a8791a; background-image: linear-gradient(180deg, #d4a02a 0%, #b8821c 40%, #8c5e12 70%, #b98a22 100%); }
+@media (max-width: 720px) {
+  :root[data-skin='okx'] .balances > section.summary::before { font-family: 'Archivo Black', 'Arial Black', var(--font-display); font-weight: 400; letter-spacing: .22em; }
+}

@@ -287,7 +287,7 @@ async function signOut(): Promise<void> {
       <img v-if="brand.logoUrl !== ''" class="brand-logo" :src="brand.logoUrl" :alt="brand.name" />
       <BrandMark v-else :size="28" />
       <span class="brand-words">
-        <span class="brand-name ellipsis">{{ brand.name }}</span>
+        <span class="brand-name brand-wordtext ellipsis">{{ brand.name }}</span>
         <span v-if="BRAND_NAME_ZH !== ''" class="brand-zh">{{ BRAND_NAME_ZH }}</span>
       </span>
       <span v-if="t('brand.test') !== ''" class="brand-tag">{{ t('brand.test') }}</span>
@@ -352,7 +352,7 @@ async function signOut(): Promise<void> {
       <div v-if="drawerOpen" class="nav-drawer-backdrop" @click="drawerOpen = false"></div>
       <aside class="nav-drawer" :class="{ 'is-open': drawerOpen }" :aria-hidden="!drawerOpen" :inert="!drawerOpen">
         <div class="drawer-head">
-          <RouterLink class="brand" to="/"><BrandMark :size="26" /><span class="brand-name">{{ brand.name }}</span></RouterLink>
+          <RouterLink class="brand" to="/"><BrandMark :size="26" /><span class="brand-name brand-wordtext">{{ brand.name }}</span></RouterLink>
           <button class="icon-button" type="button" :aria-label="copy.close" @click="drawerOpen = false"><X :size="22" /></button>
         </div>
         <div v-if="!session.isAuthenticated" class="drawer-auth">
@@ -533,7 +533,7 @@ async function signOut(): Promise<void> {
   .m-me:active { transform: scale(.94); }
   .m-search-icon { display: inline-flex; order: 1; margin-right: 8px; }
   .app-header.is-home:not(.is-inner) .brand { display: inline-flex; margin-right: auto; }
-  .app-header.is-home .brand-name { font-family: var(--font-display); font-size: 21px; font-weight: 800; letter-spacing: .08em; }
+  .app-header.is-home .brand-name { font-size: 22px; }
   .app-header.is-home .brand { gap: 9px; }
   /* The home page shows the word mark alone (owner 2026-11-17); the W stays on the sphere below it. */
   /* Main pages: bare line icons, no discs — three on the home page (search, messages, avatar). */

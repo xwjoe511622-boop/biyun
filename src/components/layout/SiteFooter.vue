@@ -201,7 +201,7 @@ onBeforeUnmount(() => {
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-side">
-        <RouterLink class="brand" to="/"><BrandMark :size="28" /><span>{{ BRAND_NAME }}</span><small v-if="BRAND_NAME_ZH !== ''">{{ BRAND_NAME_ZH }}</small></RouterLink>
+        <RouterLink class="brand" to="/"><BrandMark :size="28" /><span class="brand-wordtext">{{ BRAND_NAME }}</span><small v-if="BRAND_NAME_ZH !== ''">{{ BRAND_NAME_ZH }}</small></RouterLink>
         <p class="tagline">{{ t('tagline') }}</p>
 
         <h4>{{ t('community') }}</h4>

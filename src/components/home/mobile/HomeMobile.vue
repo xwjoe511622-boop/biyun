@@ -84,7 +84,7 @@ function goTo(index: number): void {
 }
 
 /** Shown in the footer so the owner can tell which build a phone is showing (bump with each delivery). */
-const BUILD = 'v47'
+const BUILD = 'v48'
 
 /* ------------------------------------------------------------------ quick entries */
 const entries = computed(() => [
@@ -277,7 +277,7 @@ onBeforeUnmount(() => {
     </section>
 
     <footer class="mh-foot">
-      <div class="mh-sign"><strong>{{ BRAND_NAME }}</strong></div>
+      <div class="mh-sign"><strong class="brand-wordtext">{{ BRAND_NAME }}</strong></div>
       <nav class="mh-links">
         <RouterLink to="/help">{{ t('help') }}</RouterLink><i></i><RouterLink :to="{ name: 'notices' }">{{ t('notices') }}</RouterLink><i></i><RouterLink to="/fees">{{ t('fees') }}</RouterLink>
       </nav>

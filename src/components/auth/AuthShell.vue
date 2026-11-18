@@ -44,7 +44,7 @@ const { t } = useI18n({
       <div class="brand-glow"></div>
       <div class="brand-grid"></div>
       <div class="brand-inner">
-        <div class="brand-row"><BrandMark :size="40" /><span class="brand-name">{{ BRAND_NAME }}</span><span v-if="BRAND_NAME_ZH !== ''" class="brand-zh">{{ BRAND_NAME_ZH }}</span></div>
+        <div class="brand-row"><BrandMark :size="40" /><span class="brand-name brand-wordtext">{{ BRAND_NAME }}</span><span v-if="BRAND_NAME_ZH !== ''" class="brand-zh">{{ BRAND_NAME_ZH }}</span></div>
         <h2>{{ t('headline') }}</h2>
         <p>{{ t('lead') }}</p>
         <ul>
@@ -68,7 +68,7 @@ const { t } = useI18n({
     <div class="auth-main">
       <!-- Phones: the brand panel is hidden, so the form opens with a compact brand card (owner 2026-11-17). -->
       <div class="auth-mobile-brand" aria-hidden="true">
-        <div class="amb-row"><BrandMark :size="30" /><span>{{ BRAND_NAME }}</span></div>
+        <div class="amb-row"><BrandMark :size="30" /><span class="brand-wordtext">{{ BRAND_NAME }}</span></div>
         <strong>{{ t('headline') }}</strong>
         <small>{{ t('lead') }}</small>
       </div>

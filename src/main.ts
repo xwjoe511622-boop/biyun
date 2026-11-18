@@ -15,6 +15,8 @@ import '@fontsource-variable/bricolage-grotesque'
 import '@fontsource-variable/jetbrains-mono'
 // OKX skin face (used only under :root[data-skin='okx'], see styles/skin-okx.css); upright axis only.
 import '@fontsource-variable/hanken-grotesk/wght.css'
+// Heavy grotesque for the BITWINEX name only (owner 2026-11-18); Latin subset, one weight.
+import '@fontsource/archivo-black/latin-400.css'
 import './styles/tokens.css'
 import './styles/brand-bitwinex.css'
 import './styles/skin-binance.css'
